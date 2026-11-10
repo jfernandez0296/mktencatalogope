@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Webinar Agentes de IA</title>
+<link rel="stylesheet" href="../../brand/encatalogo/tokens.css">
+<style>
+  @font-face { font-family: "DM Serif Display"; font-style: normal; src: url("../../brand/encatalogo/fonts/dm-serif-display-latin-400-normal.woff2") format("woff2"); }
+  @font-face { font-family: "DM Serif Display"; font-style: italic; src: url("../../brand/encatalogo/fonts/dm-serif-display-latin-400-italic.woff2") format("woff2"); }
+  @font-face { font-family: "Inter"; font-weight: 400; src: url("../../brand/encatalogo/fonts/inter-latin-400-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Inter"; font-weight: 500; src: url("../../brand/encatalogo/fonts/inter-latin-500-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Inter"; font-weight: 600; src: url("../../brand/encatalogo/fonts/inter-latin-600-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Inter"; font-weight: 700; src: url("../../brand/encatalogo/fonts/inter-latin-700-normal.woff2") format("woff2"); }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1080px; height: 1350px; background: var(--ec-cream); }
+  .flyer { position: relative; width: 1080px; height: 1350px; overflow: hidden; padding: 72px 76px 64px;
+    background: var(--ec-cream); font-family: var(--ec-font-sans); color: var(--ec-ink);
+    display: flex; flex-direction: column; }
+  /* decorative arc */
+  .flyer::before { content: ""; position: absolute; right: -260px; top: -260px; width: 720px; height: 720px;
+    border-radius: 50%; background: var(--ec-terracotta-soft); }
+  .flyer > * { position: relative; }
+
+  .top { display: flex; justify-content: space-between; align-items: center; }
+  .lockup { display: flex; align-items: center; gap: 14px; font: 700 30px/1 var(--ec-font-sans); letter-spacing: -.01em; }
+  .lockup img { height: 56px; }
+  .badge { background: var(--ec-ink); color: var(--ec-white); border-radius: 999px; padding: 14px 24px;
+    font: 700 17px/1 var(--ec-font-sans); letter-spacing: .14em; text-transform: uppercase; display: flex; align-items: center; gap: 10px; }
+  .badge i { width: 10px; height: 10px; border-radius: 50%; background: var(--ec-terracotta); display: inline-block; }
+
+  .eyebrow { margin-top: 84px; font: 700 20px/1.2 var(--ec-font-sans); letter-spacing: .16em; text-transform: uppercase; color: var(--ec-terracotta-dark); }
+  h1 { margin-top: 20px; font: 400 104px/1.0 var(--ec-font-display); letter-spacing: -.015em; max-width: 880px; }
+  .tag { margin-top: 22px; font: italic 400 40px/1.2 var(--ec-font-display); color: var(--ec-terracotta-dark); }
+
+  .mid { margin-top: 52px; display: grid; grid-template-columns: 1fr 330px; gap: 44px; align-items: start; }
+  .learn h2 { font: 700 18px/1 var(--ec-font-sans); letter-spacing: .14em; text-transform: uppercase; color: var(--ec-muted); margin-bottom: 22px; }
+  .item { display: flex; gap: 20px; align-items: flex-start; padding: 18px 0; border-top: 1px solid var(--ec-border); }
+  .item:last-child { border-bottom: 1px solid var(--ec-border); }
+  .num { font: 400 40px/1 var(--ec-font-display); color: var(--ec-terracotta); min-width: 52px; }
+  .item p { font: 500 24px/1.35 var(--ec-font-sans); color: var(--ec-ink); }
+
+  .speaker { text-align: center; }
+  .photo { width: 290px; height: 290px; margin: 0 auto; border-radius: 50%; border: 8px solid var(--ec-white);
+    box-shadow: 0 0 0 3px var(--ec-terracotta), var(--ec-shadow-card); background: var(--ec-terracotta-soft);
+    display: grid; place-items: center; color: var(--ec-terracotta-dark); font: 600 18px/1.3 var(--ec-font-sans); letter-spacing: .1em; text-transform: uppercase; }
+  .photo { overflow: hidden; }
+  .photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; display: block; }
+  .role { margin-top: 26px; font: 700 16px/1 var(--ec-font-sans); letter-spacing: .16em; text-transform: uppercase; color: var(--ec-terracotta-dark); }
+  .name { margin-top: 10px; font: 400 38px/1.1 var(--ec-font-display); }
+
+  .when { margin-top: auto; background: var(--ec-ink); color: var(--ec-white); border-radius: 28px; padding: 34px 40px;
+    display: grid; grid-template-columns: auto 1fr auto; gap: 36px; align-items: center; }
+  .date { border-right: 1px solid rgba(255,255,255,.18); padding-right: 36px; }
+  .date small { display: block; font: 700 16px/1 var(--ec-font-sans); letter-spacing: .16em; text-transform: uppercase; color: var(--ec-terracotta); }
+  .date strong { display: block; margin-top: 10px; font: 400 52px/1 var(--ec-font-display); }
+  .time strong { display: block; font: 400 52px/1 var(--ec-font-display); }
+  .time strong span { font: 600 20px/1 var(--ec-font-sans); color: var(--ec-terracotta); margin-left: 8px; }
+  .time p { margin-top: 12px; font: 400 16px/1.45 var(--ec-font-sans); color: rgba(255,255,255,.66); }
+  .cta { background: var(--ec-terracotta); color: var(--ec-ink); border-radius: 999px; padding: 22px 30px;
+    font: 700 20px/1 var(--ec-font-sans); white-space: nowrap; }
+
+  .foot { margin-top: 22px; display: flex; justify-content: space-between; font: 500 17px/1 var(--ec-font-sans); color: var(--ec-muted); }
+</style>
+</head>
+<body>
+<div class="flyer">
+  <div class="top">
+    <div class="lockup"><img src="../../brand/encatalogo/logo/encatalogo-logo.svg" alt="">EnCatalogo.pe</div>
+    <div class="badge"><i></i>Webinar gratuito · En vivo</div>
+  </div>
+
+  <div class="eyebrow">Ventas e IA para retail</div>
+  <h1>Agentes de IA para tu ecommerce</h1>
+  <div class="tag">De responder chats a vender con stock real.</div>
+
+  <div class="mid">
+    <div class="learn">
+      <h2>¿Qué verás?</h2>
+      <div class="item"><span class="num">01</span><p>¿Qué es un agente de IA y en qué se diferencia de un chatbot?</p></div>
+      <div class="item"><span class="num">02</span><p>¿Cómo atiende por WhatsApp con stock, fotos y precios reales?</p></div>
+      <div class="item"><span class="num">03</span><p>¿Cuándo debe la IA pasarle la conversación a tu equipo?</p></div>
+    </div>
+    <div class="speaker">
+      <div class="photo" id="photo"><img src="jaime.png" alt="Jaime Fernández Chávez"></div>
+      <div class="role">Ponente</div>
+      <div class="name">Jaime Fernández Chávez</div>
+    </div>
+  </div>
+
+  <div class="when">
+    <div class="date"><small>Este viernes</small><strong>6 de nov.</strong></div>
+    <div class="time">
+      <strong>6:30 pm<span>hora Perú</span></strong>
+      <p>México 5:30 pm · Colombia 6:30 pm<br>Chile y Argentina 8:30 pm</p>
+    </div>
+    <div class="cta">Reserva tu cupo</div>
+  </div>
+
+  <div class="foot"><span>Inscripción gratuita · Cupos limitados</span><span>@encatalogo.pe</span></div>
+</div>
+</body>
+</html>
