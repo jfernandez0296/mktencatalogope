@@ -1,0 +1,126 @@
+[
+ {
+  "id": "e1",
+  "text": "¿Tus fotos de producto se ven así? Tomadas con el celular, en el probador y con poca luz.",
+  "start": 0.5,
+  "dur": 5.773,
+  "speech": [
+   [
+    0.0,
+    5.773
+   ]
+  ],
+  "scene": 0
+ },
+ {
+  "id": "e2",
+  "text": "Con AI Studio de EnCatalogo, pasas de la foto del celular a la foto de catálogo.",
+  "start": 6.523,
+  "dur": 5.417,
+  "speech": [
+   [
+    0.0,
+    5.417
+   ]
+  ],
+  "scene": 1
+ },
+ {
+  "id": "e3",
+  "text": "El blazer, el vestido, el jean. Cada prenda queda lista para tu catálogo.",
+  "start": 12.189,
+  "dur": 5.204,
+  "speech": [
+   [
+    0.0,
+    5.204
+   ]
+  ],
+  "scene": 2
+ },
+ {
+  "id": "e4",
+  "text": "Sube tu catálogo desde Excel o con fotos del celular, y vende desde tu catálogo digital, con tienda online y enlace propio.",
+  "start": 17.644,
+  "dur": 8.794,
+  "speech": [
+   [
+    0.0,
+    6.055
+   ],
+   [
+    6.342,
+    8.794
+   ]
+  ],
+  "scene": 3
+ },
+ {
+  "id": "e5",
+  "text": "Cuando un cliente te escribe por WhatsApp, tu vendedor IA le envía esas fotos, con tallas y precios, en el mismo chat.",
+  "start": 26.688,
+  "dur": 8.139,
+  "speech": [
+   [
+    0.0,
+    2.43
+   ],
+   [
+    2.655,
+    8.139
+   ]
+  ],
+  "scene": 4
+ },
+ {
+  "id": "e6",
+  "text": "Responde con stock real, y sabe cuándo pasar la conversación a tu equipo.",
+  "start": 35.127,
+  "dur": 4.83,
+  "speech": [
+   [
+    0.0,
+    4.83
+   ]
+  ],
+  "scene": 4
+ },
+ {
+  "id": "e7",
+  "text": "Ya son más de dos mil setecientos chats atendidos por la IA, con tecnología de Claude y Google Gemini.",
+  "start": 40.207,
+  "dur": 7.059,
+  "speech": [
+   [
+    0.0,
+    7.059
+   ]
+  ],
+  "scene": 5
+ },
+ {
+  "id": "e8",
+  "text": "EnCatalogo. Fotos IA, catálogo digital y vendedor virtual para marcas de retail peruanas. Prueba siete días gratis, sin tarjeta.",
+  "start": 47.516,
+  "dur": 10.245,
+  "speech": [
+   [
+    0.0,
+    0.923
+   ],
+   [
+    1.258,
+    2.39
+   ],
+   [
+    2.714,
+    7.282
+   ],
+   [
+    7.522,
+    10.245
+   ]
+  ],
+  "scene": 6
+ }
+]

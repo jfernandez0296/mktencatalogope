@@ -1,0 +1,155 @@
+[
+ {
+  "id": "e1",
+  "text": "Vendiste la última talla M… y tu cuaderno todavía dice que te quedan tres. ¿Te suena?",
+  "start": 0.5,
+  "dur": 6.135,
+  "speech": [
+   [
+    0.0,
+    5.16
+   ],
+   [
+    5.452,
+    6.135
+   ]
+  ],
+  "scene": 0
+ },
+ {
+  "id": "e2",
+  "text": "Con EnCatalogo, tu inventario se actualiza solo: cada vez que vendes, recibes, devuelves o trasladas.",
+  "start": 6.885,
+  "dur": 7.179,
+  "speech": [
+   [
+    0.0,
+    3.109
+   ],
+   [
+    3.361,
+    7.179
+   ]
+  ],
+  "scene": 1
+ },
+ {
+  "id": "e3",
+  "text": "Ves el stock de cada producto por tienda, por almacén y por variante: talla y color.",
+  "start": 14.314,
+  "dur": 6.347,
+  "speech": [
+   [
+    0.0,
+    4.824
+   ],
+   [
+    5.114,
+    6.347
+   ]
+  ],
+  "scene": 2
+ },
+ {
+  "id": "e4",
+  "text": "¿Miraflores se quedó sin talla M y en el almacén sobran? Creas un traslado en segundos.",
+  "start": 20.91,
+  "dur": 5.338,
+  "speech": [
+   [
+    0.0,
+    3.391
+   ],
+   [
+    3.626,
+    5.338
+   ]
+  ],
+  "scene": 3
+ },
+ {
+  "id": "e5",
+  "text": "Y lo sigues paso a paso: preparado, en camino, recibido. Sabes qué tienes, dónde está y qué falta.",
+  "start": 26.498,
+  "dur": 8.025,
+  "speech": [
+   [
+    0.0,
+    1.785
+   ],
+   [
+    2.109,
+    7.779
+   ]
+  ],
+  "scene": 4
+ },
+ {
+  "id": "e6",
+  "text": "Antes de quedarte sin talla, te llega una alerta para reponer. Así no pierdes ventas.",
+  "start": 34.774,
+  "dur": 5.73,
+  "speech": [
+   [
+    0.0,
+    1.557
+   ],
+   [
+    1.9,
+    3.805
+   ],
+   [
+    4.197,
+    5.73
+   ]
+  ],
+  "scene": 5
+ },
+ {
+  "id": "e7",
+  "text": "Y desde el celular, ves tus quiebres de stock y los productos que más se mueven.",
+  "start": 40.754,
+  "dur": 5.154,
+  "speech": [
+   [
+    0.0,
+    5.154
+   ]
+  ],
+  "scene": 6
+ },
+ {
+  "id": "e8",
+  "text": "Y tus almacenes no cuestan nada extra: son gratis.",
+  "start": 46.158,
+  "dur": 3.974,
+  "speech": [
+   [
+    0.0,
+    2.67
+   ],
+   [
+    3.053,
+    3.974
+   ]
+  ],
+  "scene": 7
+ },
+ {
+  "id": "e9",
+  "text": "EnCatalogo. Tu mercadería en orden. Prueba siete días gratis, sin tarjeta.",
+  "start": 50.382,
+  "dur": 5.293,
+  "speech": [
+   [
+    0.0,
+    2.718
+   ],
+   [
+    2.959,
+    5.293
+   ]
+  ],
+  "scene": 8
+ }
+]

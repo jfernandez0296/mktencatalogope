@@ -1,0 +1,137 @@
+      @font-face { font-family: "DM Serif Display"; font-weight: 400; font-style: normal; src: url("assets/fonts/dm-serif-display-latin-400-normal.woff2") format("woff2"); }
+      @font-face { font-family: "DM Serif Display"; font-weight: 400; font-style: italic; src: url("assets/fonts/dm-serif-display-latin-400-italic.woff2") format("woff2"); }
+      @font-face { font-family: "Inter"; font-weight: 400; src: url("assets/fonts/inter-latin-400-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Inter"; font-weight: 500; src: url("assets/fonts/inter-latin-500-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Inter"; font-weight: 600; src: url("assets/fonts/inter-latin-600-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Inter"; font-weight: 700; src: url("assets/fonts/inter-latin-700-normal.woff2") format("woff2"); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #F2EDE4; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #F2EDE4; font-family: "Inter", system-ui, sans-serif; color: #0F0F10; }
+      .abs { position: absolute; }
+      .sc { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: hidden; }
+      #sB, #sC, #sD, #sE, #sF, #sG, #sH, .cap { visibility: hidden; opacity: 0; }
+      .eyebrow { font-size: 26px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #A65353; }
+      .badge { padding: 14px 28px; border-radius: 999px; background: #F2E6CE; color: #A65353; font-size: 26px; font-weight: 700; letter-spacing: .12em; white-space: nowrap; }
+      .badge.dk { background: rgba(217,152,115,.18); color: #D99873; }
+      .ttl { font-family: "DM Serif Display", Georgia, serif; font-weight: 400; line-height: 1.04; letter-spacing: -0.01em; }
+      .brand { display: flex; align-items: center; gap: 18px; font-size: 40px; font-weight: 700; }
+      .bchip { display: inline-flex; }
+      .bchip.dk { background: #F2EDE4; padding: 8px; border-radius: 18px; }
+      .card { background: #FFFFFF; border: 2px solid #E7DDD1; border-radius: 40px; box-shadow: 0 2px 4px rgba(15,15,16,.04), 0 24px 60px rgba(15,15,16,.07); }
+      .pic { width: 210px; height: 250px; border-radius: 28px; background: #F2E6CE; display: flex; align-items: center; justify-content: center; }
+      .ptitle { font-family: "DM Serif Display", serif; font-size: 64px; }
+      .pmeta { font-size: 36px; font-weight: 500; color: #57534E; }
+      .qmark { width: 150px; height: 190px; border-radius: 30px; background: #0F0F10; color: #D99873; font-family: "DM Serif Display", serif; font-size: 150px; line-height: 190px; text-align: center; }
+      .chip { display: flex; align-items: center; gap: 14px; height: 104px; padding: 0 26px; border-radius: 999px; border: 2px solid #E7DDD1; font-size: 32px; font-weight: 600; white-space: nowrap; box-shadow: 0 10px 26px rgba(15,15,16,.06); }
+      .chip .qq { width: 44px; height: 44px; border-radius: 22px; background: #A65353; color: #fff; font-size: 28px; display: flex; align-items: center; justify-content: center; }
+      .today { padding: 8px 22px; border-radius: 999px; background: #F2E6CE; color: #A65353; font-size: 26px; font-weight: 700; }
+      .stat b { display: block; font-family: "DM Serif Display", serif; font-weight: 400; font-size: 96px; line-height: 1; }
+      .stat span { display: block; font-size: 30px; font-weight: 500; color: #57534E; margin-top: 10px; }
+      #Bst1 b { color: #A65353; }
+      .thead, .trow { display: grid; grid-template-columns: 1.4fr 1fr .5fr; align-items: center; }
+      .thead { font-size: 24px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #8A8178; padding: 0 0 16px; border-bottom: 2px solid #E7DDD1; }
+      .thead span:last-child, .trow b { text-align: right; }
+      .trow { height: 100px; border-bottom: 2px solid #E7DDD1; font-size: 36px; font-weight: 600; }
+      .trow .tag { justify-self: start; padding: 8px 20px; border-radius: 999px; background: #FAF9F5; border: 2px solid #E7DDD1; font-size: 28px; font-weight: 500; color: #57534E; }
+      .trow b { font-size: 44px; font-weight: 700; }
+      .vchip { padding: 14px 26px; border-radius: 999px; background: #0F0F10; color: #fff; font-size: 30px; font-weight: 600; white-space: nowrap; }
+      .route { display: flex; align-items: center; gap: 18px; font-family: "DM Serif Display", serif; font-size: 58px; }
+      .track { height: 12px; border-radius: 6px; background: #E7DDD1; overflow: hidden; }
+      .track div { width: 100%; height: 100%; background: #D99873; transform-origin: 0% 50%; }
+      .truck { width: 90px; height: 70px; display: flex; justify-content: center; }
+      .step { width: 300px; display: flex; flex-direction: column; align-items: flex-start; gap: 18px; font-size: 30px; font-weight: 600; }
+      #Cs1 { align-items: center; left: 315px !important; }
+      #Cs2 { align-items: flex-end; left: 596px !important; }
+      .dot { width: 56px; height: 56px; border-radius: 28px; background: #3F7A4F; display: flex; align-items: center; justify-content: center; border: 6px solid #fff; box-shadow: 0 0 0 2px #E7DDD1; }
+      .items { font-size: 28px; font-weight: 500; color: #57534E; }
+      .callout { display: flex; align-items: center; gap: 30px; padding: 34px 40px; border-radius: 34px; background: #F2E6CE; border-left: 10px solid #A65353; }
+      .callout b { display: block; font-size: 40px; font-weight: 700; }
+      .callout span { display: block; font-size: 32px; font-weight: 500; color: #57534E; margin-top: 6px; }
+      .ich { flex: none; width: 92px; height: 92px; border-radius: 24px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; }
+      .phone { width: 600px; height: 900px; border-radius: 70px; background: #FFFFFF; border: 14px solid #0F0F10; box-shadow: 0 40px 80px rgba(15,15,16,.18); overflow: hidden; }
+      .hi { font-family: "DM Serif Display", serif; font-size: 50px; }
+      .big { font-family: "DM Serif Display", serif; font-size: 100px; line-height: 1; }
+      .up { display: flex; align-items: center; gap: 10px; font-size: 28px; font-weight: 700; color: #3F7A4F; }
+      .bar { width: 46px; border-radius: 12px 12px 4px 4px; background: #D99873; }
+      .dl { width: 46px; text-align: center; font-size: 22px; font-weight: 600; color: #8A8178; }
+      .low { width: 516px; padding: 26px 26px 10px; border-radius: 28px; background: #FAF9F5; border: 2px solid #E7DDD1; }
+      .low .eyebrow { font-size: 20px; }
+      .lr { display: flex; justify-content: space-between; padding: 12px 0; font-size: 30px; font-weight: 600; border-top: 2px solid #E7DDD1; }
+      .lr b { font-weight: 700; }
+      .inv { font-family: "DM Serif Display", serif; font-size: 60px; }
+      .il { display: flex; justify-content: space-between; font-size: 30px; font-weight: 500; }
+      .il b { font-weight: 700; }
+      .il.sm { font-size: 26px; color: #57534E; }
+      .il.tot { padding-top: 22px; border-top: 2px solid #E7DDD1; font-size: 40px; font-weight: 700; }
+      .stamp { display: flex; align-items: center; gap: 12px; padding: 14px 26px; border-radius: 999px; background: #E6EFE8; color: #2F5E3B; font-size: 28px; font-weight: 700; white-space: nowrap; }
+      .upd { width: 310px; height: 170px; border-radius: 32px; background: #FFFFFF; border: 2px solid #E7DDD1; display: flex; flex-direction: column; justify-content: center; gap: 14px; padding: 0 26px; font-size: 34px; font-weight: 700; box-shadow: 0 12px 30px rgba(15,15,16,.06); }
+      .upd .ich { width: 70px; height: 70px; background: #F2E6CE; border-radius: 20px; }
+      .tick { position: absolute; right: 22px; top: 22px; width: 50px; height: 50px; border-radius: 25px; background: #3F7A4F; display: flex; align-items: center; justify-content: center; }
+      .chat { border-radius: 44px; background: #EFE7DC; overflow: hidden; }
+      .chd { left: 0; top: 0; width: 940px; height: 120px; padding: 0 36px; display: flex; align-items: center; gap: 22px; background: #1C1B1A; color: #fff; }
+      .chd b { display: block; font-size: 34px; font-weight: 700; }
+      .chd i { display: block; font-style: normal; font-size: 24px; color: #B9B2A8; }
+      .wa { width: 70px; height: 70px; border-radius: 35px; background: #25D366; display: flex; align-items: center; justify-content: center; }
+      .bub { max-width: 640px; padding: 22px 28px; border-radius: 28px; font-size: 32px; font-weight: 500; line-height: 1.3; box-shadow: 0 4px 10px rgba(15,15,16,.06); }
+      .bub.in { left: 36px; background: #FFFFFF; border-top-left-radius: 8px; }
+      .bub.out { right: 36px; background: #F2E6CE; border-top-right-radius: 8px; }
+      .bub .mono { display: block; margin-top: 6px; font-weight: 700; color: #0F0F10; }
+      .bub.ph { display: flex; align-items: center; gap: 22px; }
+      .bub.ph b { display: block; font-size: 32px; } .bub.ph span { display: block; font-size: 26px; color: #57534E; }
+      .thumb { width: 104px; height: 104px; border-radius: 20px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; }
+      .paid { left: 36px; display: flex; align-items: center; gap: 12px; padding: 16px 28px; border-radius: 999px; background: #FFFFFF; color: #2F5E3B; font-size: 30px; font-weight: 700; white-space: nowrap; }
+      .frame { border-radius: 40px; overflow: hidden; }
+      .before { left: 0; top: 0; width: 940px; height: 560px; background: radial-gradient(circle at 60% 30%, #8a6d4e, #4b3a2b 70%); filter: saturate(.7) brightness(.85); }
+      .after { left: 0; top: 0; width: 940px; height: 560px; background: #F2EDE4; }
+      .lab { padding: 10px 22px; border-radius: 999px; background: rgba(15,15,16,.7); color: #fff; font-size: 26px; font-weight: 600; }
+      .lab.lt { background: #FFFFFF; color: #0F0F10; border: 2px solid #E7DDD1; }
+      .handle { top: 0; width: 6px; height: 560px; background: #fff; }
+      .knob { position: absolute; left: -33px; top: 247px; width: 72px; height: 72px; border-radius: 36px; background: #D99873; display: flex; align-items: center; justify-content: center; }
+      .ask { padding: 20px 30px; border-radius: 28px 28px 28px 8px; background: #26241F; color: #fff; font-size: 34px; font-weight: 600; }
+      .ans { display: flex; align-items: center; gap: 20px; padding: 22px 30px; border-radius: 28px; background: #F2EDE4; font-size: 32px; font-weight: 600; }
+      .cl { flex: none; width: 64px; height: 64px; border-radius: 18px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; }
+      .illu { font-size: 22px; font-weight: 500; color: #8A8178; }
+      .price { display: flex; align-items: baseline; gap: 14px; }
+      .price small { font-size: 50px; font-weight: 600; }
+      .price span { font-family: "DM Serif Display", serif; font-size: 170px; line-height: 1; }
+      .price i { font-style: normal; font-size: 32px; font-weight: 500; color: #57534E; }
+      .hl { display: flex; align-items: center; gap: 18px; font-size: 36px; font-weight: 600; }
+      .proof .brands { margin-top: 18px; font-family: "DM Serif Display", serif; font-size: 50px; line-height: 1.2; }
+      .proof .brands i { font-style: normal; color: #D99873; }
+      .fine { font-size: 24px; color: #8A8178; }
+      .wm { text-align: center; font-size: 64px; font-weight: 700; }
+      .tag1, .tag2 { text-align: center; font-family: "DM Serif Display", serif; font-size: 92px; line-height: 1.1; }
+      .tag2 { font-style: italic; color: #A65353; }
+      .cta { height: 110px; border-radius: 999px; background: #0F0F10; color: #fff; font-size: 40px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+      .ctas { text-align: center; font-size: 34px; font-weight: 500; color: #57534E; }
+      .cap { position: absolute; left: 40px; width: 1000px; top: 1500px; text-align: center; }
+      .cap span { display: inline-block; background: #0F0F10; color: #fff; font-size: 52px; font-weight: 700; padding: 14px 32px; border-radius: 24px; line-height: 1.18; box-shadow: 0 12px 34px rgba(15,15,16,.25); border: 3px solid rgba(217,152,115,.35); }
+      .cap b { color: #D99873; font-weight: 700; }
+      .ttl em { font-style: italic; }
+      .numbox { width: 240px; height: 240px; border-radius: 48px; background: #F2E6CE; display: flex; align-items: center; justify-content: center; }
+      .numbox span { font-family: "DM Serif Display", serif; font-size: 210px; line-height: 1; color: #A65353; margin-top: 10px; }
+      .pstep { width: 300px; height: 84px; border-radius: 999px; display: flex; align-items: center; justify-content: center; gap: 14px; font-size: 30px; font-weight: 600; border: 2px solid #E7DDD1; background: #FFFFFF; color: #8A8178; }
+      .pstep i { font-style: normal; width: 44px; height: 44px; border-radius: 22px; display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 700; background: #F2EDE4; color: #8A8178; }
+      .pstep.cur { background: #0F0F10; border-color: #0F0F10; color: #FFFFFF; }
+      .pstep.cur i { background: #D99873; color: #0F0F10; }
+      .pstep.done { background: #F2E6CE; border-color: #F2E6CE; color: #A65353; }
+      .flab { font-size: 26px; font-weight: 600; color: #57534E; }
+      .field { height: 92px; border-radius: 20px; border: 3px solid #E7DDD1; background: #FAF9F5; display: flex; align-items: center; gap: 20px; padding: 0 28px; font-size: 36px; font-weight: 500; }
+      .fv { white-space: nowrap; }
+      .btn { height: 96px; border-radius: 999px; background: #0F0F10; color: #fff; font-size: 36px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+      .tile { width: 200px; height: 200px; border-radius: 40px; background: #F2EDE4; border: 2px solid #E7DDD1; display: flex; align-items: center; justify-content: center; }
+      .wtile { width: 200px; height: 200px; border-radius: 100px; background: #25D366; display: flex; align-items: center; justify-content: center; }
+      .lnk { width: 80px; height: 80px; border-radius: 40px; background: #FFFFFF; border: 2px solid #E7DDD1; display: flex; align-items: center; justify-content: center; }
+      .api { display: flex; align-items: center; gap: 20px; padding: 26px 30px; border-radius: 26px; background: #F2E6CE; font-size: 36px; font-weight: 700; }
+      .src { width: 455px; height: 210px; border-radius: 36px; background: #FFFFFF; border: 2px solid #E7DDD1; display: flex; flex-direction: column; justify-content: center; gap: 18px; padding: 0 36px; font-size: 38px; font-weight: 700; box-shadow: 0 12px 30px rgba(15,15,16,.06); }
+      .prod { width: 270px; display: flex; flex-direction: column; gap: 10px; }
+      .pimg { width: 270px; height: 210px; border-radius: 26px; background: #F2E6CE; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
+      .prod b { font-size: 32px; font-weight: 700; } .prod span { font-size: 26px; font-weight: 500; color: #57534E; }
+      .srow { height: 200px; border-radius: 36px; background: #FFFFFF; border: 2px solid #E7DDD1; display: flex; align-items: center; gap: 34px; padding: 0 40px; box-shadow: 0 12px 30px rgba(15,15,16,.06); }
+      .snum { flex: none; width: 110px; height: 110px; border-radius: 55px; background: #F2E6CE; color: #A65353; font-family: "DM Serif Display", serif; font-size: 76px; line-height: 116px; text-align: center; }
+      .stx { flex: 1; } .stx b { display: block; font-size: 44px; font-weight: 700; } .stx span { display: block; font-size: 30px; font-weight: 500; color: #57534E; margin-top: 8px; }
+      .sic { flex: none; width: 90px; height: 90px; border-radius: 24px; background: #FAF9F5; display: flex; align-items: center; justify-content: center; }
+      .crow { height: 190px; border-radius: 36px; background: #FFFFFF; border: 2px solid #E7DDD1; display: flex; align-items: center; gap: 34px; padding: 0 40px; font-size: 44px; font-weight: 600; line-height: 1.2; box-shadow: 0 12px 30px rgba(15,15,16,.06); }
+      .cdot { flex: none; width: 96px; height: 96px; border-radius: 48px; background: #3F7A4F; display: flex; align-items: center; justify-content: center; }
+      .illu.dk { color: #B9B2A8; }
+      .bub.ph i { font-style: normal; }

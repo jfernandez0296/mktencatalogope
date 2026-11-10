@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>EnCatalogo.pe — AI Studio</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "DM Serif Display"; font-weight: 400; font-style: normal; src: url("assets/fonts/dm-serif-display-latin-400-normal.woff2") format("woff2"); }
+      @font-face { font-family: "DM Serif Display"; font-weight: 400; font-style: italic; src: url("assets/fonts/dm-serif-display-latin-400-italic.woff2") format("woff2"); }
+      @font-face { font-family: "Inter"; font-weight: 400; src: url("assets/fonts/inter-latin-400-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Inter"; font-weight: 500; src: url("assets/fonts/inter-latin-500-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Inter"; font-weight: 600; src: url("assets/fonts/inter-latin-600-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Inter"; font-weight: 700; src: url("assets/fonts/inter-latin-700-normal.woff2") format("woff2"); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #F2EDE4; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #F2EDE4; font-family: "Inter", system-ui, sans-serif; color: #0F0F10; }
+      .abs { position: absolute; }
+      .sc { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: hidden; }
+      #sB, #sC, #sD, #sE, #sF, #sG, .cap { visibility: hidden; opacity: 0; }
+      .eyebrow { font-size: 26px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #A65353; }
+      .badge { padding: 14px 28px; border-radius: 999px; background: #F2E6CE; color: #A65353; font-size: 26px; font-weight: 700; letter-spacing: .12em; white-space: nowrap; }
+      .badge.dk { background: rgba(217,152,115,.18); color: #D99873; }
+      .ttl { font-family: "DM Serif Display", Georgia, serif; font-weight: 400; line-height: 1.04; letter-spacing: -0.01em; }
+      .brand { display: flex; align-items: center; gap: 18px; font-size: 40px; font-weight: 700; }
+      .bchip { display: inline-flex; }
+      .bchip.dk { background: #F2EDE4; padding: 8px; border-radius: 18px; }
+      .card { background: #FFFFFF; border: 2px solid #E7DDD1; border-radius: 40px; box-shadow: 0 2px 4px rgba(15,15,16,.04), 0 24px 60px rgba(15,15,16,.07); }
+      .pic { width: 210px; height: 250px; border-radius: 28px; background: #F2E6CE; display: flex; align-items: center; justify-content: center; }
+      .ptitle { font-family: "DM Serif Display", serif; font-size: 64px; }
+      .pmeta { font-size: 36px; font-weight: 500; color: #57534E; }
+      .qmark { width: 150px; height: 190px; border-radius: 30px; background: #0F0F10; color: #D99873; font-family: "DM Serif Display", serif; font-size: 150px; line-height: 190px; text-align: center; }
+      .chip { display: flex; align-items: center; gap: 14px; height: 104px; padding: 0 26px; border-radius: 999px; border: 2px solid #E7DDD1; font-size: 32px; font-weight: 600; white-space: nowrap; box-shadow: 0 10px 26px rgba(15,15,16,.06); }
+      .chip .qq { width: 44px; height: 44px; border-radius: 22px; background: #A65353; color: #fff; font-size: 28px; display: flex; align-items: center; justify-content: center; }
+      .today { padding: 8px 22px; border-radius: 999px; background: #F2E6CE; color: #A65353; font-size: 26px; font-weight: 700; }
+      .stat b { display: block; font-family: "DM Serif Display", serif; font-weight: 400; font-size: 96px; line-height: 1; }
+      .stat span { display: block; font-size: 30px; font-weight: 500; color: #57534E; margin-top: 10px; }
+      #Bst1 b { color: #A65353; }
+      .thead, .trow { display: grid; grid-template-columns: 1.4fr 1fr .5fr; align-items: center; }
+      .thead { font-size: 24px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #8A8178; padding: 0 0 16px; border-bottom: 2px solid #E7DDD1; }
+      .thead span:last-child, .trow b { text-align: right; }
+      .trow { height: 100px; border-bottom: 2px solid #E7DDD1; font-size: 36px; font-weight: 600; }
+      .trow .tag { justify-self: start; padding: 8px 20px; border-radius: 999px; background: #FAF9F5; border: 2px solid #E7DDD1; font-size: 28px; font-weight: 500; color: #57534E; }
+      .trow b { font-size: 44px; font-weight: 700; }
+      .vchip { padding: 14px 26px; border-radius: 999px; background: #0F0F10; color: #fff; font-size: 30px; font-weight: 600; white-space: nowrap; }
+      .route { display: flex; align-items: center; gap: 18px; font-family: "DM Serif Display", serif; font-size: 58px; }
+      .track { height: 12px; border-radius: 6px; background: #E7DDD1; overflow: hidden; }
+      .track div { width: 100%; height: 100%; background: #D99873; transform-origin: 0% 50%; }
+      .truck { width: 90px; height: 70px; display: flex; justify-content: center; }
+      .step { width: 300px; display: flex; flex-direction: column; align-items: flex-start; gap: 18px; font-size: 30px; font-weight: 600; }
+      #Cs1 { align-items: center; left: 315px !important; }
+      #Cs2 { align-items: flex-end; left: 596px !important; }
+      .dot { width: 56px; height: 56px; border-radius: 28px; background: #3F7A4F; display: flex; align-items: center; justify-content: center; border: 6px solid #fff; box-shadow: 0 0 0 2px #E7DDD1; }
+      .items { font-size: 28px; font-weight: 500; color: #57534E; }
+      .callout { display: flex; align-items: center; gap: 30px; padding: 34px 40px; border-radius: 34px; background: #F2E6CE; border-left: 10px solid #A65353; }
+      .callout b { display: block; font-size: 40px; font-weight: 700; }
+      .callout span { display: block; font-size: 32px; font-weight: 500; color: #57534E; margin-top: 6px; }
+      .ich { flex: none; width: 92px; height: 92px; border-radius: 24px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; }
+      .phone { width: 600px; height: 900px; border-radius: 70px; background: #FFFFFF; border: 14px solid #0F0F10; box-shadow: 0 40px 80px rgba(15,15,16,.18); overflow: hidden; }
+      .hi { font-family: "DM Serif Display", serif; font-size: 50px; }
+      .big { font-family: "DM Serif Display", serif; font-size: 100px; line-height: 1; }
+      .up { display: flex; align-items: center; gap: 10px; font-size: 28px; font-weight: 700; color: #3F7A4F; }
+      .bar { width: 46px; border-radius: 12px 12px 4px 4px; background: #D99873; }
+      .dl { width: 46px; text-align: center; font-size: 22px; font-weight: 600; color: #8A8178; }
+      .low { width: 516px; padding: 26px 26px 10px; border-radius: 28px; background: #FAF9F5; border: 2px solid #E7DDD1; }
+      .low .eyebrow { font-size: 20px; }
+      .lr { display: flex; justify-content: space-between; padding: 12px 0; font-size: 30px; font-weight: 600; border-top: 2px solid #E7DDD1; }
+      .lr b { font-weight: 700; }
+      .inv { font-family: "DM Serif Display", serif; font-size: 60px; }
+      .il { display: flex; justify-content: space-between; font-size: 30px; font-weight: 500; }
+      .il b { font-weight: 700; }
+      .il.sm { font-size: 26px; color: #57534E; }
+      .il.tot { padding-top: 22px; border-top: 2px solid #E7DDD1; font-size: 40px; font-weight: 700; }
+      .stamp { display: flex; align-items: center; gap: 12px; padding: 14px 26px; border-radius: 999px; background: #E6EFE8; color: #2F5E3B; font-size: 28px; font-weight: 700; white-space: nowrap; }
+      .upd { width: 310px; height: 170px; border-radius: 32px; background: #FFFFFF; border: 2px solid #E7DDD1; display: flex; flex-direction: column; justify-content: center; gap: 14px; padding: 0 26px; font-size: 34px; font-weight: 700; box-shadow: 0 12px 30px rgba(15,15,16,.06); }
+      .upd .ich { width: 70px; height: 70px; background: #F2E6CE; border-radius: 20px; }
+      .tick { position: absolute; right: 22px; top: 22px; width: 50px; height: 50px; border-radius: 25px; background: #3F7A4F; display: flex; align-items: center; justify-content: center; }
+      .chat { border-radius: 44px; background: #EFE7DC; overflow: hidden; }
+      .chd { left: 0; top: 0; width: 940px; height: 120px; padding: 0 36px; display: flex; align-items: center; gap: 22px; background: #1C1B1A; color: #fff; }
+      .chd b { display: block; font-size: 34px; font-weight: 700; }
+      .chd i { display: block; font-style: normal; font-size: 24px; color: #B9B2A8; }
+      .wa { width: 70px; height: 70px; border-radius: 35px; background: #25D366; display: flex; align-items: center; justify-content: center; }
+      .bub { max-width: 640px; padding: 22px 28px; border-radius: 28px; font-size: 32px; font-weight: 500; line-height: 1.3; box-shadow: 0 4px 10px rgba(15,15,16,.06); }
+      .bub.in { left: 36px; background: #FFFFFF; border-top-left-radius: 8px; }
+      .bub.out { right: 36px; background: #F2E6CE; border-top-right-radius: 8px; }
+      .bub .mono { display: block; margin-top: 6px; font-weight: 700; color: #0F0F10; }
+      .bub.ph { display: flex; align-items: center; gap: 22px; }
+      .bub.ph b { display: block; font-size: 32px; } .bub.ph span { display: block; font-size: 26px; color: #57534E; }
+      .thumb { width: 104px; height: 104px; border-radius: 20px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; }
+      .paid { left: 36px; display: flex; align-items: center; gap: 12px; padding: 16px 28px; border-radius: 999px; background: #FFFFFF; color: #2F5E3B; font-size: 30px; font-weight: 700; white-space: nowrap; }
+      .frame { border-radius: 40px; overflow: hidden; }
+      .before { left: 0; top: 0; width: 940px; height: 560px; background: radial-gradient(circle at 60% 30%, #8a6d4e, #4b3a2b 70%); filter: saturate(.7) brightness(.85); }
+      .after { left: 0; top: 0; width: 940px; height: 560px; background: #F2EDE4; }
+      .lab { padding: 10px 22px; border-radius: 999px; background: rgba(15,15,16,.7); color: #fff; font-size: 26px; font-weight: 600; }
+      .lab.lt { background: #FFFFFF; color: #0F0F10; border: 2px solid #E7DDD1; }
+      .handle { top: 0; width: 6px; height: 560px; background: #fff; }
+      .knob { position: absolute; left: -33px; top: 247px; width: 72px; height: 72px; border-radius: 36px; background: #D99873; display: flex; align-items: center; justify-content: center; }
+      .ask { padding: 20px 30px; border-radius: 28px 28px 28px 8px; background: #26241F; color: #fff; font-size: 34px; font-weight: 600; }
+      .ans { display: flex; align-items: center; gap: 20px; padding: 22px 30px; border-radius: 28px; background: #F2EDE4; font-size: 32px; font-weight: 600; }
+      .cl { flex: none; width: 64px; height: 64px; border-radius: 18px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; }
+      .illu { font-size: 22px; font-weight: 500; color: #8A8178; }
+      .price { display: flex; align-items: baseline; gap: 14px; }
+      .price small { font-size: 50px; font-weight: 600; }
+      .price span { font-family: "DM Serif Display", serif; font-size: 170px; line-height: 1; }
+      .price i { font-style: normal; font-size: 32px; font-weight: 500; color: #57534E; }
+      .hl { display: flex; align-items: center; gap: 18px; font-size: 36px; font-weight: 600; }
+      .proof .brands { margin-top: 18px; font-family: "DM Serif Display", serif; font-size: 50px; line-height: 1.2; }
+      .proof .brands i { font-style: normal; color: #D99873; }
+      .fine { font-size: 24px; color: #8A8178; }
+      .wm { text-align: center; font-size: 64px; font-weight: 700; }
+      .tag1, .tag2 { text-align: center; font-family: "DM Serif Display", serif; font-size: 92px; line-height: 1.1; }
+      .tag2 { font-style: italic; color: #A65353; }
+      .cta { height: 110px; border-radius: 999px; background: #0F0F10; color: #fff; font-size: 40px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+      .ctas { text-align: center; font-size: 34px; font-weight: 500; color: #57534E; }
+      .cap { position: absolute; left: 40px; width: 1000px; top: 1500px; text-align: center; }
+      .cap span { display: inline-block; background: #0F0F10; color: #fff; font-size: 52px; font-weight: 700; padding: 14px 32px; border-radius: 24px; line-height: 1.18; box-shadow: 0 12px 34px rgba(15,15,16,.25); border: 3px solid rgba(217,152,115,.35); }
+      .cap b { color: #D99873; font-weight: 700; }
+      /* AI Studio */
+      .bf { background: radial-gradient(circle at 30% 20%, #8a6d4e, #4b3a2b 75%); overflow: hidden; }
+      .bf .dim { left: 0; top: 0; width: 100%; height: 100%; background: linear-gradient(160deg, rgba(232,190,110,.18), rgba(20,14,8,.45)); }
+      .af { background: radial-gradient(ellipse at 50% 35%, #FFFFFF, #F2EDE4 70%); overflow: hidden; }
+      .floor { height: 28px; border-radius: 50%; background: rgba(15,15,16,.14); filter: blur(6px); }
+      .shot { border-radius: 36px; overflow: hidden; border: 12px solid #FFFFFF; box-shadow: 0 30px 70px rgba(15,15,16,.2); }
+      .flash { left: 0; top: 0; width: 100%; height: 100%; background: #FFFFFF; opacity: 0; }
+      .illu { color: #6E665E !important; } .illu.dk { color: #B9B2A8 !important; }
+      .tile { width: 290px; height: 560px; border-radius: 30px; overflow: hidden; border: 2px solid #E7DDD1; box-shadow: 0 16px 40px rgba(15,15,16,.08); }
+      .ok { right: 18px; top: 18px; width: 56px; height: 56px; border-radius: 28px; background: #3F7A4F; display: flex; align-items: center; justify-content: center; border: 4px solid #fff; }
+      .tname { width: 290px; text-align: center; font-family: "DM Serif Display", serif; font-size: 40px; }
+      .xls { width: 46px; height: 46px; border-radius: 10px; background: #3F7A4F; color: #fff; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+      .brw { overflow: hidden; }
+      .bar0 { left: 0; top: 0; width: 940px; height: 84px; display: flex; align-items: center; gap: 10px; padding: 0 30px; background: #FAF9F5; border-bottom: 2px solid #E7DDD1; }
+      .bar0 i { width: 16px; height: 16px; border-radius: 8px; background: #E7DDD1; }
+      .bar0 span { margin-left: 16px; font-size: 26px; font-weight: 700; }
+      .bar0 b { margin-left: auto; display: flex; align-items: center; gap: 10px; padding: 10px 20px; border-radius: 999px; background: #0F0F10; color: #fff; font-size: 22px; font-weight: 600; white-space: nowrap; }
+      .pc { width: 430px; height: 270px; display: flex; gap: 20px; padding: 18px; border-radius: 26px; border: 2px solid #E7DDD1; background: #FFFFFF; }
+      .pim { flex: none; width: 190px; height: 234px; border-radius: 18px; background: radial-gradient(ellipse at 50% 35%, #FFFFFF, #F2EDE4 75%); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+      .pinfo { display: flex; flex-direction: column; justify-content: center; gap: 10px; }
+      .pinfo b { font-family: "DM Serif Display", serif; font-weight: 400; font-size: 34px; line-height: 1.05; }
+      .pinfo span { font-size: 30px; font-weight: 700; color: #A65353; }
+      .pinfo i { font-style: normal; font-size: 22px; font-weight: 600; color: #8A8178; }
+      .bub.pho { display: flex; gap: 24px; align-items: center; padding: 16px; }
+      .pimg { position: relative; flex: none; width: 230px; height: 260px; border-radius: 20px; overflow: hidden; }
+      .pt b { display: block; font-family: "DM Serif Display", serif; font-weight: 400; font-size: 40px; }
+      .pt span { display: block; font-size: 32px; font-weight: 700; margin-top: 8px; }
+      .pt i { display: block; font-style: normal; font-size: 28px; font-weight: 700; margin-top: 8px; }
+      .bignum { font-family: "DM Serif Display", serif; font-size: 200px; line-height: 1; color: #A65353; }
+      .mini { width: 455px; padding: 30px 34px; border-radius: 30px; background: #FFFFFF; border: 2px solid #E7DDD1; }
+      .mini b { display: block; font-family: "DM Serif Display", serif; font-weight: 400; font-size: 64px; line-height: 1; }
+      .mini span { display: block; margin-top: 10px; font-size: 28px; font-weight: 500; color: #57534E; }
+      .tech { display: flex; align-items: center; gap: 18px; padding: 18px 30px 18px 18px; border-radius: 999px; background: #FFFFFF; border: 2px solid #E7DDD1; font-size: 34px; font-weight: 700; white-space: nowrap; }
+      .tech .cl { background: #F2E6CE; }
+
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="59.76" data-fps="30" data-width="1080" data-height="1920">
+      <div class="sc" id="sA" style="background:#F2EDE4">
+        <div class="abs brand" id="Abr" style="left:70px;top:130px;color:#0F0F10"><span class="bchip"><img src="assets/img/encatalogo-logo.svg" alt="EnCatalogo.pe" style="height:54px;width:auto;display:block"></span>EnCatalogo.pe</div>
+        <div class="abs badge" id="Ak" style="left:70px;top:290px">AI STUDIO</div><div class="abs ttl" id="At" style="left:70px;top:370px;width:940px;font-size:100px;color:#0F0F10">¿Tus fotos de producto se ven así?</div>
+        <div class="abs shot" id="Ash" style="left:70px;top:640px;width:560px;height:760px">
+          <div class="abs bf"  style="left:0;top:0;width:560px;height:760px"><svg class="abs" style="left:0;top:0" width="100%" height="100%" aria-hidden="true">
+  <rect x="6%" y="4%" width="34%" height="88%" fill="none" stroke="#2e2419" stroke-width="10"/>
+  <line x1="0" y1="18%" x2="100%" y2="14%" stroke="#3a2d20" stroke-width="8"/>
+  <ellipse cx="82%" cy="30%" rx="12%" ry="18%" fill="#6f5a43" opacity=".55"/>
+  <rect x="68%" y="70%" width="26%" height="22%" rx="6" fill="#3b2f23"/><rect x="72%" y="62%" width="18%" height="10%" rx="4" fill="#57452f"/>
+  <rect x="2%" y="76%" width="22%" height="20%" rx="6" fill="#4a3a2a"/><circle cx="18%" cy="12%" r="7%" fill="#e8c27a" opacity=".22"/>
+</svg><div class="abs" style="left:90px;top:150px;transform:rotate(-9deg)"><svg viewBox="0 0 200 240" width="380" height="456" aria-label="blazer"><path d="M62 20 L100 40 L138 20 L176 44 L190 200 L160 206 L156 120 L150 232 L50 232 L44 120 L40 206 L10 200 L24 44 Z" fill="#2a2622"/>
+  <path d="M62 20 L100 120 L138 20" fill="none" stroke="#4a433c" stroke-width="5"/><path d="M100 120 L100 232" stroke="#4a433c" stroke-width="3"/>
+  <circle cx="108" cy="150" r="5" fill="#4a433c"/><circle cx="108" cy="180" r="5" fill="#4a433c"/>
+  <path d="M70 170 L90 170" stroke="#4a433c" stroke-width="4"/><path d="M114 100 L132 100" stroke="#4a433c" stroke-width="4"/></svg></div><div class="abs dim"></div></div>
+          <div class="abs flash" id="Afl"></div>
+        </div>
+        <div class="abs chip" id="Ac0" style="left:660px;top:760px;background:#FFFFFF;color:#0F0F10"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="smartphone">
+  <rect width="14" height="20" x="5" y="2" rx="2" ry="2" />
+  <path d="M12 18h.01" />
+</svg><span>Celular</span></div><div class="abs chip" id="Ac1" style="left:660px;top:930px;background:#FFFFFF;color:#0F0F10"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="shirt">
+  <path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z" />
+</svg><span>Probador</span></div><div class="abs chip" id="Ac2" style="left:660px;top:1100px;background:#FFFFFF;color:#0F0F10"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="camera">
+  <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" />
+  <circle cx="12" cy="13" r="3" />
+</svg><span>Poca luz</span></div>
+        <div class="abs illu" id="Ail" style="left:70px;top:1420px">Recreación ilustrativa</div>
+      </div>
+      <div class="sc" id="sB" style="background:#0F0F10">
+        <div class="abs badge dk" id="Bk" style="left:70px;top:250px">AI STUDIO · ENCATALOGO</div><div class="abs ttl" id="Bt" style="left:70px;top:330px;width:940px;font-size:84px;color:#FFFFFF">De la foto del celular a la foto de catálogo</div>
+        <div class="abs frame" id="Bfr" style="left:70px;top:600px;width:940px;height:800px">
+          <div class="abs bf"  style="left:0;top:0;width:940px;height:800px"><svg class="abs" style="left:0;top:0" width="100%" height="100%" aria-hidden="true">
+  <rect x="6%" y="4%" width="34%" height="88%" fill="none" stroke="#2e2419" stroke-width="10"/>
+  <line x1="0" y1="18%" x2="100%" y2="14%" stroke="#3a2d20" stroke-width="8"/>
+  <ellipse cx="82%" cy="30%" rx="12%" ry="18%" fill="#6f5a43" opacity=".55"/>
+  <rect x="68%" y="70%" width="26%" height="22%" rx="6" fill="#3b2f23"/><rect x="72%" y="62%" width="18%" height="10%" rx="4" fill="#57452f"/>
+  <rect x="2%" y="76%" width="22%" height="20%" rx="6" fill="#4a3a2a"/><circle cx="18%" cy="12%" r="7%" fill="#e8c27a" opacity=".22"/>
+</svg><div class="abs" style="left:250px;top:120px;transform:rotate(-9deg)"><svg viewBox="0 0 200 240" width="440" height="528" aria-label="blazer"><path d="M62 20 L100 40 L138 20 L176 44 L190 200 L160 206 L156 120 L150 232 L50 232 L44 120 L40 206 L10 200 L24 44 Z" fill="#2a2622"/>
+  <path d="M62 20 L100 120 L138 20" fill="none" stroke="#4a433c" stroke-width="5"/><path d="M100 120 L100 232" stroke="#4a433c" stroke-width="3"/>
+  <circle cx="108" cy="150" r="5" fill="#4a433c"/><circle cx="108" cy="180" r="5" fill="#4a433c"/>
+  <path d="M70 170 L90 170" stroke="#4a433c" stroke-width="4"/><path d="M114 100 L132 100" stroke="#4a433c" stroke-width="4"/></svg></div><div class="abs dim"></div><div class="abs lab" style="left:20px;bottom:20px">Foto del celular</div></div>
+          <div class="abs af" id="Baf" style="left:0;top:0;width:940px;height:800px"><div class="abs floor" style="left:294px;top:624px;width:352px"></div><div class="abs" style="left:250px;top:110px"><svg viewBox="0 0 200 240" width="440" height="528" aria-label="blazer"><path d="M62 20 L100 40 L138 20 L176 44 L190 200 L160 206 L156 120 L150 232 L50 232 L44 120 L40 206 L10 200 L24 44 Z" fill="#1a1a1a"/>
+  <path d="M62 20 L100 120 L138 20" fill="none" stroke="#3d3d3d" stroke-width="5"/><path d="M100 120 L100 232" stroke="#3d3d3d" stroke-width="3"/>
+  <circle cx="108" cy="150" r="5" fill="#3d3d3d"/><circle cx="108" cy="180" r="5" fill="#3d3d3d"/>
+  <path d="M70 170 L90 170" stroke="#3d3d3d" stroke-width="4"/><path d="M114 100 L132 100" stroke="#3d3d3d" stroke-width="4"/></svg></div><div class="abs lab lt" style="right:20px;bottom:20px">Foto de catálogo</div></div>
+          <div class="abs handle" id="Bhd" style="height:800px"><div class="knob" style="top:363px"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#0F0F10" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="wand-sparkles">
+  <path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72" />
+  <path d="m14 7 3 3" />
+  <path d="M5 6v4" />
+  <path d="M19 14v4" />
+  <path d="M10 2v2" />
+  <path d="M7 8H3" />
+  <path d="M21 16h-4" />
+  <path d="M11 3H9" />
+</svg></div></div>
+        </div>
+        <div class="abs illu dk" id="Bil" style="left:70px;top:1420px">Recreación ilustrativa</div>
+      </div>
+      <div class="sc" id="sC" style="background:#FAF9F5">
+        <div class="abs badge" id="Ck" style="left:70px;top:250px">CADA PRENDA</div><div class="abs ttl" id="Ct" style="left:70px;top:330px;width:940px;font-size:92px;color:#0F0F10">Lista para tu catálogo</div>
+        <div class="abs tile" id="Ct0" style="left:70px;top:560px">
+          <div class="abs bf"  style="left:0;top:0;width:290px;height:560px"><svg class="abs" style="left:0;top:0" width="100%" height="100%" aria-hidden="true">
+  <rect x="6%" y="4%" width="34%" height="88%" fill="none" stroke="#2e2419" stroke-width="10"/>
+  <line x1="0" y1="18%" x2="100%" y2="14%" stroke="#3a2d20" stroke-width="8"/>
+  <ellipse cx="82%" cy="30%" rx="12%" ry="18%" fill="#6f5a43" opacity=".55"/>
+  <rect x="68%" y="70%" width="26%" height="22%" rx="6" fill="#3b2f23"/><rect x="72%" y="62%" width="18%" height="10%" rx="4" fill="#57452f"/>
+  <rect x="2%" y="76%" width="22%" height="20%" rx="6" fill="#4a3a2a"/><circle cx="18%" cy="12%" r="7%" fill="#e8c27a" opacity=".22"/>
+</svg><div class="abs" style="left:35px;top:150px;transform:rotate(-7deg)"><svg viewBox="0 0 200 240" width="220" height="264" aria-label="blazer"><path d="M62 20 L100 40 L138 20 L176 44 L190 200 L160 206 L156 120 L150 232 L50 232 L44 120 L40 206 L10 200 L24 44 Z" fill="#2a2622"/>
+  <path d="M62 20 L100 120 L138 20" fill="none" stroke="#4a433c" stroke-width="5"/><path d="M100 120 L100 232" stroke="#4a433c" stroke-width="3"/>
+  <circle cx="108" cy="150" r="5" fill="#4a433c"/><circle cx="108" cy="180" r="5" fill="#4a433c"/>
+  <path d="M70 170 L90 170" stroke="#4a433c" stroke-width="4"/><path d="M114 100 L132 100" stroke="#4a433c" stroke-width="4"/></svg></div><div class="abs dim"></div></div>
+          <div class="abs af" id="Ca0" style="left:0;top:0;width:290px;height:560px"><div class="abs floor" style="left:57px;top:390px;width:176px"></div><div class="abs" style="left:35px;top:140px"><svg viewBox="0 0 200 240" width="220" height="264" aria-label="blazer"><path d="M62 20 L100 40 L138 20 L176 44 L190 200 L160 206 L156 120 L150 232 L50 232 L44 120 L40 206 L10 200 L24 44 Z" fill="#1a1a1a"/>
+  <path d="M62 20 L100 120 L138 20" fill="none" stroke="#3d3d3d" stroke-width="5"/><path d="M100 120 L100 232" stroke="#3d3d3d" stroke-width="3"/>
+  <circle cx="108" cy="150" r="5" fill="#3d3d3d"/><circle cx="108" cy="180" r="5" fill="#3d3d3d"/>
+  <path d="M70 170 L90 170" stroke="#3d3d3d" stroke-width="4"/><path d="M114 100 L132 100" stroke="#3d3d3d" stroke-width="4"/></svg></div></div>
+          <div class="abs ok" id="Co0"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-label="check">
+  <path d="M20 6 9 17l-5-5" />
+</svg></div>
+        </div><div class="abs tname" id="Cn0" style="left:70px;top:1150px">Blazer Siena</div><div class="abs tile" id="Ct1" style="left:395px;top:560px">
+          <div class="abs bf"  style="left:0;top:0;width:290px;height:560px"><svg class="abs" style="left:0;top:0" width="100%" height="100%" aria-hidden="true">
+  <rect x="6%" y="4%" width="34%" height="88%" fill="none" stroke="#2e2419" stroke-width="10"/>
+  <line x1="0" y1="18%" x2="100%" y2="14%" stroke="#3a2d20" stroke-width="8"/>
+  <ellipse cx="82%" cy="30%" rx="12%" ry="18%" fill="#6f5a43" opacity=".55"/>
+  <rect x="68%" y="70%" width="26%" height="22%" rx="6" fill="#3b2f23"/><rect x="72%" y="62%" width="18%" height="10%" rx="4" fill="#57452f"/>
+  <rect x="2%" y="76%" width="22%" height="20%" rx="6" fill="#4a3a2a"/><circle cx="18%" cy="12%" r="7%" fill="#e8c27a" opacity=".22"/>
+</svg><div class="abs" style="left:35px;top:150px;transform:rotate(-2deg)"><svg viewBox="0 0 200 240" width="220" height="264" aria-label="vestido"><path d="M74 10 L88 30 L112 30 L126 10 L142 22 L132 84 L124 96 L178 232 L22 232 L76 96 L68 84 L58 22 Z" fill="#6e4440"/>
+  <path d="M88 30 Q100 52 112 30" fill="none" stroke="#8a5a52" stroke-width="4"/><path d="M72 96 L128 96" stroke="#8a5a52" stroke-width="6"/>
+  <path d="M100 100 L92 232 M100 100 L134 232 M100 100 L64 232" stroke="#8a5a52" stroke-width="2" opacity=".6"/></svg></div><div class="abs dim"></div></div>
+          <div class="abs af" id="Ca1" style="left:0;top:0;width:290px;height:560px"><div class="abs floor" style="left:57px;top:390px;width:176px"></div><div class="abs" style="left:35px;top:140px"><svg viewBox="0 0 200 240" width="220" height="264" aria-label="vestido"><path d="M74 10 L88 30 L112 30 L126 10 L142 22 L132 84 L124 96 L178 232 L22 232 L76 96 L68 84 L58 22 Z" fill="#A65353"/>
+  <path d="M88 30 Q100 52 112 30" fill="none" stroke="#c27a6c" stroke-width="4"/><path d="M72 96 L128 96" stroke="#c27a6c" stroke-width="6"/>
+  <path d="M100 100 L92 232 M100 100 L134 232 M100 100 L64 232" stroke="#c27a6c" stroke-width="2" opacity=".6"/></svg></div></div>
+          <div class="abs ok" id="Co1"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-label="check">
+  <path d="M20 6 9 17l-5-5" />
+</svg></div>
+        </div><div class="abs tname" id="Cn1" style="left:395px;top:1150px">Vestido Emilia</div><div class="abs tile" id="Ct2" style="left:720px;top:560px">
+          <div class="abs bf"  style="left:0;top:0;width:290px;height:560px"><svg class="abs" style="left:0;top:0" width="100%" height="100%" aria-hidden="true">
+  <rect x="6%" y="4%" width="34%" height="88%" fill="none" stroke="#2e2419" stroke-width="10"/>
+  <line x1="0" y1="18%" x2="100%" y2="14%" stroke="#3a2d20" stroke-width="8"/>
+  <ellipse cx="82%" cy="30%" rx="12%" ry="18%" fill="#6f5a43" opacity=".55"/>
+  <rect x="68%" y="70%" width="26%" height="22%" rx="6" fill="#3b2f23"/><rect x="72%" y="62%" width="18%" height="10%" rx="4" fill="#57452f"/>
+  <rect x="2%" y="76%" width="22%" height="20%" rx="6" fill="#4a3a2a"/><circle cx="18%" cy="12%" r="7%" fill="#e8c27a" opacity=".22"/>
+</svg><div class="abs" style="left:35px;top:150px;transform:rotate(3deg)"><svg viewBox="0 0 200 240" width="220" height="264" aria-label="jean"><path d="M42 12 L158 12 L168 234 L118 234 L102 96 L98 96 L82 234 L32 234 Z" fill="#36404c"/>
+  <path d="M42 34 L158 34" stroke="#4c5866" stroke-width="4"/><path d="M100 34 L100 92" stroke="#4c5866" stroke-width="3"/>
+  <path d="M50 46 Q66 70 82 46 M118 46 Q134 70 150 46" fill="none" stroke="#4c5866" stroke-width="3"/>
+  <circle cx="100" cy="24" r="4" fill="#4c5866"/></svg></div><div class="abs dim"></div></div>
+          <div class="abs af" id="Ca2" style="left:0;top:0;width:290px;height:560px"><div class="abs floor" style="left:57px;top:390px;width:176px"></div><div class="abs" style="left:35px;top:140px"><svg viewBox="0 0 200 240" width="220" height="264" aria-label="jean"><path d="M42 12 L158 12 L168 234 L118 234 L102 96 L98 96 L82 234 L32 234 Z" fill="#3b5373"/>
+  <path d="M42 34 L158 34" stroke="#5c7699" stroke-width="4"/><path d="M100 34 L100 92" stroke="#5c7699" stroke-width="3"/>
+  <path d="M50 46 Q66 70 82 46 M118 46 Q134 70 150 46" fill="none" stroke="#5c7699" stroke-width="3"/>
+  <circle cx="100" cy="24" r="4" fill="#5c7699"/></svg></div></div>
+          <div class="abs ok" id="Co2"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-label="check">
+  <path d="M20 6 9 17l-5-5" />
+</svg></div>
+        </div><div class="abs tname" id="Cn2" style="left:720px;top:1150px">Jean Araña</div>
+        <div class="abs illu" id="Cil" style="left:70px;top:1240px">Recreación ilustrativa</div>
+      </div>
+      <div class="sc" id="sD" style="background:#F2EDE4">
+        <div class="abs badge" id="Dk" style="left:70px;top:250px">SUBE TU CATÁLOGO</div><div class="abs ttl" id="Dt" style="left:70px;top:330px;width:940px;font-size:86px;color:#0F0F10">Desde Excel o fotos del celular</div>
+        <div class="abs chip" id="Dx" style="left:70px;top:560px;background:#FFFFFF"><span class="xls">XLS</span><span>Excel</span></div>
+        <div class="abs chip" id="Dc" style="left:330px;top:560px;background:#FFFFFF"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="camera">
+  <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" />
+  <circle cx="12" cy="13" r="3" />
+</svg><span>Fotos del celular</span></div>
+        <div class="abs card brw" id="Dbr" style="left:70px;top:710px;width:940px;height:700px">
+          <div class="abs bar0"><i></i><i></i><i></i><span>Tu catálogo digital</span><b id="Dlink"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="store">
+  <path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7" />
+  <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+  <path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4" />
+  <path d="M2 7h20" />
+  <path d="M22 7v3a2 2 0 0 1-2 2a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12a2 2 0 0 1-2-2V7" />
+</svg> Tienda online · enlace propio</b></div>
+          <div class="abs pc" id="Dp0" style="left:30px;top:110px">
+            <div class="pim"><svg viewBox="0 0 200 240" width="170" height="204" aria-label="blazer"><path d="M62 20 L100 40 L138 20 L176 44 L190 200 L160 206 L156 120 L150 232 L50 232 L44 120 L40 206 L10 200 L24 44 Z" fill="#1a1a1a"/>
+  <path d="M62 20 L100 120 L138 20" fill="none" stroke="#3d3d3d" stroke-width="5"/><path d="M100 120 L100 232" stroke="#3d3d3d" stroke-width="3"/>
+  <circle cx="108" cy="150" r="5" fill="#3d3d3d"/><circle cx="108" cy="180" r="5" fill="#3d3d3d"/>
+  <path d="M70 170 L90 170" stroke="#3d3d3d" stroke-width="4"/><path d="M114 100 L132 100" stroke="#3d3d3d" stroke-width="4"/></svg></div><div class="pinfo"><b>Blazer Siena</b><span>S/ 200</span><i>S · M · L</i></div></div><div class="abs pc" id="Dp1" style="left:480px;top:110px">
+            <div class="pim"><svg viewBox="0 0 200 240" width="170" height="204" aria-label="vestido"><path d="M74 10 L88 30 L112 30 L126 10 L142 22 L132 84 L124 96 L178 232 L22 232 L76 96 L68 84 L58 22 Z" fill="#A65353"/>
+  <path d="M88 30 Q100 52 112 30" fill="none" stroke="#c27a6c" stroke-width="4"/><path d="M72 96 L128 96" stroke="#c27a6c" stroke-width="6"/>
+  <path d="M100 100 L92 232 M100 100 L134 232 M100 100 L64 232" stroke="#c27a6c" stroke-width="2" opacity=".6"/></svg></div><div class="pinfo"><b>Vestido Emilia</b><span>S/ 189</span><i>S · M · L</i></div></div><div class="abs pc" id="Dp2" style="left:30px;top:400px">
+            <div class="pim"><svg viewBox="0 0 200 240" width="170" height="204" aria-label="jean"><path d="M42 12 L158 12 L168 234 L118 234 L102 96 L98 96 L82 234 L32 234 Z" fill="#3b5373"/>
+  <path d="M42 34 L158 34" stroke="#5c7699" stroke-width="4"/><path d="M100 34 L100 92" stroke="#5c7699" stroke-width="3"/>
+  <path d="M50 46 Q66 70 82 46 M118 46 Q134 70 150 46" fill="none" stroke="#5c7699" stroke-width="3"/>
+  <circle cx="100" cy="24" r="4" fill="#5c7699"/></svg></div><div class="pinfo"><b>Jean Araña</b><span>S/ 129</span><i>S · M · L</i></div></div><div class="abs pc" id="Dp3" style="left:480px;top:400px">
+            <div class="pim"><svg viewBox="0 0 200 240" width="170" height="204" aria-label="camisa"><path d="M70 14 L100 26 L130 14 L178 46 L162 92 L146 84 L146 232 L54 232 L54 84 L38 92 L22 46 Z" fill="#F2E6CE"/>
+  <path d="M84 18 L100 44 L116 18" fill="none" stroke="#D9C8AA" stroke-width="4"/><path d="M100 44 L100 232" stroke="#D9C8AA" stroke-width="3"/>
+  <circle cx="106" cy="80" r="4" fill="#D9C8AA"/><circle cx="106" cy="120" r="4" fill="#D9C8AA"/><circle cx="106" cy="160" r="4" fill="#D9C8AA"/></svg></div><div class="pinfo"><b>Camisa Lino</b><span>S/ 99</span><i>S · M · L</i></div></div>
+        </div>
+      </div>
+      <div class="sc" id="sE" style="background:#0F0F10">
+        <div class="abs badge dk" id="Ek" style="left:70px;top:250px">VENDEDOR IA · WHATSAPP</div><div class="abs ttl" id="Et" style="left:70px;top:330px;width:940px;font-size:86px;color:#FFFFFF">Envía tus fotos, con tallas y precios</div>
+        <div class="abs chat" id="Echat" style="left:70px;top:590px;width:940px;height:830px">
+          <div class="abs chd"><span class="wa"><svg width="40" height="40" viewBox="0 0 24 24" aria-label="whatsapp"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" fill="#FFFFFF"/></svg></span><div><b>Tu tienda</b><i>en línea</i></div></div>
+          <div class="abs bub in" id="Em0" style="top:150px">Hola, ¿tienes el vestido en talla M?</div>
+          <div class="abs bub out pho" id="Em1" style="top:260px">
+            <div class="pimg"><div class="abs af"  style="left:0;top:0;width:230px;height:260px"><div class="abs floor" style="left:47px;top:220px;width:136px"></div><div class="abs" style="left:30px;top:30px"><svg viewBox="0 0 200 240" width="170" height="204" aria-label="vestido"><path d="M74 10 L88 30 L112 30 L126 10 L142 22 L132 84 L124 96 L178 232 L22 232 L76 96 L68 84 L58 22 Z" fill="#A65353"/>
+  <path d="M88 30 Q100 52 112 30" fill="none" stroke="#c27a6c" stroke-width="4"/><path d="M72 96 L128 96" stroke="#c27a6c" stroke-width="6"/>
+  <path d="M100 100 L92 232 M100 100 L134 232 M100 100 L64 232" stroke="#c27a6c" stroke-width="2" opacity=".6"/></svg></div></div></div>
+            <div class="pt"><b>Vestido Emilia</b><span id="Epr">S/ 189.00</span><i id="Etl">Tallas S · M · L</i></div>
+          </div>
+          <div class="abs bub out" id="Em2" style="top:600px">Sí, quedan 5 en talla M</div>
+          <div class="abs paid" id="Ehd" style="top:716px"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="bell-ring">
+  <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+  <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+  <path d="M4 2C2.8 3.7 2 5.7 2 8" />
+  <path d="M22 8c0-2.3-.8-4.3-2-6" />
+</svg> Sabe cuándo pasar a tu equipo</div>
+        </div>
+      </div>
+      <div class="sc" id="sF" style="background:#FAF9F5">
+        <div class="abs badge" id="Fk" style="left:70px;top:250px">VENDEDOR IA EN NÚMEROS</div><div class="abs ttl" id="Ft" style="left:70px;top:330px;width:940px;font-size:92px;color:#0F0F10">Ya atiende a tus clientes</div>
+        <div class="abs card" id="Fcard" style="left:70px;top:560px;width:940px;height:400px">
+          <div class="abs eyebrow" style="left:50px;top:50px">CHATS ATENDIDOS POR LA IA</div>
+          <div class="abs bignum" style="left:50px;top:110px">+<span id="Fn">2.700</span></div>
+        </div>
+        <div class="abs mini" id="Fs0" style="left:70px;top:990px"><b>+117 mil</b><span>mensajes de WhatsApp</span></div><div class="abs mini" id="Fs1" style="left:555px;top:990px"><b>+20 mil</b><span>clientes gestionados</span></div>
+        <div class="abs eyebrow" id="Fte" style="left:70px;top:1210px;color:#8A8178">TECNOLOGÍA DE</div>
+        <div class="abs tech" id="Fc" style="left:70px;top:1270px"><span class="cl"><svg width="40" height="40" viewBox="0 0 24 24" aria-label="claude"><path d="m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z" fill="#D99873"/></svg></span>Claude · Anthropic</div>
+        <div class="abs tech" id="Fg" style="left:560px;top:1270px"><span class="cl"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="sparkles">
+  <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
+  <path d="M20 3v4" />
+  <path d="M22 5h-4" />
+  <path d="M4 17v2" />
+  <path d="M5 18H3" />
+</svg></span>Google Gemini</div>
+      </div>
+      <div class="sc" id="sG" style="background:#F2EDE4">
+        <div class="abs" id="Glg" style="left:390px;top:280px"><img src="assets/img/encatalogo-logo.svg" alt="EnCatalogo.pe" style="height:300px;width:auto;display:block"></div>
+        <div class="abs wm" id="Gwm" style="left:0;top:630px;width:1080px">EnCatalogo.pe</div>
+        <div class="abs tag1" id="Gt1" style="left:0;top:750px;width:1080px;font-size:78px">Fotos IA, catálogo digital</div>
+        <div class="abs tag2" id="Gt2" style="left:0;top:850px;width:1080px;font-size:78px">y vendedor virtual.</div>
+        <div class="abs ctas" id="Gsb0" style="left:0;top:965px;width:1080px">Para marcas de retail peruanas</div>
+        <div class="abs cta" id="Gcta" style="left:240px;top:1090px;width:600px">Probar 7 días gratis</div>
+        <div class="abs ctas" id="Gsub" style="left:0;top:1220px;width:1080px">Sin tarjeta · encatalogo.pe</div>
+      </div>
+      <div class="cap" id="cap0" data-layout-allow-overlap="true"><span>¿Tus <b>fotos</b> de producto</span></div>
+      <div class="cap" id="cap1" data-layout-allow-overlap="true"><span>se ven así? Tomadas</span></div>
+      <div class="cap" id="cap2" data-layout-allow-overlap="true"><span>con el <b>celular,</b></span></div>
+      <div class="cap" id="cap3" data-layout-allow-overlap="true"><span>en el probador</span></div>
+      <div class="cap" id="cap4" data-layout-allow-overlap="true"><span>y con poca luz.</span></div>
+      <div class="cap" id="cap5" data-layout-allow-overlap="true"><span>Con <b>AI</b> <b>Studio</b> de</span></div>
+      <div class="cap" id="cap6" data-layout-allow-overlap="true"><span><b>EnCatalogo,</b> pasas de</span></div>
+      <div class="cap" id="cap7" data-layout-allow-overlap="true"><span>la foto del <b>celular</b> a</span></div>
+      <div class="cap" id="cap8" data-layout-allow-overlap="true"><span>la foto de <b>catálogo.</b></span></div>
+      <div class="cap" id="cap9" data-layout-allow-overlap="true"><span>El <b>blazer,</b> el</span></div>
+      <div class="cap" id="cap10" data-layout-allow-overlap="true"><span><b>vestido,</b> el <b>jean.</b> Cada</span></div>
+      <div class="cap" id="cap11" data-layout-allow-overlap="true"><span><b>prenda</b> queda lista</span></div>
+      <div class="cap" id="cap12" data-layout-allow-overlap="true"><span>para tu <b>catálogo.</b></span></div>
+      <div class="cap" id="cap13" data-layout-allow-overlap="true"><span>Sube tu <b>catálogo</b></span></div>
+      <div class="cap" id="cap14" data-layout-allow-overlap="true"><span>desde <b>Excel</b> o con</span></div>
+      <div class="cap" id="cap15" data-layout-allow-overlap="true"><span><b>fotos</b> del <b>celular,</b></span></div>
+      <div class="cap" id="cap16" data-layout-allow-overlap="true"><span>y vende desde tu</span></div>
+      <div class="cap" id="cap17" data-layout-allow-overlap="true"><span><b>catálogo</b> <b>digital,</b></span></div>
+      <div class="cap" id="cap18" data-layout-allow-overlap="true"><span>con tienda online</span></div>
+      <div class="cap" id="cap19" data-layout-allow-overlap="true"><span>y <b>enlace</b> propio.</span></div>
+      <div class="cap" id="cap20" data-layout-allow-overlap="true"><span>Cuando un cliente te</span></div>
+      <div class="cap" id="cap21" data-layout-allow-overlap="true"><span>escribe por <b>WhatsApp,</b></span></div>
+      <div class="cap" id="cap22" data-layout-allow-overlap="true"><span>tu vendedor IA</span></div>
+      <div class="cap" id="cap23" data-layout-allow-overlap="true"><span>le envía esas <b>fotos,</b></span></div>
+      <div class="cap" id="cap24" data-layout-allow-overlap="true"><span>con <b>tallas</b> y <b>precios,</b></span></div>
+      <div class="cap" id="cap25" data-layout-allow-overlap="true"><span>en el mismo chat.</span></div>
+      <div class="cap" id="cap26" data-layout-allow-overlap="true"><span>Responde con <b>stock</b></span></div>
+      <div class="cap" id="cap27" data-layout-allow-overlap="true"><span>real, y sabe cuándo</span></div>
+      <div class="cap" id="cap28" data-layout-allow-overlap="true"><span>pasar la conversación</span></div>
+      <div class="cap" id="cap29" data-layout-allow-overlap="true"><span>a tu <b>equipo.</b></span></div>
+      <div class="cap" id="cap30" data-layout-allow-overlap="true"><span>Ya son más</span></div>
+      <div class="cap" id="cap31" data-layout-allow-overlap="true"><span>de dos mil <b>setecientos</b></span></div>
+      <div class="cap" id="cap32" data-layout-allow-overlap="true"><span>chats atendidos por la</span></div>
+      <div class="cap" id="cap33" data-layout-allow-overlap="true"><span>IA, con tecnología de</span></div>
+      <div class="cap" id="cap34" data-layout-allow-overlap="true"><span><b>Claude</b> y Google <b>Gemini.</b></span></div>
+      <div class="cap" id="cap35" data-layout-allow-overlap="true"><span><b>EnCatalogo.</b> <b>Fotos</b> IA,</span></div>
+      <div class="cap" id="cap36" data-layout-allow-overlap="true"><span><b>catálogo</b> <b>digital</b></span></div>
+      <div class="cap" id="cap37" data-layout-allow-overlap="true"><span>y vendedor virtual</span></div>
+      <div class="cap" id="cap38" data-layout-allow-overlap="true"><span>para marcas de</span></div>
+      <div class="cap" id="cap39" data-layout-allow-overlap="true"><span>retail peruanas.</span></div>
+      <div class="cap" id="cap40" data-layout-allow-overlap="true"><span>Prueba siete</span></div>
+      <div class="cap" id="cap41" data-layout-allow-overlap="true"><span>días <b>gratis,</b></span></div>
+      <div class="cap" id="cap42" data-layout-allow-overlap="true"><span>sin tarjeta.</span></div>
+      <audio id="v_e1" src="audio/seg/e1.wav" data-start="0.5" data-duration="5.773" data-track-index="12" data-volume="1"></audio>
+      <audio id="v_e2" src="audio/seg/e2.wav" data-start="6.523" data-duration="5.417" data-track-index="12" data-volume="1"></audio>
+      <audio id="v_e3" src="audio/seg/e3.wav" data-start="12.189" data-duration="5.204" data-track-index="12" data-volume="1"></audio>
+      <audio id="v_e4" src="audio/seg/e4.wav" data-start="17.644" data-duration="8.794" data-track-index="12" data-volume="1"></audio>
+      <audio id="v_e5" src="audio/seg/e5.wav" data-start="26.688" data-duration="8.139" data-track-index="12" data-volume="1"></audio>
+      <audio id="v_e6" src="audio/seg/e6.wav" data-start="35.127" data-duration="4.83" data-track-index="12" data-volume="1"></audio>
+      <audio id="v_e7" src="audio/seg/e7.wav" data-start="40.207" data-duration="7.059" data-track-index="12" data-volume="1"></audio>
+      <audio id="v_e8" src="audio/seg/e8.wav" data-start="47.516" data-duration="10.245" data-track-index="12" data-volume="1"></audio>
+      <audio id="musica-fondo" src="audio/musica-duck.wav" data-start="0" data-duration="59.76" data-track-index="13" data-volume="0.8"></audio>
+      <audio id="efectos-sonido" src="audio/efectos.wav" data-start="0" data-duration="59.76" data-track-index="14" data-volume="0.45"></audio>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const capShow = (sel, a, b) => {
+        tl.fromTo(sel, { autoAlpha: 0, y: 12, scale: 0.96 }, { autoAlpha: 1, y: 0, scale: 1, duration: 0.15, ease: "back.out(2)" }, a - 0.04);
+        tl.set(sel, { autoAlpha: 0 }, b);
+      };
+      tl.fromTo("#Abr", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 0.100);
+      tl.fromTo("#Ak", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 0.250);
+      tl.fromTo("#At", { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.55, ease: "power3.out" }, 0.400);
+      tl.fromTo("#Ash", { autoAlpha: 0, rotation: -4, y: 80 }, { autoAlpha: 1, rotation: 2, y: 0, duration: 0.6, ease: "power3.out" }, 2.124);
+      tl.fromTo("#Afl", { autoAlpha: 0.9 }, { autoAlpha: 0, duration: 0.5 }, 2.524);
+      tl.fromTo("#Ac0", { autoAlpha: 0, x: 80 }, { autoAlpha: 1, x: 0, duration: 0.45, ease: "power3.out" }, 3.607);
+      tl.fromTo("#Ac1", { autoAlpha: 0, x: 80 }, { autoAlpha: 1, x: 0, duration: 0.45, ease: "power3.out" }, 4.569);
+      tl.fromTo("#Ac2", { autoAlpha: 0, x: 80 }, { autoAlpha: 1, x: 0, duration: 0.45, ease: "power3.out" }, 5.532);
+      tl.fromTo("#Ail", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 3.707);
+      tl.set("#sB", { autoAlpha: 1 }, 5.923);
+      tl.fromTo("#sB", { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.6, ease: "power3.inOut" }, 5.923);
+      tl.set("#sA", { autoAlpha: 0 }, 6.573);
+      tl.fromTo("#Bk", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 6.123);
+      tl.fromTo("#Bt", { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 6.273);
+      tl.fromTo("#Bfr", { autoAlpha: 0, y: 60 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 6.791);
+      tl.fromTo("#Bil", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 7.191);
+      tl.fromTo("#Baf", { clipPath: "inset(0% 0% 0% 100%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 3.21, ease: "power2.inOut" }, 8.362);
+      tl.fromTo("#Bhd", { x: 940 }, { x: 0, duration: 3.21, ease: "power2.inOut" }, 8.362);
+      tl.to("#Bhd", { autoAlpha: 0, duration: 0.3 }, 11.771);
+      tl.set("#sC", { autoAlpha: 1 }, 11.589);
+      tl.fromTo("#sC", { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.6, ease: "power3.inOut" }, 11.589);
+      tl.set("#sB", { autoAlpha: 0 }, 12.239);
+      tl.fromTo("#Ck", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 11.789);
+      tl.fromTo("#Ct", { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 11.939);
+      gsap.set(["#Ca0", "#Ca1", "#Ca2", ".ok"], { autoAlpha: 0 });
+      tl.fromTo("#Ct0", { autoAlpha: 0, y: 50 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 12.050);
+      tl.fromTo("#Cn0", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.35, ease: "power3.out" }, 12.150);
+      tl.set("#Ca0", { autoAlpha: 1 }, 12.500);
+      tl.fromTo("#Ca0", { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.55, ease: "power2.inOut" }, 12.500);
+      tl.fromTo("#Ct1", { autoAlpha: 0, y: 50 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 12.824);
+      tl.fromTo("#Cn1", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.35, ease: "power3.out" }, 12.924);
+      tl.set("#Ca1", { autoAlpha: 1 }, 13.274);
+      tl.fromTo("#Ca1", { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.55, ease: "power2.inOut" }, 13.274);
+      tl.fromTo("#Ct2", { autoAlpha: 0, y: 50 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 13.667);
+      tl.fromTo("#Cn2", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.35, ease: "power3.out" }, 13.767);
+      tl.set("#Ca2", { autoAlpha: 1 }, 14.117);
+      tl.fromTo("#Ca2", { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.55, ease: "power2.inOut" }, 14.117);
+      tl.fromTo("#Cil", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 12.400);
+      tl.fromTo(".ok", { autoAlpha: 0, scale: 0.4 }, { autoAlpha: 1, scale: 1, duration: 0.35, stagger: 0.12, ease: "back.out(2)" }, 15.605);
+      tl.set("#sD", { autoAlpha: 1 }, 17.044);
+      tl.fromTo("#sD", { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.6, ease: "power3.inOut" }, 17.044);
+      tl.set("#sC", { autoAlpha: 0 }, 17.694);
+      tl.fromTo("#Dk", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 17.244);
+      tl.fromTo("#Dt", { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 17.394);
+      tl.fromTo("#Dx", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(1.8)" }, 20.123);
+      tl.fromTo("#Dc", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(1.8)" }, 21.469);
+      tl.fromTo("#Dbr", { autoAlpha: 0, y: 60 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 22.790);
+      tl.fromTo("#sD .pc", { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.14, ease: "power3.out" }, 23.856);
+      tl.fromTo("#Dlink", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(1.8)" }, 25.713);
+      tl.set("#sE", { autoAlpha: 1 }, 26.088);
+      tl.fromTo("#sE", { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.6, ease: "power3.inOut" }, 26.088);
+      tl.set("#sD", { autoAlpha: 0 }, 26.738);
+      tl.fromTo("#Ek", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 26.288);
+      tl.fromTo("#Et", { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 26.438);
+      gsap.set(["#Ehd"], { autoAlpha: 0 });
+      tl.fromTo("#Echat", { autoAlpha: 0, y: 60 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 28.153);
+      tl.fromTo("#Em0", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.35, ease: "back.out(1.8)" }, 28.653);
+      tl.fromTo("#Em1", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.8)" }, 31.236);
+      tl.fromTo("#Etl", { color: "#0F0F10" }, { color: "#A65353", duration: 0.25 }, 32.229);
+      tl.fromTo("#Epr", { color: "#0F0F10" }, { color: "#A65353", duration: 0.25 }, 32.879);
+      tl.fromTo("#Em2", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.35, ease: "back.out(1.8)" }, 35.776);
+      tl.fromTo("#Ehd", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(1.8)" }, 37.473);
+      tl.set("#sF", { autoAlpha: 1 }, 39.607);
+      tl.fromTo("#sF", { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.6, ease: "power3.inOut" }, 39.607);
+      tl.set("#sE", { autoAlpha: 0 }, 40.257);
+      tl.fromTo("#Fk", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 39.807);
+      tl.fromTo("#Ft", { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 39.957);
+      tl.fromTo("#Fcard", { autoAlpha: 0, y: 60 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 40.213);
+      (() => { const o = { v: 0 }; tl.to(o, { v: 2700, duration: 1.3, ease: "power2.out", onUpdate: () => { const n = Math.round(o.v); document.querySelector("#Fn").textContent = n >= 1000 ? Math.floor(n / 1000) + "." + String(n % 1000).padStart(3, "0") : String(n); } }, 41.066); })();
+      tl.fromTo("#Fs0", { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 42.637);
+      tl.fromTo("#Fs1", { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 42.787);
+      tl.fromTo("#Fte", { autoAlpha: 0, y: 15 }, { autoAlpha: 1, y: 0, duration: 0.35, ease: "power3.out" }, 44.462);
+      tl.fromTo("#Fc", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(1.8)" }, 45.521);
+      tl.fromTo("#Fg", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(1.8)" }, 46.138);
+      tl.set("#sG", { autoAlpha: 1 }, 46.916);
+      tl.fromTo("#sG", { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.6, ease: "power3.inOut" }, 46.916);
+      tl.set("#sF", { autoAlpha: 0 }, 47.566);
+      tl.fromTo("#Glg", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "back.out(1.8)" }, 47.266);
+      tl.fromTo("#Gwm", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.45, ease: "power3.out" }, 47.716);
+      tl.fromTo("#Gt1", { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 47.919);
+      tl.fromTo("#Gt2", { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 48.990);
+      tl.fromTo("#Gsb0", { autoAlpha: 0, y: 15 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 49.357);
+      tl.fromTo("#Gcta", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.5, ease: "back.out(1.8)" }, 50.080);
+      tl.fromTo("#Gsub", { autoAlpha: 0, y: 15 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 54.938);
+      tl.to("#Gcta", { scale: 1.05, duration: 0.4, yoyo: true, repeat: 3, ease: "sine.inOut" }, 55.638);
+      capShow("#cap0", 0.500, 1.975);
+      capShow("#cap1", 1.975, 3.258);
+      capShow("#cap2", 3.258, 4.285);
+      capShow("#cap3", 4.285, 5.247);
+      capShow("#cap4", 5.247, 6.523);
+      capShow("#cap5", 6.523, 7.660);
+      capShow("#cap6", 7.660, 9.064);
+      capShow("#cap7", 9.064, 10.536);
+      capShow("#cap8", 10.536, 12.189);
+      capShow("#cap9", 12.189, 13.174);
+      capShow("#cap10", 13.174, 14.791);
+      capShow("#cap11", 14.791, 16.127);
+      capShow("#cap12", 16.127, 17.644);
+      capShow("#cap13", 17.644, 19.550);
+      capShow("#cap14", 19.550, 21.569);
+      capShow("#cap15", 21.569, 23.986);
+      capShow("#cap16", 23.986, 24.581);
+      capShow("#cap17", 24.581, 25.212);
+      capShow("#cap18", 25.212, 25.843);
+      capShow("#cap19", 25.843, 26.688);
+      capShow("#cap20", 26.688, 27.875);
+      capShow("#cap21", 27.875, 29.343);
+      capShow("#cap22", 29.343, 30.425);
+      capShow("#cap23", 30.425, 31.941);
+      capShow("#cap24", 31.941, 33.528);
+      capShow("#cap25", 33.528, 35.127);
+      capShow("#cap26", 35.127, 36.367);
+      capShow("#cap27", 36.367, 37.673);
+      capShow("#cap28", 37.673, 39.108);
+      capShow("#cap29", 39.108, 40.207);
+      capShow("#cap30", 40.207, 40.961);
+      capShow("#cap31", 40.961, 42.537);
+      capShow("#cap32", 42.537, 44.113);
+      capShow("#cap33", 44.113, 45.621);
+      capShow("#cap34", 45.621, 47.516);
+      capShow("#cap35", 47.516, 48.774);
+      capShow("#cap36", 48.774, 49.057);
+      capShow("#cap37", 49.057, 49.373);
+      capShow("#cap38", 49.373, 49.623);
+      capShow("#cap39", 49.623, 50.230);
+      capShow("#cap40", 50.230, 52.514);
+      capShow("#cap41", 52.514, 55.038);
+      capShow("#cap42", 55.038, 58.161);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

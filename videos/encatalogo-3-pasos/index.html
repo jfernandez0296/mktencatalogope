@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>EnCatalogo.pe — empiezas en 3 pasos</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "DM Serif Display"; font-weight: 400; font-style: normal; src: url("assets/fonts/dm-serif-display-latin-400-normal.woff2") format("woff2"); }
+      @font-face { font-family: "DM Serif Display"; font-weight: 400; font-style: italic; src: url("assets/fonts/dm-serif-display-latin-400-italic.woff2") format("woff2"); }
+      @font-face { font-family: "Inter"; font-weight: 400; src: url("assets/fonts/inter-latin-400-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Inter"; font-weight: 500; src: url("assets/fonts/inter-latin-500-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Inter"; font-weight: 600; src: url("assets/fonts/inter-latin-600-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Inter"; font-weight: 700; src: url("assets/fonts/inter-latin-700-normal.woff2") format("woff2"); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #F2EDE4; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #F2EDE4; font-family: "Inter", system-ui, sans-serif; color: #0F0F10; }
+      .abs { position: absolute; }
+      .sc { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: hidden; }
+      #sB, #sC, #sD, #sE, #sF, #sG, #sH, .cap { visibility: hidden; opacity: 0; }
+      .eyebrow { font-size: 26px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #A65353; }
+      .badge { padding: 14px 28px; border-radius: 999px; background: #F2E6CE; color: #A65353; font-size: 26px; font-weight: 700; letter-spacing: .12em; white-space: nowrap; }
+      .badge.dk { background: rgba(217,152,115,.18); color: #D99873; }
+      .ttl { font-family: "DM Serif Display", Georgia, serif; font-weight: 400; line-height: 1.04; letter-spacing: -0.01em; }
+      .brand { display: flex; align-items: center; gap: 18px; font-size: 40px; font-weight: 700; }
+      .bchip { display: inline-flex; }
+      .bchip.dk { background: #F2EDE4; padding: 8px; border-radius: 18px; }
+      .card { background: #FFFFFF; border: 2px solid #E7DDD1; border-radius: 40px; box-shadow: 0 2px 4px rgba(15,15,16,.04), 0 24px 60px rgba(15,15,16,.07); }
+      .pic { width: 210px; height: 250px; border-radius: 28px; background: #F2E6CE; display: flex; align-items: center; justify-content: center; }
+      .ptitle { font-family: "DM Serif Display", serif; font-size: 64px; }
+      .pmeta { font-size: 36px; font-weight: 500; color: #57534E; }
+      .qmark { width: 150px; height: 190px; border-radius: 30px; background: #0F0F10; color: #D99873; font-family: "DM Serif Display", serif; font-size: 150px; line-height: 190px; text-align: center; }
+      .chip { display: flex; align-items: center; gap: 14px; height: 104px; padding: 0 26px; border-radius: 999px; border: 2px solid #E7DDD1; font-size: 32px; font-weight: 600; white-space: nowrap; box-shadow: 0 10px 26px rgba(15,15,16,.06); }
+      .chip .qq { width: 44px; height: 44px; border-radius: 22px; background: #A65353; color: #fff; font-size: 28px; display: flex; align-items: center; justify-content: center; }
+      .today { padding: 8px 22px; border-radius: 999px; background: #F2E6CE; color: #A65353; font-size: 26px; font-weight: 700; }
+      .stat b { display: block; font-family: "DM Serif Display", serif; font-weight: 400; font-size: 96px; line-height: 1; }
+      .stat span { display: block; font-size: 30px; font-weight: 500; color: #57534E; margin-top: 10px; }
+      #Bst1 b { color: #A65353; }
+      .thead, .trow { display: grid; grid-template-columns: 1.4fr 1fr .5fr; align-items: center; }
+      .thead { font-size: 24px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #8A8178; padding: 0 0 16px; border-bottom: 2px solid #E7DDD1; }
+      .thead span:last-child, .trow b { text-align: right; }
+      .trow { height: 100px; border-bottom: 2px solid #E7DDD1; font-size: 36px; font-weight: 600; }
+      .trow .tag { justify-self: start; padding: 8px 20px; border-radius: 999px; background: #FAF9F5; border: 2px solid #E7DDD1; font-size: 28px; font-weight: 500; color: #57534E; }
+      .trow b { font-size: 44px; font-weight: 700; }
+      .vchip { padding: 14px 26px; border-radius: 999px; background: #0F0F10; color: #fff; font-size: 30px; font-weight: 600; white-space: nowrap; }
+      .route { display: flex; align-items: center; gap: 18px; font-family: "DM Serif Display", serif; font-size: 58px; }
+      .track { height: 12px; border-radius: 6px; background: #E7DDD1; overflow: hidden; }
+      .track div { width: 100%; height: 100%; background: #D99873; transform-origin: 0% 50%; }
+      .truck { width: 90px; height: 70px; display: flex; justify-content: center; }
+      .step { width: 300px; display: flex; flex-direction: column; align-items: flex-start; gap: 18px; font-size: 30px; font-weight: 600; }
+      #Cs1 { align-items: center; left: 315px !important; }
+      #Cs2 { align-items: flex-end; left: 596px !important; }
+      .dot { width: 56px; height: 56px; border-radius: 28px; background: #3F7A4F; display: flex; align-items: center; justify-content: center; border: 6px solid #fff; box-shadow: 0 0 0 2px #E7DDD1; }
+      .items { font-size: 28px; font-weight: 500; color: #57534E; }
+      .callout { display: flex; align-items: center; gap: 30px; padding: 34px 40px; border-radius: 34px; background: #F2E6CE; border-left: 10px solid #A65353; }
+      .callout b { display: block; font-size: 40px; font-weight: 700; }
+      .callout span { display: block; font-size: 32px; font-weight: 500; color: #57534E; margin-top: 6px; }
+      .ich { flex: none; width: 92px; height: 92px; border-radius: 24px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; }
+      .phone { width: 600px; height: 900px; border-radius: 70px; background: #FFFFFF; border: 14px solid #0F0F10; box-shadow: 0 40px 80px rgba(15,15,16,.18); overflow: hidden; }
+      .hi { font-family: "DM Serif Display", serif; font-size: 50px; }
+      .big { font-family: "DM Serif Display", serif; font-size: 100px; line-height: 1; }
+      .up { display: flex; align-items: center; gap: 10px; font-size: 28px; font-weight: 700; color: #3F7A4F; }
+      .bar { width: 46px; border-radius: 12px 12px 4px 4px; background: #D99873; }
+      .dl { width: 46px; text-align: center; font-size: 22px; font-weight: 600; color: #8A8178; }
+      .low { width: 516px; padding: 26px 26px 10px; border-radius: 28px; background: #FAF9F5; border: 2px solid #E7DDD1; }
+      .low .eyebrow { font-size: 20px; }
+      .lr { display: flex; justify-content: space-between; padding: 12px 0; font-size: 30px; font-weight: 600; border-top: 2px solid #E7DDD1; }
+      .lr b { font-weight: 700; }
+      .inv { font-family: "DM Serif Display", serif; font-size: 60px; }
+      .il { display: flex; justify-content: space-between; font-size: 30px; font-weight: 500; }
+      .il b { font-weight: 700; }
+      .il.sm { font-size: 26px; color: #57534E; }
+      .il.tot { padding-top: 22px; border-top: 2px solid #E7DDD1; font-size: 40px; font-weight: 700; }
+      .stamp { display: flex; align-items: center; gap: 12px; padding: 14px 26px; border-radius: 999px; background: #E6EFE8; color: #2F5E3B; font-size: 28px; font-weight: 700; white-space: nowrap; }
+      .upd { width: 310px; height: 170px; border-radius: 32px; background: #FFFFFF; border: 2px solid #E7DDD1; display: flex; flex-direction: column; justify-content: center; gap: 14px; padding: 0 26px; font-size: 34px; font-weight: 700; box-shadow: 0 12px 30px rgba(15,15,16,.06); }
+      .upd .ich { width: 70px; height: 70px; background: #F2E6CE; border-radius: 20px; }
+      .tick { position: absolute; right: 22px; top: 22px; width: 50px; height: 50px; border-radius: 25px; background: #3F7A4F; display: flex; align-items: center; justify-content: center; }
+      .chat { border-radius: 44px; background: #EFE7DC; overflow: hidden; }
+      .chd { left: 0; top: 0; width: 940px; height: 120px; padding: 0 36px; display: flex; align-items: center; gap: 22px; background: #1C1B1A; color: #fff; }
+      .chd b { display: block; font-size: 34px; font-weight: 700; }
+      .chd i { display: block; font-style: normal; font-size: 24px; color: #B9B2A8; }
+      .wa { width: 70px; height: 70px; border-radius: 35px; background: #25D366; display: flex; align-items: center; justify-content: center; }
+      .bub { max-width: 640px; padding: 22px 28px; border-radius: 28px; font-size: 32px; font-weight: 500; line-height: 1.3; box-shadow: 0 4px 10px rgba(15,15,16,.06); }
+      .bub.in { left: 36px; background: #FFFFFF; border-top-left-radius: 8px; }
+      .bub.out { right: 36px; background: #F2E6CE; border-top-right-radius: 8px; }
+      .bub .mono { display: block; margin-top: 6px; font-weight: 700; color: #0F0F10; }
+      .bub.ph { display: flex; align-items: center; gap: 22px; }
+      .bub.ph b { display: block; font-size: 32px; } .bub.ph span { display: block; font-size: 26px; color: #57534E; }
+      .thumb { width: 104px; height: 104px; border-radius: 20px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; }
+      .paid { left: 36px; display: flex; align-items: center; gap: 12px; padding: 16px 28px; border-radius: 999px; background: #FFFFFF; color: #2F5E3B; font-size: 30px; font-weight: 700; white-space: nowrap; }
+      .frame { border-radius: 40px; overflow: hidden; }
+      .before { left: 0; top: 0; width: 940px; height: 560px; background: radial-gradient(circle at 60% 30%, #8a6d4e, #4b3a2b 70%); filter: saturate(.7) brightness(.85); }
+      .after { left: 0; top: 0; width: 940px; height: 560px; background: #F2EDE4; }
+      .lab { padding: 10px 22px; border-radius: 999px; background: rgba(15,15,16,.7); color: #fff; font-size: 26px; font-weight: 600; }
+      .lab.lt { background: #FFFFFF; color: #0F0F10; border: 2px solid #E7DDD1; }
+      .handle { top: 0; width: 6px; height: 560px; background: #fff; }
+      .knob { position: absolute; left: -33px; top: 247px; width: 72px; height: 72px; border-radius: 36px; background: #D99873; display: flex; align-items: center; justify-content: center; }
+      .ask { padding: 20px 30px; border-radius: 28px 28px 28px 8px; background: #26241F; color: #fff; font-size: 34px; font-weight: 600; }
+      .ans { display: flex; align-items: center; gap: 20px; padding: 22px 30px; border-radius: 28px; background: #F2EDE4; font-size: 32px; font-weight: 600; }
+      .cl { flex: none; width: 64px; height: 64px; border-radius: 18px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; }
+      .illu { font-size: 22px; font-weight: 500; color: #8A8178; }
+      .price { display: flex; align-items: baseline; gap: 14px; }
+      .price small { font-size: 50px; font-weight: 600; }
+      .price span { font-family: "DM Serif Display", serif; font-size: 170px; line-height: 1; }
+      .price i { font-style: normal; font-size: 32px; font-weight: 500; color: #57534E; }
+      .hl { display: flex; align-items: center; gap: 18px; font-size: 36px; font-weight: 600; }
+      .proof .brands { margin-top: 18px; font-family: "DM Serif Display", serif; font-size: 50px; line-height: 1.2; }
+      .proof .brands i { font-style: normal; color: #D99873; }
+      .fine { font-size: 24px; color: #8A8178; }
+      .wm { text-align: center; font-size: 64px; font-weight: 700; }
+      .tag1, .tag2 { text-align: center; font-family: "DM Serif Display", serif; font-size: 92px; line-height: 1.1; }
+      .tag2 { font-style: italic; color: #A65353; }
+      .cta { height: 110px; border-radius: 999px; background: #0F0F10; color: #fff; font-size: 40px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+      .ctas { text-align: center; font-size: 34px; font-weight: 500; color: #57534E; }
+      .cap { position: absolute; left: 40px; width: 1000px; top: 1500px; text-align: center; }
+      .cap span { display: inline-block; background: #0F0F10; color: #fff; font-size: 52px; font-weight: 700; padding: 14px 32px; border-radius: 24px; line-height: 1.18; box-shadow: 0 12px 34px rgba(15,15,16,.25); border: 3px solid rgba(217,152,115,.35); }
+      .cap b { color: #D99873; font-weight: 700; }
+      .ttl em { font-style: italic; }
+      .numbox { width: 240px; height: 240px; border-radius: 48px; background: #F2E6CE; display: flex; align-items: center; justify-content: center; }
+      .numbox span { font-family: "DM Serif Display", serif; font-size: 210px; line-height: 1; color: #A65353; margin-top: 10px; }
+      .pstep { width: 300px; height: 84px; border-radius: 999px; display: flex; align-items: center; justify-content: center; gap: 14px; font-size: 30px; font-weight: 600; border: 2px solid #E7DDD1; background: #FFFFFF; color: #8A8178; }
+      .pstep i { font-style: normal; width: 44px; height: 44px; border-radius: 22px; display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 700; background: #F2EDE4; color: #8A8178; }
+      .pstep.cur { background: #0F0F10; border-color: #0F0F10; color: #FFFFFF; }
+      .pstep.cur i { background: #D99873; color: #0F0F10; }
+      .pstep.done { background: #F2E6CE; border-color: #F2E6CE; color: #A65353; }
+      .flab { font-size: 26px; font-weight: 600; color: #57534E; }
+      .field { height: 92px; border-radius: 20px; border: 3px solid #E7DDD1; background: #FAF9F5; display: flex; align-items: center; gap: 20px; padding: 0 28px; font-size: 36px; font-weight: 500; }
+      .fv { white-space: nowrap; }
+      .btn { height: 96px; border-radius: 999px; background: #0F0F10; color: #fff; font-size: 36px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+      .tile { width: 200px; height: 200px; border-radius: 40px; background: #F2EDE4; border: 2px solid #E7DDD1; display: flex; align-items: center; justify-content: center; }
+      .wtile { width: 200px; height: 200px; border-radius: 100px; background: #25D366; display: flex; align-items: center; justify-content: center; }
+      .lnk { width: 80px; height: 80px; border-radius: 40px; background: #FFFFFF; border: 2px solid #E7DDD1; display: flex; align-items: center; justify-content: center; }
+      .api { display: flex; align-items: center; gap: 20px; padding: 26px 30px; border-radius: 26px; background: #F2E6CE; font-size: 36px; font-weight: 700; }
+      .src { width: 455px; height: 210px; border-radius: 36px; background: #FFFFFF; border: 2px solid #E7DDD1; display: flex; flex-direction: column; justify-content: center; gap: 18px; padding: 0 36px; font-size: 38px; font-weight: 700; box-shadow: 0 12px 30px rgba(15,15,16,.06); }
+      .prod { width: 270px; display: flex; flex-direction: column; gap: 10px; }
+      .pimg { width: 270px; height: 210px; border-radius: 26px; background: #F2E6CE; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
+      .prod b { font-size: 32px; font-weight: 700; } .prod span { font-size: 26px; font-weight: 500; color: #57534E; }
+      .srow { height: 200px; border-radius: 36px; background: #FFFFFF; border: 2px solid #E7DDD1; display: flex; align-items: center; gap: 34px; padding: 0 40px; box-shadow: 0 12px 30px rgba(15,15,16,.06); }
+      .snum { flex: none; width: 110px; height: 110px; border-radius: 55px; background: #F2E6CE; color: #A65353; font-family: "DM Serif Display", serif; font-size: 76px; line-height: 116px; text-align: center; }
+      .stx { flex: 1; } .stx b { display: block; font-size: 44px; font-weight: 700; } .stx span { display: block; font-size: 30px; font-weight: 500; color: #57534E; margin-top: 8px; }
+      .sic { flex: none; width: 90px; height: 90px; border-radius: 24px; background: #FAF9F5; display: flex; align-items: center; justify-content: center; }
+      .crow { height: 190px; border-radius: 36px; background: #FFFFFF; border: 2px solid #E7DDD1; display: flex; align-items: center; gap: 34px; padding: 0 40px; font-size: 44px; font-weight: 600; line-height: 1.2; box-shadow: 0 12px 30px rgba(15,15,16,.06); }
+      .cdot { flex: none; width: 96px; height: 96px; border-radius: 48px; background: #3F7A4F; display: flex; align-items: center; justify-content: center; }
+      .illu.dk { color: #B9B2A8; }
+      .bub.ph i { font-style: normal; }
+
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="62.56" data-fps="30" data-width="1080" data-height="1920">
+      <div class="sc" id="sA" style="background:#F2EDE4">
+        <div class="abs brand" id="Abr" style="left:70px;top:130px;color:#0F0F10"><span class="bchip"><img src="assets/img/encatalogo-logo.svg" alt="EnCatalogo.pe" style="height:54px;width:auto;display:block"></span>EnCatalogo.pe</div>
+        <div class="abs badge" id="Ak" style="left:70px;top:290px">TUTORIAL · EMPIEZA HOY</div>
+        <div class="abs ttl" id="At" style="left:70px;top:370px;width:940px;font-size:104px;color:#0F0F10">Empieza a vender en <em>3 pasos</em></div>
+        <div class="abs srow" id="Ar0" style="left:70px;top:660px;width:940px"><div class="snum">1</div><div class="stx"><b>Crea tu cuenta</b><span>7 días gratis, sin tarjeta</span></div><div class="sic"><svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="user"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg></div></div><div class="abs srow" id="Ar1" style="left:70px;top:890px;width:940px"><div class="snum">2</div><div class="stx"><b>Conecta tu WhatsApp</b><span>API oficial de WhatsApp Business</span></div><div class="sic"><svg width="48" height="48" viewBox="0 0 24 24" aria-label="whatsapp"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" fill="#25D366"/></svg></div></div><div class="abs srow" id="Ar2" style="left:70px;top:1120px;width:940px"><div class="snum">3</div><div class="stx"><b>Sube tu catálogo</b><span>Desde Excel o fotos del celular</span></div><div class="sic"><svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="upload"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg></div></div>
+      </div>
+      <div class="sc" id="sB" style="background:#FAF9F5">
+        <div class="abs badge" id="Bk" style="left:70px;top:250px">PASO 1 DE 3</div><div class="abs ttl" id="Bt" style="left:70px;top:330px;width:660px;font-size:92px;color:#0F0F10">Crea tu cuenta</div><div class="abs numbox" id="Bn" style="left:770px;top:226px"><span>1</span></div>
+        <div class="abs card" id="Bcard" style="left:70px;top:620px;width:940px;height:560px">
+          <div class="abs eyebrow" style="left:44px;top:44px">CREAR MI CUENTA</div>
+          <div class="abs flab" style="left:44px;top:100px">Nombre de tu tienda</div><div class="abs field" id="Bf0" style="left:44px;top:146px;width:852px"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#8A8178" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="store">
+  <path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7" />
+  <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+  <path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4" />
+  <path d="M2 7h20" />
+  <path d="M22 7v3a2 2 0 0 1-2 2a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12a2 2 0 0 1-2-2V7" />
+</svg><span class="fv" id="Bf0v">Tienda Demo</span><span class="caret" id="Bf0c"></span></div>
+          <div class="abs flab" style="left:44px;top:250px">Correo</div><div class="abs field" id="Bf1" style="left:44px;top:296px;width:852px"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#8A8178" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="mail"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg><span class="fv" id="Bf1v">hola@tiendademo.pe</span><span class="caret" id="Bf1c"></span></div>
+          <div class="abs btn" id="Bbtn" style="left:44px;top:430px;width:852px">Crear mi cuenta</div>
+        </div>
+        <div class="abs chip" id="Bc0" style="left:70px;top:1220px;background:#FFFFFF;color:#0F0F10"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="circle-check">
+  <circle cx="12" cy="12" r="10" />
+  <path d="m9 12 2 2 4-4" />
+</svg><span>7 días gratis</span></div>
+        <div class="abs chip" id="Bc1" style="left:470px;top:1220px;background:#FFFFFF;color:#0F0F10"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="credit-card">
+  <rect width="20" height="14" x="2" y="5" rx="2" />
+  <line x1="2" x2="22" y1="10" y2="10" />
+</svg><span>Sin tarjeta</span></div>
+        <div class="abs" id="Bpg" style="left:0;top:0"><div class="abs pstep cur" style="left:70px;top:1380px"><i>1</i><span>Cuenta</span></div><div class="abs pstep next" style="left:390px;top:1380px"><i>2</i><span>WhatsApp</span></div><div class="abs pstep next" style="left:710px;top:1380px"><i>3</i><span>Catálogo</span></div></div>
+      </div>
+      <div class="sc" id="sC" style="background:#F2EDE4">
+        <div class="abs badge" id="Ck" style="left:70px;top:250px">PASO 2 DE 3</div><div class="abs ttl" id="Ct" style="left:70px;top:330px;width:660px;font-size:88px;color:#0F0F10">Conecta tu WhatsApp</div><div class="abs numbox" id="Cn" style="left:770px;top:226px"><span>2</span></div>
+        <div class="abs card" id="Ccard" style="left:70px;top:620px;width:940px;height:560px">
+          <div class="abs tile" id="Cl" style="left:70px;top:60px"><img src="assets/img/encatalogo-logo.svg" alt="EnCatalogo.pe" style="height:150px;width:auto;display:block"></div>
+          <div class="abs wtile" id="Cw" style="left:670px;top:60px"><svg width="120" height="120" viewBox="0 0 24 24" aria-label="whatsapp"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" fill="#FFFFFF"/></svg></div>
+          <div class="abs track" style="left:290px;top:154px;width:360px"><div id="Cfill"></div></div>
+          <div class="abs lnk" id="Clk" style="left:430px;top:120px"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
+          <div class="abs api" id="Capi" style="left:44px;top:330px;width:852px"><svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="shield-check"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg><span>API oficial de WhatsApp Business</span></div>
+          <div class="abs stamp" id="Cok" style="left:44px;top:440px"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#3F7A4F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="circle-check">
+  <circle cx="12" cy="12" r="10" />
+  <path d="m9 12 2 2 4-4" />
+</svg> Conectado</div>
+        </div>
+        <div class="abs chip" id="Cc0" style="left:70px;top:1220px;background:#FFFFFF;color:#0F0F10"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="check">
+  <path d="M20 6 9 17l-5-5" />
+</svg><span>Listo en minutos</span></div>
+        <div class="abs" id="Cpg" style="left:0;top:0"><div class="abs pstep done" style="left:70px;top:1380px"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-label="check">
+  <path d="M20 6 9 17l-5-5" />
+</svg><span>Cuenta</span></div><div class="abs pstep cur" style="left:390px;top:1380px"><i>2</i><span>WhatsApp</span></div><div class="abs pstep next" style="left:710px;top:1380px"><i>3</i><span>Catálogo</span></div></div>
+      </div>
+      <div class="sc" id="sD" style="background:#FAF9F5">
+        <div class="abs badge" id="Dk" style="left:70px;top:250px">PASO 3 DE 3</div><div class="abs ttl" id="Dt" style="left:70px;top:330px;width:660px;font-size:92px;color:#0F0F10">Sube tu catálogo</div><div class="abs numbox" id="Dn" style="left:770px;top:226px"><span>3</span></div>
+        <div class="abs src" id="Ds0" style="left:70px;top:620px"><svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#3F7A4F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-label="file-spreadsheet"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M8 13h2"/><path d="M14 13h2"/><path d="M8 17h2"/><path d="M14 17h2"/></svg><span>Desde Excel</span></div>
+        <div class="abs src" id="Ds1" style="left:555px;top:620px"><svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-label="camera">
+  <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" />
+  <circle cx="12" cy="13" r="3" />
+</svg><span>Fotos del celular</span></div>
+        <div class="abs card" id="Dcard" style="left:70px;top:870px;width:940px;height:470px">
+          <div class="abs eyebrow" style="left:44px;top:40px">TU CATÁLOGO</div>
+          <div class="abs today" id="Dcnt" style="left:700px;top:34px"><span id="Dcn">0</span> productos</div>
+          <div class="abs prod" id="Dp0" style="left:44px;top:110px"><div class="pimg"><svg width="96" height="96" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-label="shirt">
+  <path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z" />
+</svg></div><b>Vestido Emilia</b><span>S · M · L</span></div><div class="abs prod" id="Dp1" style="left:334px;top:110px"><div class="pimg"><svg width="96" height="96" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-label="shirt">
+  <path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z" />
+</svg></div><b>Blazer Siena</b><span>S · M · L</span></div><div class="abs prod" id="Dp2" style="left:624px;top:110px"><div class="pimg"><svg width="96" height="96" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-label="shirt">
+  <path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z" />
+</svg></div><b>Pantalón Nara</b><span>S · M · L</span></div>
+        </div>
+        <div class="abs" id="Dpg" style="left:0;top:0"><div class="abs pstep done" style="left:70px;top:1380px"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-label="check">
+  <path d="M20 6 9 17l-5-5" />
+</svg><span>Cuenta</span></div><div class="abs pstep done" style="left:390px;top:1380px"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-label="check">
+  <path d="M20 6 9 17l-5-5" />
+</svg><span>WhatsApp</span></div><div class="abs pstep cur" style="left:710px;top:1380px"><i>3</i><span>Catálogo</span></div></div>
+      </div>
+      <div class="sc" id="sE" style="background:#0F0F10">
+        <div class="abs badge dk" id="Ek" style="left:70px;top:250px">VENDEDOR IA · WHATSAPP</div><div class="abs ttl" id="Et" style="left:70px;top:330px;width:940px;font-size:92px;color:#FFFFFF">Y listo: ya puedes vender</div>
+        <div class="abs chat" id="Echat" style="left:70px;top:620px;width:940px;height:720px">
+          <div class="abs chd"><span class="wa"><svg width="40" height="40" viewBox="0 0 24 24" aria-label="whatsapp"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" fill="#FFFFFF"/></svg></span><div><b>Tienda Demo</b><i>en línea</i></div></div>
+          <div class="abs bub in" id="Em0" style="top:160px">¿Tienes el Vestido Emilia en talla M?</div>
+          <div class="abs bub out" id="Em1" style="top:290px">Sí, nos quedan 5 en talla M <span class="mono">Tallas S · M · L</span></div>
+          <div class="abs bub out ph" id="Em2" style="top:460px"><div class="thumb"><svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-label="shirt">
+  <path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z" />
+</svg></div><div><b>Vestido Emilia</b><span><i id="Epr">S/ 189.00 · </i>3 fotos</span></div></div>
+        </div>
+        <div class="abs illu dk" style="left:70px;top:1370px">Recreación ilustrativa</div>
+      </div>
+      <div class="sc" id="sF" style="background:#F2EDE4">
+        <div class="abs badge" id="Fk" style="left:70px;top:250px">¿ES PARA TI?</div><div class="abs ttl" id="Ft" style="left:70px;top:330px;width:940px;font-size:100px;color:#0F0F10">Es para ti si…</div>
+        <div class="abs crow" id="Fr0" style="left:70px;top:600px;width:940px"><div class="cdot" id="Fd0"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-label="check">
+  <path d="M20 6 9 17l-5-5" />
+</svg></div><span>Vendes productos con precio</span></div><div class="abs crow" id="Fr1" style="left:70px;top:820px;width:940px"><div class="cdot" id="Fd1"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-label="check">
+  <path d="M20 6 9 17l-5-5" />
+</svg></div><span>Tus clientes te escriben por WhatsApp</span></div><div class="abs crow" id="Fr2" style="left:70px;top:1040px;width:940px"><div class="cdot" id="Fd2"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-label="check">
+  <path d="M20 6 9 17l-5-5" />
+</svg></div><span>Tienes catálogo, aunque sea en fotos</span></div>
+      </div>
+      <div class="sc" id="sG" style="background:#FAF9F5">
+        <div class="abs badge" id="Gk" style="left:70px;top:250px">PRECIOS</div><div class="abs ttl" id="Gt" style="left:70px;top:330px;width:940px;font-size:92px;color:#0F0F10">Un solo plan. Pagas por tienda.</div>
+        <div class="abs card" id="Gcard" style="left:70px;top:560px;width:940px;height:560px">
+          <div class="abs eyebrow" style="left:50px;top:50px">ENCATALOGO</div>
+          <div class="abs price" style="left:50px;top:110px"><small>S/</small><span id="Gp">150</span><i>/mes con 1 tienda</i></div>
+          <div class="abs hl" id="Gl0" style="left:50px;top:325px"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="circle-check">
+  <circle cx="12" cy="12" r="10" />
+  <path d="m9 12 2 2 4-4" />
+</svg><span>S/ 90 cada tienda extra</span></div><div class="abs hl" id="Gl1" style="left:50px;top:397px"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="circle-check">
+  <circle cx="12" cy="12" r="10" />
+  <path d="m9 12 2 2 4-4" />
+</svg><span>Almacenes gratis</span></div><div class="abs hl" id="Gl2" style="left:50px;top:469px"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="circle-check">
+  <circle cx="12" cy="12" r="10" />
+  <path d="m9 12 2 2 4-4" />
+</svg><span>Vendedor IA en WhatsApp incluido</span></div>
+        </div>
+        <div class="abs callout" id="Gsp" style="left:70px;top:1160px;width:940px">
+          <div class="ich"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-label="x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></div>
+          <div><b>Sin permanencia</b><span>Cancelas cuando quieras</span></div>
+        </div>
+        <div class="abs fine" style="left:70px;top:1370px">Precios en soles · IGV incluido</div>
+      </div>
+      <div class="sc" id="sH" style="background:#F2EDE4">
+        <div class="abs" id="Hlg" style="left:390px;top:300px"><img src="assets/img/encatalogo-logo.svg" alt="EnCatalogo.pe" style="height:300px;width:auto;display:block"></div>
+        <div class="abs wm" id="Hwm" style="left:0;top:650px;width:1080px">EnCatalogo.pe</div>
+        <div class="abs tag1" id="Ht1" style="left:0;top:770px;width:1080px">Ordena tu operación.</div>
+        <div class="abs tag2" id="Ht2" style="left:0;top:880px;width:1080px">Empieza gratis hoy.</div>
+        <div class="abs cta" id="Hcta" style="left:240px;top:1060px;width:600px">Crear mi cuenta</div>
+        <div class="abs ctas" id="Hsub" style="left:0;top:1190px;width:1080px">7 días gratis · sin tarjeta · encatalogo.pe</div>
+      </div>
+      <div class="cap" id="cap0" data-layout-allow-overlap="true"><span>¿Vendes por</span></div>
+      <div class="cap" id="cap1" data-layout-allow-overlap="true"><span><b>WhatsApp</b> y quieres</span></div>
+      <div class="cap" id="cap2" data-layout-allow-overlap="true"><span>ordenar tu negocio?</span></div>
+      <div class="cap" id="cap3" data-layout-allow-overlap="true"><span>Empezar con</span></div>
+      <div class="cap" id="cap4" data-layout-allow-overlap="true"><span><b>EnCatalogo</b> te toma</span></div>
+      <div class="cap" id="cap5" data-layout-allow-overlap="true"><span>solo <b>tres</b> <b>pasos.</b></span></div>
+      <div class="cap" id="cap6" data-layout-allow-overlap="true"><span>Paso <b>uno:</b> crea</span></div>
+      <div class="cap" id="cap7" data-layout-allow-overlap="true"><span>tu <b>cuenta.</b></span></div>
+      <div class="cap" id="cap8" data-layout-allow-overlap="true"><span>Tienes siete</span></div>
+      <div class="cap" id="cap9" data-layout-allow-overlap="true"><span>días <b>gratis,</b> y no</span></div>
+      <div class="cap" id="cap10" data-layout-allow-overlap="true"><span>necesitas <b>tarjeta.</b></span></div>
+      <div class="cap" id="cap11" data-layout-allow-overlap="true"><span>Paso <b>dos:</b></span></div>
+      <div class="cap" id="cap12" data-layout-allow-overlap="true"><span>conecta tu <b>WhatsApp.</b></span></div>
+      <div class="cap" id="cap13" data-layout-allow-overlap="true"><span>Usamos la <b>API</b> oficial</span></div>
+      <div class="cap" id="cap14" data-layout-allow-overlap="true"><span>de <b>WhatsApp</b> Business,</span></div>
+      <div class="cap" id="cap15" data-layout-allow-overlap="true"><span>y queda listo</span></div>
+      <div class="cap" id="cap16" data-layout-allow-overlap="true"><span>en <b>minutos.</b></span></div>
+      <div class="cap" id="cap17" data-layout-allow-overlap="true"><span>Paso <b>tres:</b> sube</span></div>
+      <div class="cap" id="cap18" data-layout-allow-overlap="true"><span>tu <b>catálogo.</b></span></div>
+      <div class="cap" id="cap19" data-layout-allow-overlap="true"><span>Puedes cargarlo</span></div>
+      <div class="cap" id="cap20" data-layout-allow-overlap="true"><span>desde <b>Excel,</b> o con</span></div>
+      <div class="cap" id="cap21" data-layout-allow-overlap="true"><span><b>fotos</b> del celular.</span></div>
+      <div class="cap" id="cap22" data-layout-allow-overlap="true"><span>Y listo: ya</span></div>
+      <div class="cap" id="cap23" data-layout-allow-overlap="true"><span>puedes <b>vender.</b></span></div>
+      <div class="cap" id="cap24" data-layout-allow-overlap="true"><span>Tu vendedor con IA</span></div>
+      <div class="cap" id="cap25" data-layout-allow-overlap="true"><span>responde en <b>WhatsApp</b></span></div>
+      <div class="cap" id="cap26" data-layout-allow-overlap="true"><span>con <b>stock</b> real,</span></div>
+      <div class="cap" id="cap27" data-layout-allow-overlap="true"><span><b>fotos</b> y precios.</span></div>
+      <div class="cap" id="cap28" data-layout-allow-overlap="true"><span>¿Es para ti? Sí,</span></div>
+      <div class="cap" id="cap29" data-layout-allow-overlap="true"><span>si vendes productos</span></div>
+      <div class="cap" id="cap30" data-layout-allow-overlap="true"><span>con <b>precio,</b></span></div>
+      <div class="cap" id="cap31" data-layout-allow-overlap="true"><span>si tus clientes te</span></div>
+      <div class="cap" id="cap32" data-layout-allow-overlap="true"><span>escriben por <b>WhatsApp,</b></span></div>
+      <div class="cap" id="cap33" data-layout-allow-overlap="true"><span>y si tienes <b>catálogo,</b></span></div>
+      <div class="cap" id="cap34" data-layout-allow-overlap="true"><span>aunque sea en <b>fotos.</b></span></div>
+      <div class="cap" id="cap35" data-layout-allow-overlap="true"><span>Un solo plan: <b>ciento</b></span></div>
+      <div class="cap" id="cap36" data-layout-allow-overlap="true"><span><b>cincuenta</b> soles al</span></div>
+      <div class="cap" id="cap37" data-layout-allow-overlap="true"><span>mes con una tienda.</span></div>
+      <div class="cap" id="cap38" data-layout-allow-overlap="true"><span><b>Noventa</b> soles por</span></div>
+      <div class="cap" id="cap39" data-layout-allow-overlap="true"><span>cada tienda extra,</span></div>
+      <div class="cap" id="cap40" data-layout-allow-overlap="true"><span>y los <b>almacenes</b></span></div>
+      <div class="cap" id="cap41" data-layout-allow-overlap="true"><span>son <b>gratis.</b></span></div>
+      <div class="cap" id="cap42" data-layout-allow-overlap="true"><span>Sin <b>permanencia:</b></span></div>
+      <div class="cap" id="cap43" data-layout-allow-overlap="true"><span>cancelas cuando quieras.</span></div>
+      <div class="cap" id="cap44" data-layout-allow-overlap="true"><span>Ordena tu <b>operación.</b></span></div>
+      <div class="cap" id="cap45" data-layout-allow-overlap="true"><span>Crea tu <b>cuenta</b> y</span></div>
+      <div class="cap" id="cap46" data-layout-allow-overlap="true"><span>empieza <b>gratis</b> <b>hoy.</b></span></div>
+      <audio id="v_e1" src="audio/seg/e1.wav" data-start="0.5" data-duration="6.473" data-track-index="12" data-volume="1"></audio>
+      <audio id="v_e2" src="audio/seg/e2.wav" data-start="7.223" data-duration="5.675" data-track-index="12" data-volume="1"></audio>
+      <audio id="v_e3" src="audio/seg/e3.wav" data-start="13.148" data-duration="7.591" data-track-index="12" data-volume="1"></audio>
+      <audio id="v_e4" src="audio/seg/e4.wav" data-start="20.988" data-duration="5.479" data-track-index="12" data-volume="1"></audio>
+      <audio id="v_e5" src="audio/seg/e5.wav" data-start="26.717" data-duration="7.65" data-track-index="12" data-volume="1"></audio>
+      <audio id="v_e6" src="audio/seg/e6.wav" data-start="34.618" data-duration="8.499" data-track-index="12" data-volume="1"></audio>
+      <audio id="v_e7" src="audio/seg/e7.wav" data-start="43.367" data-duration="9.871" data-track-index="12" data-volume="1"></audio>
+      <audio id="v_e8" src="audio/seg/e8.wav" data-start="53.538" data-duration="2.876" data-track-index="12" data-volume="1"></audio>
+      <audio id="v_e9" src="audio/seg/e9.wav" data-start="56.664" data-duration="3.901" data-track-index="12" data-volume="1"></audio>
+      <audio id="musica-fondo" src="audio/musica-duck.wav" data-start="0" data-duration="62.56" data-track-index="13" data-volume="0.8"></audio>
+      <audio id="efectos-sonido" src="audio/efectos.wav" data-start="0" data-duration="62.56" data-track-index="14" data-volume="0.45"></audio>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const capShow = (sel, a, b) => {
+        tl.fromTo(sel, { autoAlpha: 0, y: 12, scale: 0.96 }, { autoAlpha: 1, y: 0, scale: 1, duration: 0.15, ease: "back.out(2)" }, a - 0.04);
+        tl.set(sel, { autoAlpha: 0 }, b);
+      };
+      tl.fromTo("#Abr", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 0.100);
+      tl.fromTo("#Ak", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 0.250);
+      tl.fromTo("#At", { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.55, ease: "power3.out" }, 0.400);
+      tl.fromTo("#Ar0", { autoAlpha: 0, x: 80 }, { autoAlpha: 1, x: 0, duration: 0.45, ease: "power3.out" }, 2.103);
+      tl.fromTo("#Ar1", { autoAlpha: 0, x: 80 }, { autoAlpha: 1, x: 0, duration: 0.45, ease: "power3.out" }, 2.403);
+      tl.fromTo("#Ar2", { autoAlpha: 0, x: 80 }, { autoAlpha: 1, x: 0, duration: 0.45, ease: "power3.out" }, 2.703);
+      tl.fromTo("#sA .snum", { scale: 1 }, { scale: 1.18, backgroundColor: "#D99873", color: "#0F0F10", duration: 0.2, stagger: 0.18, yoyo: true, repeat: 1 }, 6.057);
+      tl.to("#At em", { color: "#A65353", duration: 0.3 }, 6.157);
+      tl.set("#sB", { autoAlpha: 1 }, 6.623);
+      tl.fromTo("#sB", { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.6, ease: "power3.inOut" }, 6.623);
+      tl.set("#sA", { autoAlpha: 0 }, 7.273);
+      tl.fromTo("#Bk", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 6.823);
+      tl.fromTo("#Bt", { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 6.973);
+      tl.fromTo("#Bn", { autoAlpha: 0, scale: 0.5, rotation: -8 }, { autoAlpha: 1, scale: 1, rotation: 0, duration: 0.55, ease: "back.out(1.7)" }, 7.529);
+      tl.fromTo("#Bpg", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 7.123);
+      gsap.set(["#Bf0v", "#Bf1v"], { clipPath: "inset(0% 100% 0% 0%)" });
+      tl.fromTo("#Bcard", { autoAlpha: 0, y: 60 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 7.835);
+      tl.fromTo("#Bf0v", { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.6, ease: "steps(14)" }, 8.235);
+      tl.fromTo("#Bf0", { borderColor: "#E7DDD1" }, { borderColor: "#A65353", duration: 0.2 }, 8.135);
+      tl.to("#Bf0", { borderColor: "#E7DDD1", duration: 0.2 }, 9.035);
+      tl.fromTo("#Bf1v", { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.7, ease: "steps(14)" }, 8.785);
+      tl.fromTo("#Bf1", { borderColor: "#E7DDD1" }, { borderColor: "#A65353", duration: 0.2 }, 8.685);
+      tl.to("#Bf1", { borderColor: "#E7DDD1", duration: 0.2 }, 9.685);
+      tl.to("#Bbtn", { scale: 0.94, duration: 0.09, yoyo: true, repeat: 1 }, 9.399);
+      tl.fromTo("#Bc0", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(1.8)" }, 10.587);
+      tl.fromTo("#Bc1", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(1.8)" }, 12.104);
+      tl.set("#sC", { autoAlpha: 1 }, 12.548);
+      tl.fromTo("#sC", { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.6, ease: "power3.inOut" }, 12.548);
+      tl.set("#sB", { autoAlpha: 0 }, 13.198);
+      tl.fromTo("#Ck", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 12.748);
+      tl.fromTo("#Ct", { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 12.898);
+      tl.fromTo("#Cn", { autoAlpha: 0, scale: 0.5, rotation: -8 }, { autoAlpha: 1, scale: 1, rotation: 0, duration: 0.55, ease: "back.out(1.7)" }, 13.447);
+      tl.fromTo("#Cpg", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 13.048);
+      gsap.set(["#Cok", "#Cc0"], { autoAlpha: 0 });
+      tl.fromTo("#Ccard", { autoAlpha: 0, y: 60 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 13.975);
+      tl.fromTo("#Cfill", { scaleX: 0 }, { scaleX: 1, transformOrigin: "0% 50%", duration: 1.10, ease: "power1.inOut" }, 14.705);
+      tl.fromTo("#Clk", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.35, ease: "back.out(1.8)" }, 15.800);
+      tl.fromTo("#Capi", { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, duration: 0.45, ease: "power3.out" }, 16.269);
+      tl.to("#Cw", { scale: 1.08, duration: 0.2, yoyo: true, repeat: 1, ease: "sine.inOut" }, 18.076);
+      tl.fromTo("#Cok", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(1.8)" }, 19.423);
+      tl.fromTo("#Cc0", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(1.8)" }, 20.031);
+      tl.set("#sD", { autoAlpha: 1 }, 20.388);
+      tl.fromTo("#sD", { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.6, ease: "power3.inOut" }, 20.388);
+      tl.set("#sC", { autoAlpha: 0 }, 21.038);
+      tl.fromTo("#Dk", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 20.588);
+      tl.fromTo("#Dt", { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 20.738);
+      tl.fromTo("#Dn", { autoAlpha: 0, scale: 0.5, rotation: -8 }, { autoAlpha: 1, scale: 1, rotation: 0, duration: 0.55, ease: "back.out(1.7)" }, 21.011);
+      tl.fromTo("#Dpg", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 20.888);
+      tl.fromTo("#Dcard", { autoAlpha: 0, y: 60 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 21.158);
+      tl.fromTo("#Ds0", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(1.8)" }, 23.652);
+      tl.fromTo("#Ds1", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(1.8)" }, 24.734);
+      tl.fromTo("#Dp0", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.35, ease: "back.out(1.8)" }, 24.102);
+      tl.fromTo("#Dp1", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.35, ease: "back.out(1.8)" }, 24.452);
+      tl.fromTo("#Dp2", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.35, ease: "back.out(1.8)" }, 24.802);
+      (() => { const o = { v: 0 }; tl.to(o, { v: 48, duration: 1.6, ease: "power2.out", onUpdate: () => { document.querySelector("#Dcn").textContent = Math.round(o.v).toLocaleString("en-US"); } }, 24.102); })();
+      tl.to("#Ds1", { y: -12, duration: 0.18, yoyo: true, repeat: 1, ease: "sine.inOut" }, 25.717);
+      tl.set("#sE", { autoAlpha: 1 }, 26.117);
+      tl.fromTo("#sE", { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.6, ease: "power3.inOut" }, 26.117);
+      tl.set("#sD", { autoAlpha: 0 }, 26.767);
+      tl.fromTo("#Ek", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 26.317);
+      tl.fromTo("#Et", { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 26.467);
+      tl.fromTo("#Echat", { autoAlpha: 0, y: 60 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 26.849);
+      tl.fromTo("#Em0", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.35, ease: "back.out(1.8)" }, 27.822);
+      tl.fromTo("#Em1", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.35, ease: "back.out(1.8)" }, 31.497);
+      tl.fromTo("#Em2", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.35, ease: "back.out(1.8)" }, 32.652);
+      gsap.set("#Epr", { autoAlpha: 0 });
+      tl.fromTo("#Epr", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3 }, 33.488);
+      tl.set("#sF", { autoAlpha: 1 }, 34.018);
+      tl.fromTo("#sF", { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.6, ease: "power3.inOut" }, 34.018);
+      tl.set("#sE", { autoAlpha: 0 }, 34.668);
+      tl.fromTo("#Fk", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 34.218);
+      tl.fromTo("#Ft", { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 34.368);
+      tl.fromTo("#Fr0", { autoAlpha: 0, x: -60 }, { autoAlpha: 1, x: 0, duration: 0.45, ease: "power3.out" }, 34.641);
+      tl.fromTo("#Fd0", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.35, ease: "back.out(1.8)" }, 35.041);
+      tl.fromTo("#Fr1", { autoAlpha: 0, x: -60 }, { autoAlpha: 1, x: 0, duration: 0.45, ease: "power3.out" }, 36.040);
+      tl.fromTo("#Fd1", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.35, ease: "back.out(1.8)" }, 36.440);
+      tl.fromTo("#Fr2", { autoAlpha: 0, x: -60 }, { autoAlpha: 1, x: 0, duration: 0.45, ease: "power3.out" }, 39.541);
+      tl.fromTo("#Fd2", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.35, ease: "back.out(1.8)" }, 39.941);
+      tl.to("#Fr2 span", { color: "#A65353", duration: 0.3 }, 41.279);
+      tl.set("#sG", { autoAlpha: 1 }, 42.767);
+      tl.fromTo("#sG", { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.6, ease: "power3.inOut" }, 42.767);
+      tl.set("#sF", { autoAlpha: 0 }, 43.417);
+      tl.fromTo("#Gk", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 42.967);
+      tl.fromTo("#Gt", { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 43.117);
+      gsap.set("#Gsp", { autoAlpha: 0 });
+      tl.fromTo("#Gcard", { autoAlpha: 0, y: 60 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 43.324);
+      (() => { const o = { v: 0 }; tl.to(o, { v: 150, duration: 0.9, ease: "power2.out", onUpdate: () => { document.querySelector("#Gp").textContent = Math.round(o.v).toLocaleString("en-US"); } }, 43.541); })();
+      tl.fromTo("#Gl0", { autoAlpha: 0, x: -60 }, { autoAlpha: 1, x: 0, duration: 0.45, ease: "power3.out" }, 44.960);
+      tl.fromTo("#Gl1", { autoAlpha: 0, x: -60 }, { autoAlpha: 1, x: 0, duration: 0.45, ease: "power3.out" }, 51.750);
+      tl.fromTo("#Gl2", { autoAlpha: 0, x: -60 }, { autoAlpha: 1, x: 0, duration: 0.45, ease: "power3.out" }, 53.061);
+      tl.fromTo("#Gsp", { autoAlpha: 0, x: 0 }, { autoAlpha: 1, x: 0, duration: 0.45, ease: "power3.out" }, 53.438);
+      tl.to("#Gsp .ich", { rotation: 90, duration: 0.4, ease: "back.out(2)" }, 54.604);
+      tl.set("#sH", { autoAlpha: 1 }, 56.064);
+      tl.fromTo("#sH", { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.6, ease: "power3.inOut" }, 56.064);
+      tl.set("#sG", { autoAlpha: 0 }, 56.714);
+      tl.fromTo("#Hlg", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "back.out(1.8)" }, 56.414);
+      tl.fromTo("#Hwm", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.45, ease: "power3.out" }, 56.664);
+      tl.fromTo("#Ht1", { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 56.564);
+      tl.fromTo("#Ht2", { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 59.120);
+      tl.fromTo("#Hcta", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.5, ease: "back.out(1.8)" }, 57.926);
+      tl.fromTo("#Hsub", { autoAlpha: 0, y: 15 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 60.329);
+      tl.to("#Hcta", { scale: 1.05, duration: 0.4, yoyo: true, repeat: 3, ease: "sine.inOut" }, 60.729);
+      capShow("#cap0", 0.500, 1.198);
+      capShow("#cap1", 1.198, 2.303);
+      capShow("#cap2", 2.303, 3.710);
+      capShow("#cap3", 3.710, 4.526);
+      capShow("#cap4", 4.526, 5.817);
+      capShow("#cap5", 5.817, 7.223);
+      capShow("#cap6", 7.223, 8.441);
+      capShow("#cap7", 8.441, 9.599);
+      capShow("#cap8", 9.599, 10.457);
+      capShow("#cap9", 10.457, 11.644);
+      capShow("#cap10", 11.644, 13.148);
+      capShow("#cap11", 13.148, 14.175);
+      capShow("#cap12", 14.175, 15.800);
+      capShow("#cap13", 15.800, 17.273);
+      capShow("#cap14", 17.273, 18.982);
+      capShow("#cap15", 18.982, 19.928);
+      capShow("#cap16", 19.928, 20.988);
+      capShow("#cap17", 20.988, 21.381);
+      capShow("#cap18", 21.381, 21.969);
+      capShow("#cap19", 21.969, 23.302);
+      capShow("#cap20", 23.302, 24.884);
+      capShow("#cap21", 24.884, 26.717);
+      capShow("#cap22", 26.717, 27.027);
+      capShow("#cap23", 27.027, 27.646);
+      capShow("#cap24", 27.646, 29.395);
+      capShow("#cap25", 29.395, 31.329);
+      capShow("#cap26", 31.329, 32.802);
+      capShow("#cap27", 32.802, 34.618);
+      capShow("#cap28", 34.618, 34.850);
+      capShow("#cap29", 34.850, 35.124);
+      capShow("#cap30", 35.124, 35.677);
+      capShow("#cap31", 35.677, 37.340);
+      capShow("#cap32", 37.340, 39.353);
+      capShow("#cap33", 39.353, 41.279);
+      capShow("#cap34", 41.279, 43.367);
+      capShow("#cap35", 43.367, 43.778);
+      capShow("#cap36", 43.778, 44.150);
+      capShow("#cap37", 44.150, 44.860);
+      capShow("#cap38", 44.860, 47.788);
+      capShow("#cap39", 47.788, 51.217);
+      capShow("#cap40", 51.217, 52.372);
+      capShow("#cap41", 52.372, 53.538);
+      capShow("#cap42", 53.538, 54.604);
+      capShow("#cap43", 54.604, 56.664);
+      capShow("#cap44", 56.664, 58.076);
+      capShow("#cap45", 58.076, 59.220);
+      capShow("#cap46", 59.220, 60.965);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

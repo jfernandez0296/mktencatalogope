@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="330 276 366 430" role="img" aria-label="EnCatalogo.pe">
+  <defs>
+    <clipPath id="ec-bag">
+      <path d="M377 382 H648 Q667 382 667 401 L678 664 Q679 690 652 690 H374 Q347 690 348 664 L357 401 Q357 382 377 382 Z"/>
+    </clipPath>
+  </defs>
+  <path d="M441 382 V350 Q441 300 512 298 Q584 300 584 350 V382" fill="none" stroke="#111111" stroke-width="16" stroke-linecap="round"/>
+  <g clip-path="url(#ec-bag)">
+    <rect x="340" y="370" width="350" height="330" fill="#111111"/>
+    <path d="M340 464 C420 468 470 515 522 515 C580 515 622 470 690 458 V700 H340 Z" fill="#5E2C2C"/>
+    <path d="M340 528 C420 524 470 553 522 553 C582 553 622 532 690 538 V700 H340 Z" fill="#A65353"/>
+    <path d="M340 592 C420 588 482 616 540 618 C600 620 640 607 690 610 V700 H340 Z" fill="#D99873"/>
+    <path d="M340 660 C420 659 482 673 532 672 C590 671 632 655 690 656 V700 H340 Z" fill="#F2E6CE"/>
+  </g>
+</svg>

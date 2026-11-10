@@ -1,0 +1,642 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>EnCatalogo.pe — inventario y traslados</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "DM Serif Display"; font-weight: 400; font-style: normal; src: url("assets/fonts/dm-serif-display-latin-400-normal.woff2") format("woff2"); }
+      @font-face { font-family: "DM Serif Display"; font-weight: 400; font-style: italic; src: url("assets/fonts/dm-serif-display-latin-400-italic.woff2") format("woff2"); }
+      @font-face { font-family: "Inter"; font-weight: 400; src: url("assets/fonts/inter-latin-400-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Inter"; font-weight: 500; src: url("assets/fonts/inter-latin-500-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Inter"; font-weight: 600; src: url("assets/fonts/inter-latin-600-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Inter"; font-weight: 700; src: url("assets/fonts/inter-latin-700-normal.woff2") format("woff2"); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #F2EDE4; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #F2EDE4; font-family: "Inter", system-ui, sans-serif; color: #0F0F10; }
+      .abs { position: absolute; }
+      .sc { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: hidden; }
+      #sB, #sC, #sD, #sE, #sF, #sG, #sH, #sI, .cap { visibility: hidden; opacity: 0; }
+      .eyebrow { font-size: 26px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #A65353; }
+      .badge { padding: 14px 28px; border-radius: 999px; background: #F2E6CE; color: #A65353; font-size: 26px; font-weight: 700; letter-spacing: .12em; white-space: nowrap; }
+      .badge.dk { background: rgba(217,152,115,.18); color: #D99873; }
+      .ttl { font-family: "DM Serif Display", Georgia, serif; font-weight: 400; line-height: 1.04; letter-spacing: -0.01em; }
+      .brand { display: flex; align-items: center; gap: 18px; font-size: 40px; font-weight: 700; }
+      .bchip { display: inline-flex; }
+      .bchip.dk { background: #F2EDE4; padding: 8px; border-radius: 18px; }
+      .card { background: #FFFFFF; border: 2px solid #E7DDD1; border-radius: 40px; box-shadow: 0 2px 4px rgba(15,15,16,.04), 0 24px 60px rgba(15,15,16,.07); }
+      .pic { width: 210px; height: 250px; border-radius: 28px; background: #F2E6CE; display: flex; align-items: center; justify-content: center; }
+      .ptitle { font-family: "DM Serif Display", serif; font-size: 64px; }
+      .pmeta { font-size: 36px; font-weight: 500; color: #57534E; }
+      .qmark { width: 150px; height: 190px; border-radius: 30px; background: #0F0F10; color: #D99873; font-family: "DM Serif Display", serif; font-size: 150px; line-height: 190px; text-align: center; }
+      .chip { display: flex; align-items: center; gap: 14px; height: 104px; padding: 0 26px; border-radius: 999px; border: 2px solid #E7DDD1; font-size: 32px; font-weight: 600; white-space: nowrap; box-shadow: 0 10px 26px rgba(15,15,16,.06); }
+      .chip .qq { width: 44px; height: 44px; border-radius: 22px; background: #A65353; color: #fff; font-size: 28px; display: flex; align-items: center; justify-content: center; }
+      .today { padding: 8px 22px; border-radius: 999px; background: #F2E6CE; color: #A65353; font-size: 26px; font-weight: 700; }
+      .stat b { display: block; font-family: "DM Serif Display", serif; font-weight: 400; font-size: 96px; line-height: 1; }
+      .stat span { display: block; font-size: 30px; font-weight: 500; color: #57534E; margin-top: 10px; }
+      #Bst1 b { color: #A65353; }
+      .thead, .trow { display: grid; grid-template-columns: 1.4fr 1fr .5fr; align-items: center; }
+      .thead { font-size: 24px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #8A8178; padding: 0 0 16px; border-bottom: 2px solid #E7DDD1; }
+      .thead span:last-child, .trow b { text-align: right; }
+      .trow { height: 100px; border-bottom: 2px solid #E7DDD1; font-size: 36px; font-weight: 600; }
+      .trow .tag { justify-self: start; padding: 8px 20px; border-radius: 999px; background: #FAF9F5; border: 2px solid #E7DDD1; font-size: 28px; font-weight: 500; color: #57534E; }
+      .trow b { font-size: 44px; font-weight: 700; }
+      .vchip { padding: 14px 26px; border-radius: 999px; background: #0F0F10; color: #fff; font-size: 30px; font-weight: 600; white-space: nowrap; }
+      .route { display: flex; align-items: center; gap: 18px; font-family: "DM Serif Display", serif; font-size: 58px; }
+      .track { height: 12px; border-radius: 6px; background: #E7DDD1; overflow: hidden; }
+      .track div { width: 100%; height: 100%; background: #D99873; transform-origin: 0% 50%; }
+      .truck { width: 90px; height: 70px; display: flex; justify-content: center; }
+      .step { width: 300px; display: flex; flex-direction: column; align-items: flex-start; gap: 18px; font-size: 30px; font-weight: 600; }
+      #Cs1 { align-items: center; left: 315px !important; }
+      #Cs2 { align-items: flex-end; left: 596px !important; }
+      .dot { width: 56px; height: 56px; border-radius: 28px; background: #3F7A4F; display: flex; align-items: center; justify-content: center; border: 6px solid #fff; box-shadow: 0 0 0 2px #E7DDD1; }
+      .items { font-size: 28px; font-weight: 500; color: #57534E; }
+      .callout { display: flex; align-items: center; gap: 30px; padding: 34px 40px; border-radius: 34px; background: #F2E6CE; border-left: 10px solid #A65353; }
+      .callout b { display: block; font-size: 40px; font-weight: 700; }
+      .callout span { display: block; font-size: 32px; font-weight: 500; color: #57534E; margin-top: 6px; }
+      .ich { flex: none; width: 92px; height: 92px; border-radius: 24px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; }
+      .phone { width: 600px; height: 900px; border-radius: 70px; background: #FFFFFF; border: 14px solid #0F0F10; box-shadow: 0 40px 80px rgba(15,15,16,.18); overflow: hidden; }
+      .hi { font-family: "DM Serif Display", serif; font-size: 50px; }
+      .big { font-family: "DM Serif Display", serif; font-size: 100px; line-height: 1; }
+      .up { display: flex; align-items: center; gap: 10px; font-size: 28px; font-weight: 700; color: #3F7A4F; }
+      .bar { width: 46px; border-radius: 12px 12px 4px 4px; background: #D99873; }
+      .dl { width: 46px; text-align: center; font-size: 22px; font-weight: 600; color: #8A8178; }
+      .low { width: 516px; padding: 26px 26px 10px; border-radius: 28px; background: #FAF9F5; border: 2px solid #E7DDD1; }
+      .low .eyebrow { font-size: 20px; }
+      .lr { display: flex; justify-content: space-between; padding: 12px 0; font-size: 30px; font-weight: 600; border-top: 2px solid #E7DDD1; }
+      .lr b { font-weight: 700; }
+      .inv { font-family: "DM Serif Display", serif; font-size: 60px; }
+      .il { display: flex; justify-content: space-between; font-size: 30px; font-weight: 500; }
+      .il b { font-weight: 700; }
+      .il.sm { font-size: 26px; color: #57534E; }
+      .il.tot { padding-top: 22px; border-top: 2px solid #E7DDD1; font-size: 40px; font-weight: 700; }
+      .stamp { display: flex; align-items: center; gap: 12px; padding: 14px 26px; border-radius: 999px; background: #E6EFE8; color: #2F5E3B; font-size: 28px; font-weight: 700; white-space: nowrap; }
+      .upd { width: 310px; height: 170px; border-radius: 32px; background: #FFFFFF; border: 2px solid #E7DDD1; display: flex; flex-direction: column; justify-content: center; gap: 14px; padding: 0 26px; font-size: 34px; font-weight: 700; box-shadow: 0 12px 30px rgba(15,15,16,.06); }
+      .upd .ich { width: 70px; height: 70px; background: #F2E6CE; border-radius: 20px; }
+      .tick { position: absolute; right: 22px; top: 22px; width: 50px; height: 50px; border-radius: 25px; background: #3F7A4F; display: flex; align-items: center; justify-content: center; }
+      .chat { border-radius: 44px; background: #EFE7DC; overflow: hidden; }
+      .chd { left: 0; top: 0; width: 940px; height: 120px; padding: 0 36px; display: flex; align-items: center; gap: 22px; background: #1C1B1A; color: #fff; }
+      .chd b { display: block; font-size: 34px; font-weight: 700; }
+      .chd i { display: block; font-style: normal; font-size: 24px; color: #B9B2A8; }
+      .wa { width: 70px; height: 70px; border-radius: 35px; background: #25D366; display: flex; align-items: center; justify-content: center; }
+      .bub { max-width: 640px; padding: 22px 28px; border-radius: 28px; font-size: 32px; font-weight: 500; line-height: 1.3; box-shadow: 0 4px 10px rgba(15,15,16,.06); }
+      .bub.in { left: 36px; background: #FFFFFF; border-top-left-radius: 8px; }
+      .bub.out { right: 36px; background: #F2E6CE; border-top-right-radius: 8px; }
+      .bub .mono { display: block; margin-top: 6px; font-weight: 700; color: #0F0F10; }
+      .bub.ph { display: flex; align-items: center; gap: 22px; }
+      .bub.ph b { display: block; font-size: 32px; } .bub.ph span { display: block; font-size: 26px; color: #57534E; }
+      .thumb { width: 104px; height: 104px; border-radius: 20px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; }
+      .paid { left: 36px; display: flex; align-items: center; gap: 12px; padding: 16px 28px; border-radius: 999px; background: #FFFFFF; color: #2F5E3B; font-size: 30px; font-weight: 700; white-space: nowrap; }
+      .frame { border-radius: 40px; overflow: hidden; }
+      .before { left: 0; top: 0; width: 940px; height: 560px; background: radial-gradient(circle at 60% 30%, #8a6d4e, #4b3a2b 70%); filter: saturate(.7) brightness(.85); }
+      .after { left: 0; top: 0; width: 940px; height: 560px; background: #F2EDE4; }
+      .lab { padding: 10px 22px; border-radius: 999px; background: rgba(15,15,16,.7); color: #fff; font-size: 26px; font-weight: 600; }
+      .lab.lt { background: #FFFFFF; color: #0F0F10; border: 2px solid #E7DDD1; }
+      .handle { top: 0; width: 6px; height: 560px; background: #fff; }
+      .knob { position: absolute; left: -33px; top: 247px; width: 72px; height: 72px; border-radius: 36px; background: #D99873; display: flex; align-items: center; justify-content: center; }
+      .ask { padding: 20px 30px; border-radius: 28px 28px 28px 8px; background: #26241F; color: #fff; font-size: 34px; font-weight: 600; }
+      .ans { display: flex; align-items: center; gap: 20px; padding: 22px 30px; border-radius: 28px; background: #F2EDE4; font-size: 32px; font-weight: 600; }
+      .cl { flex: none; width: 64px; height: 64px; border-radius: 18px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; }
+      .illu { font-size: 22px; font-weight: 500; color: #8A8178; }
+      .price { display: flex; align-items: baseline; gap: 14px; }
+      .price small { font-size: 50px; font-weight: 600; }
+      .price span { font-family: "DM Serif Display", serif; font-size: 170px; line-height: 1; }
+      .price i { font-style: normal; font-size: 32px; font-weight: 500; color: #57534E; }
+      .hl { display: flex; align-items: center; gap: 18px; font-size: 36px; font-weight: 600; }
+      .proof .brands { margin-top: 18px; font-family: "DM Serif Display", serif; font-size: 50px; line-height: 1.2; }
+      .proof .brands i { font-style: normal; color: #D99873; }
+      .fine { font-size: 24px; color: #8A8178; }
+      .wm { text-align: center; font-size: 64px; font-weight: 700; }
+      .tag1, .tag2 { text-align: center; font-family: "DM Serif Display", serif; font-size: 92px; line-height: 1.1; }
+      .tag2 { font-style: italic; color: #A65353; }
+      .cta { height: 110px; border-radius: 999px; background: #0F0F10; color: #fff; font-size: 40px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+      .ctas { text-align: center; font-size: 34px; font-weight: 500; color: #57534E; }
+      .cap { position: absolute; left: 40px; width: 1000px; top: 1500px; text-align: center; }
+      .cap span { display: inline-block; background: #0F0F10; color: #fff; font-size: 52px; font-weight: 700; padding: 14px 32px; border-radius: 24px; line-height: 1.18; box-shadow: 0 12px 34px rgba(15,15,16,.25); border: 3px solid rgba(217,152,115,.35); }
+      .cap b { color: #D99873; font-weight: 700; }
+      .qmark.sm { width: 140px; height: 170px; font-size: 130px; line-height: 170px; }
+      .nb { border-radius: 30px; background: #FFFDF6 repeating-linear-gradient(180deg, transparent 0 119px, #E7DDD1 119px 121px); background-position: 0 30px; border: 2px solid #E7DDD1; border-left: 14px solid #D99873; box-shadow: 0 24px 60px rgba(15,15,16,.08); transform: rotate(-1.5deg); }
+      .nbt { font-family: "DM Serif Display", serif; font-style: italic; font-size: 50px; color: #57534E; }
+      .nbr { display: flex; justify-content: space-between; align-items: baseline; font-family: "DM Serif Display", serif; font-style: italic; font-size: 44px; color: #0F0F10; }
+      .nbr b { font-weight: 400; font-size: 60px; display: inline-block; }
+      .strike { width: 80px; height: 8px; border-radius: 4px; background: #A65353; transform: rotate(-12deg); }
+      .ticket { padding: 36px 36px 40px; border-radius: 30px; background: #0F0F10; color: #fff; box-shadow: 0 24px 60px rgba(15,15,16,.2); }
+      .tkp { margin-top: 18px; font-family: "DM Serif Display", serif; font-size: 58px; line-height: 1.05; }
+      .tkm { margin-top: 8px; font-size: 34px; font-weight: 600; color: #B9B2A8; }
+      .tkl { margin-top: 26px; padding-top: 20px; border-top: 2px dashed rgba(255,255,255,.25); font-size: 32px; font-weight: 700; }
+      .real { padding: 30px 36px; border-radius: 30px; background: #FFFFFF; border: 3px solid #A65353; }
+      .real b { display: block; font-family: "DM Serif Display", serif; font-weight: 400; font-size: 120px; line-height: 1; color: #A65353; margin-top: 8px; }
+      .bnum { height: 140px; }
+      .bn { right: 0; top: 0; font-family: "DM Serif Display", serif; font-weight: 400; font-size: 150px; line-height: 1; }
+      .mv { height: 112px; display: flex; align-items: center; gap: 28px; padding: 0 30px 0 12px; border-radius: 30px; background: #FFFFFF; border: 2px solid #E7DDD1; font-size: 38px; font-weight: 600; }
+      .mv .ich { width: 84px; height: 84px; background: #F2E6CE; }
+      .mv span { flex: 1; }
+      .mv b { padding: 8px 26px; border-radius: 999px; font-size: 38px; font-weight: 700; }
+      .mv b.pos { background: #E6EFE8; color: #2F5E3B; } .mv b.neg { background: #F2E6CE; color: #A65353; }
+      .sw { display: flex; align-items: center; gap: 12px; padding: 12px 24px; border-radius: 999px; border: 2px solid #E7DDD1; font-size: 28px; font-weight: 600; background: #0F0F10; color: #fff; }
+      #Csw1 { background: #FFFFFF; color: #8A8178; }
+      .sw i { width: 30px; height: 30px; border-radius: 15px; border: 2px solid #E7DDD1; }
+      .band { border-radius: 22px; background: rgba(217,152,115,.18); border: 3px solid #D99873; }
+      .chd2 { text-align: center; font-size: 30px; font-weight: 700; letter-spacing: .1em; color: #8A8178; }
+      .plc { display: flex; align-items: center; gap: 14px; height: 96px; font-size: 36px; font-weight: 600; white-space: nowrap; }
+      .cell { height: 96px; line-height: 96px; text-align: center; font-family: "DM Serif Display", serif; font-size: 62px; }
+      .cell.zero { color: #A65353; }
+      .ctot { padding-top: 22px; border-top: 2px solid #E7DDD1; text-align: right; font-size: 32px; font-weight: 700; color: #57534E; }
+      .snum { font-family: "DM Serif Display", serif; font-weight: 400; font-size: 120px; line-height: 1; }
+      .pill { padding: 10px 24px; border-radius: 999px; font-size: 28px; font-weight: 700; white-space: nowrap; }
+      .pill.bad { background: #F2E6CE; color: #A65353; } .pill.good { background: #E6EFE8; color: #2F5E3B; }
+      .btn { height: 96px; border-radius: 999px; background: #0F0F10; color: #fff; font-size: 36px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 16px; }
+      .btn.ok { background: #3F7A4F; }
+      .dcard { border-radius: 40px; background: #1C1B1A; border: 2px solid #2E2C29; }
+      .vtrack { width: 8px; border-radius: 4px; background: #3A3733; overflow: hidden; }
+      .vtrack div { width: 100%; height: 100%; background: #3F7A4F; }
+      .vstep { display: flex; align-items: center; gap: 34px; color: #fff; }
+      .vstep b { display: block; font-family: "DM Serif Display", serif; font-weight: 400; font-size: 54px; line-height: 1.05; }
+      .vstep span { display: block; font-size: 28px; font-weight: 500; color: #B9B2A8; margin-top: 4px; }
+      .vdot { width: 82px; height: 82px; border-radius: 41px; background: #57534E; border: 6px solid #1C1B1A; box-shadow: 0 0 0 2px #3A3733; display: flex; align-items: center; justify-content: center; }
+      .know { width: 300px; height: 110px; display: flex; align-items: center; justify-content: center; gap: 14px; border-radius: 999px; background: #F2EDE4; color: #0F0F10; font-size: 32px; font-weight: 700; white-space: nowrap; }
+      .gnum { font-family: "DM Serif Display", serif; font-weight: 400; font-size: 110px; line-height: 1; }
+      .gauge { height: 28px; border-radius: 14px; background: #E7DDD1; overflow: hidden; }
+      .gauge div { width: 100%; height: 100%; background: #3F7A4F; transform-origin: 0% 50%; }
+      .gmin { width: 4px; height: 88px; background: #0F0F10; }
+      .gml { font-size: 24px; font-weight: 700; color: #57534E; white-space: nowrap; }
+      .notif { display: flex; align-items: center; gap: 28px; padding: 30px 36px; border-radius: 36px; background: #FFFFFF; border: 2px solid #E7DDD1; box-shadow: 0 24px 60px rgba(15,15,16,.12); }
+      .nlogo { flex: none; display: inline-flex; padding: 10px; border-radius: 22px; background: #F2EDE4; }
+      .notif i { display: block; font-style: normal; font-size: 24px; font-weight: 600; color: #8A8178; }
+      .notif b { display: block; font-size: 40px; font-weight: 700; margin-top: 4px; }
+      .notif span { display: block; font-size: 32px; font-weight: 500; color: #57534E; margin-top: 4px; }
+      .qr { display: flex; justify-content: space-between; align-items: center; height: 76px; border-bottom: 2px solid #E7DDD1; font-size: 28px; font-weight: 600; }
+      .qr b { padding: 6px 16px; border-radius: 999px; font-size: 22px; font-weight: 700; }
+      .qr b.bad { background: #F2E6CE; color: #A65353; } .qr b.warn { background: #FAF9F5; color: #57534E; border: 2px solid #E7DDD1; }
+      .mrow span { display: block; font-size: 26px; font-weight: 600; margin-bottom: 12px; }
+      .mtrack { height: 22px; border-radius: 11px; background: #F2EDE4; }
+      .mfill { height: 100%; border-radius: 11px; background: #D99873; }
+      .zero0 { display: flex; justify-content: center; align-items: baseline; gap: 16px; color: #D99873; }
+      .zero0 small { font-size: 90px; font-weight: 600; }
+      .zero0 span { display: inline-block; font-family: "DM Serif Display", serif; font-size: 300px; line-height: 1; }
+      .zl { text-align: center; font-size: 44px; font-weight: 600; color: #F2EDE4; }
+      .wh { width: 300px; height: 260px; border-radius: 34px; background: #1C1B1A; border: 2px solid #2E2C29; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: #fff; }
+      .wh span { font-size: 32px; font-weight: 600; } .wh b { font-size: 36px; font-weight: 700; color: #D99873; }
+
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="57.67" data-fps="30" data-width="1080" data-height="1920">
+      <div class="sc" id="sA" style="background:#F2EDE4">
+        <div class="abs brand" id="Abr" style="left:70px;top:130px;color:#0F0F10"><span class="bchip"><img src="assets/img/encatalogo-logo.svg" alt="EnCatalogo.pe" style="height:54px;width:auto;display:block"></span>EnCatalogo.pe</div>
+        <div class="abs badge" id="Ak" style="left:70px;top:290px">INVENTARIO Y TRASLADOS</div><div class="abs ttl" id="At" style="left:70px;top:370px;width:940px;font-size:100px;color:#0F0F10">¿Tu stock dice la verdad?</div>
+        <div class="abs nb" id="Anb" style="left:70px;top:640px;width:560px;height:700px">
+          <div class="abs nbt" style="left:56px;top:40px">Cuaderno de stock</div>
+          <div class="abs nbr" id="Ar0" style="left:56px;top:150px;width:460px"><span>Polo Lima · M</span><b id="Ab0">3</b></div><div class="abs nbr" id="Ar1" style="left:56px;top:270px;width:460px"><span>Polo Lima · L</span><b id="Ab1">5</b></div><div class="abs nbr" id="Ar2" style="left:56px;top:390px;width:460px"><span>Jean Nara · 30</span><b id="Ab2">2</b></div><div class="abs nbr" id="Ar3" style="left:56px;top:510px;width:460px"><span>Blazer Siena · S</span><b id="Ab3">4</b></div>
+          <div class="abs strike" id="Ast" style="left:450px;top:186px"></div>
+        </div>
+        <div class="abs ticket" id="Atk" style="left:660px;top:640px;width:350px">
+          <div class="eyebrow" style="color:#D99873">VENTA</div>
+          <div class="tkp">Polo Lima</div>
+          <div class="tkm">Talla M</div>
+          <div class="tkl">Última unidad</div>
+        </div>
+        <div class="abs real" id="Areal" style="left:660px;top:1010px;width:350px">
+          <div class="eyebrow" style="color:#8A8178">EN LA TIENDA</div>
+          <b>0</b>
+        </div>
+        <div class="abs qmark sm" id="Aq" style="left:860px;top:1200px">?</div>
+      </div>
+      <div class="sc" id="sB" style="background:#FAF9F5">
+        <div class="abs badge" id="Bk" style="left:70px;top:250px">STOCK EN TIEMPO REAL</div><div class="abs ttl" id="Bt" style="left:70px;top:330px;width:940px;font-size:92px;color:#0F0F10">Se actualiza solo</div>
+        <div class="abs card" id="Bcard" style="left:70px;top:520px;width:940px;height:330px">
+          <div class="abs pic" style="left:40px;top:40px"><svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-label="shirt">
+  <path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z" />
+</svg></div>
+          <div class="abs ptitle" style="left:290px;top:60px">Vestido Emilia</div>
+          <div class="abs pmeta" style="left:290px;top:148px">Talla M · Negro</div>
+          <div class="abs eyebrow" style="left:290px;top:226px;color:#8A8178">STOCK</div>
+          <div class="abs bnum" style="left:640px;top:96px;width:260px"><b class="abs bn" id="Bn0">8</b><b class="abs bn" id="Bn1">7</b><b class="abs bn" id="Bn2">19</b><b class="abs bn" id="Bn3">20</b><b class="abs bn" id="Bn4">14</b></div>
+        </div>
+        <div class="abs mv" id="Bm0" style="left:70px;top:900px;width:940px"><div class="ich"><svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="receipt">
+  <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z" />
+  <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8" />
+  <path d="M12 17.5v-11" />
+</svg></div><span>Venta</span><b class="neg">−1</b></div><div class="abs mv" id="Bm1" style="left:70px;top:1032px;width:940px"><div class="ich"><svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="package">
+  <path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z" />
+  <path d="M12 22V12" />
+  <path d="m3.3 7 7.703 4.734a2 2 0 0 0 1.994 0L20.7 7" />
+  <path d="m7.5 4.27 9 5.15" />
+</svg></div><span>Recepción</span><b class="pos">+12</b></div><div class="abs mv" id="Bm2" style="left:70px;top:1164px;width:940px"><div class="ich"><svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="arrow-right">
+  <path d="M5 12h14" />
+  <path d="m12 5 7 7-7 7" />
+</svg></div><span>Devolución</span><b class="pos">+1</b></div><div class="abs mv" id="Bm3" style="left:70px;top:1296px;width:940px"><div class="ich"><svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="truck">
+  <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2" />
+  <path d="M15 18H9" />
+  <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14" />
+  <circle cx="17" cy="18" r="2" />
+  <circle cx="7" cy="18" r="2" />
+</svg></div><span>Traslado</span><b class="neg">−6</b></div>
+      </div>
+      <div class="sc" id="sC" style="background:#F2EDE4">
+        <div class="abs badge" id="Ck" style="left:70px;top:250px">POR TIENDA · ALMACÉN · VARIANTE</div><div class="abs ttl" id="Ct" style="left:70px;top:330px;width:940px;font-size:86px;color:#0F0F10">Cada talla y color, en cada sede</div>
+        <div class="abs card" id="Ccard" style="left:70px;top:590px;width:940px;height:780px">
+          <div class="abs ptitle" style="left:44px;top:36px;font-size:54px">Blazer Siena</div>
+          <div class="abs sw" id="Csw0" style="left:560px;top:44px"><i style="background:#1C1B1A"></i>Negro</div>
+          <div class="abs sw" id="Csw1" style="left:740px;top:44px"><i style="background:#D8C3A5"></i>Arena</div>
+          <div class="abs band" id="Chr" style="left:20px;top:240px;width:900px;height:232px"></div>
+          <div class="abs band" id="Cha" style="left:20px;top:472px;width:900px;height:116px"></div>
+          <div class="abs band" id="Chc" style="left:510px;top:150px;width:130px;height:438px"></div>
+          <div class="abs chd2" style="left:380px;top:170px;width:130px">S</div><div class="abs chd2" style="left:510px;top:170px;width:130px">M</div><div class="abs chd2" style="left:640px;top:170px;width:130px">L</div><div class="abs chd2" style="left:770px;top:170px;width:130px">XL</div>
+          <div class="abs plc" id="Cp0" style="left:44px;top:250px"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="store">
+  <path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7" />
+  <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+  <path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4" />
+  <path d="M2 7h20" />
+  <path d="M22 7v3a2 2 0 0 1-2 2a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12a2 2 0 0 1-2-2V7" />
+</svg><span>Miraflores</span></div><div class="abs plc" id="Cp1" style="left:44px;top:366px"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="store">
+  <path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7" />
+  <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+  <path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4" />
+  <path d="M2 7h20" />
+  <path d="M22 7v3a2 2 0 0 1-2 2a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12a2 2 0 0 1-2-2V7" />
+</svg><span>San Isidro</span></div><div class="abs plc" id="Cp2" style="left:44px;top:482px"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="warehouse">
+  <path d="M22 8.35V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8.35A2 2 0 0 1 3.26 6.5l8-3.2a2 2 0 0 1 1.48 0l8 3.2A2 2 0 0 1 22 8.35Z" />
+  <path d="M6 18h12" />
+  <path d="M6 14h12" />
+  <rect width="12" height="12" x="6" y="10" />
+</svg><span>Almacén</span></div>
+          <div class="abs" id="Cg0" style="left:0;top:0"><div class="abs cell" style="left:380px;top:250px;width:130px">3</div><div class="abs cell zero" style="left:510px;top:250px;width:130px">0</div><div class="abs cell" style="left:640px;top:250px;width:130px">4</div><div class="abs cell" style="left:770px;top:250px;width:130px">2</div><div class="abs cell" style="left:380px;top:366px;width:130px">5</div><div class="abs cell" style="left:510px;top:366px;width:130px">2</div><div class="abs cell" style="left:640px;top:366px;width:130px">1</div><div class="abs cell zero" style="left:770px;top:366px;width:130px">0</div><div class="abs cell" style="left:380px;top:482px;width:130px">12</div><div class="abs cell" style="left:510px;top:482px;width:130px">18</div><div class="abs cell" style="left:640px;top:482px;width:130px">9</div><div class="abs cell" style="left:770px;top:482px;width:130px">6</div><div class="abs ctot" style="left:380px;top:618px;width:520px">62 unidades</div></div>
+          <div class="abs" id="Cg1" style="left:0;top:0"><div class="abs cell" style="left:380px;top:250px;width:130px">1</div><div class="abs cell" style="left:510px;top:250px;width:130px">4</div><div class="abs cell" style="left:640px;top:250px;width:130px">2</div><div class="abs cell zero" style="left:770px;top:250px;width:130px">0</div><div class="abs cell zero" style="left:380px;top:366px;width:130px">0</div><div class="abs cell" style="left:510px;top:366px;width:130px">3</div><div class="abs cell" style="left:640px;top:366px;width:130px">3</div><div class="abs cell" style="left:770px;top:366px;width:130px">1</div><div class="abs cell" style="left:380px;top:482px;width:130px">8</div><div class="abs cell" style="left:510px;top:482px;width:130px">10</div><div class="abs cell" style="left:640px;top:482px;width:130px">14</div><div class="abs cell" style="left:770px;top:482px;width:130px">5</div><div class="abs ctot" style="left:380px;top:618px;width:520px">51 unidades</div></div>
+        </div>
+      </div>
+      <div class="sc" id="sD" style="background:#FAF9F5">
+        <div class="abs badge" id="Dk" style="left:70px;top:250px">TRASLADOS</div><div class="abs ttl" id="Dt" style="left:70px;top:330px;width:940px;font-size:88px;color:#0F0F10">Mueve stock a donde se vende</div>
+        <div class="abs card st" id="Dl" style="left:70px;top:560px;width:450px;height:400px">
+          <div class="abs plc" style="left:36px;top:36px"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="store">
+  <path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7" />
+  <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+  <path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4" />
+  <path d="M2 7h20" />
+  <path d="M22 7v3a2 2 0 0 1-2 2a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12a2 2 0 0 1-2-2V7" />
+</svg><span>Miraflores</span></div>
+          <div class="abs pmeta" style="left:36px;top:110px">Talla M</div>
+          <b class="abs snum" id="Dn0" style="left:36px;top:180px;color:#A65353">0</b>
+          <div class="abs pill bad" id="Dp0" style="left:36px;top:318px">Sin stock</div>
+        </div>
+        <div class="abs card st" id="Dr" style="left:560px;top:560px;width:450px;height:400px">
+          <div class="abs plc" style="left:36px;top:36px"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="warehouse">
+  <path d="M22 8.35V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8.35A2 2 0 0 1 3.26 6.5l8-3.2a2 2 0 0 1 1.48 0l8 3.2A2 2 0 0 1 22 8.35Z" />
+  <path d="M6 18h12" />
+  <path d="M6 14h12" />
+  <rect width="12" height="12" x="6" y="10" />
+</svg><span>Almacén</span></div>
+          <div class="abs pmeta" style="left:36px;top:110px">Talla M</div>
+          <b class="abs snum" style="left:36px;top:180px">42</b>
+          <div class="abs pill good" id="Dp1" style="left:36px;top:318px">Disponible</div>
+        </div>
+        <div class="abs card" id="Df" style="left:70px;top:990px;width:940px;height:420px">
+          <div class="abs eyebrow" style="left:44px;top:40px">NUEVO TRASLADO</div>
+          <div class="abs route" style="left:44px;top:96px">Almacén <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="arrow-right">
+  <path d="M5 12h14" />
+  <path d="m12 5 7 7-7 7" />
+</svg> Miraflores</div>
+          <div class="abs pmeta" style="left:44px;top:200px">18 prendas · Polo Lima · Talla M</div>
+          <div class="abs btn" id="Dbtn" style="left:44px;top:290px;width:852px">Crear traslado</div>
+          <div class="abs btn ok" id="Dok" style="left:44px;top:290px;width:852px"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="circle-check">
+  <circle cx="12" cy="12" r="10" />
+  <path d="m9 12 2 2 4-4" />
+</svg> Traslado creado</div>
+        </div>
+      </div>
+      <div class="sc" id="sE" style="background:#0F0F10">
+        <div class="abs badge dk" id="Ek" style="left:70px;top:250px">TRASLADO TRAZABLE</div><div class="abs ttl" id="Et" style="left:70px;top:330px;width:940px;font-size:92px;color:#FFFFFF">Síguelo paso a paso</div>
+        <div class="abs dcard" id="Ecard" style="left:70px;top:540px;width:940px;height:560px">
+          <div class="abs eyebrow" style="left:50px;top:44px;color:#D99873">TRASLADO #0187</div>
+          <div class="abs vtrack" style="left:97px;top:150px;height:320px"><div id="Efill"></div></div>
+          <div class="abs vstep" id="Es0" style="left:60px;top:125px"><div class="vdot" id="Ed0"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-label="check">
+  <path d="M20 6 9 17l-5-5" />
+</svg></div><div><b>Preparado</b><span>Almacén</span></div></div><div class="abs vstep" id="Es1" style="left:60px;top:285px"><div class="vdot" id="Ed1"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-label="check">
+  <path d="M20 6 9 17l-5-5" />
+</svg></div><div><b>En camino</b><span>18 prendas en ruta</span></div></div><div class="abs vstep" id="Es2" style="left:60px;top:445px"><div class="vdot" id="Ed2"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-label="check">
+  <path d="M20 6 9 17l-5-5" />
+</svg></div><div><b>Recibido</b><span>Miraflores</span></div></div>
+          <div class="abs etruck" id="Etr" style="left:760px;top:125px"><svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#D99873" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-label="truck">
+  <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2" />
+  <path d="M15 18H9" />
+  <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14" />
+  <circle cx="17" cy="18" r="2" />
+  <circle cx="7" cy="18" r="2" />
+</svg></div>
+        </div>
+        <div class="abs know" id="Ek0" style="left:70px;top:1150px"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="package">
+  <path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z" />
+  <path d="M12 22V12" />
+  <path d="m3.3 7 7.703 4.734a2 2 0 0 0 1.994 0L20.7 7" />
+  <path d="m7.5 4.27 9 5.15" />
+</svg><span>Qué tienes</span></div><div class="abs know" id="Ek1" style="left:390px;top:1150px"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="map-pin">
+  <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
+  <circle cx="12" cy="10" r="3" />
+</svg><span>Dónde está</span></div><div class="abs know" id="Ek2" style="left:710px;top:1150px"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="bell-ring">
+  <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+  <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+  <path d="M4 2C2.8 3.7 2 5.7 2 8" />
+  <path d="M22 8c0-2.3-.8-4.3-2-6" />
+</svg><span>Qué falta</span></div>
+      </div>
+      <div class="sc" id="sF" style="background:#F2EDE4">
+        <div class="abs badge" id="Fk" style="left:70px;top:250px">ALERTAS DE STOCK</div><div class="abs ttl" id="Ft" style="left:70px;top:330px;width:940px;font-size:86px;color:#0F0F10">Repón antes de quedarte sin talla</div>
+        <div class="abs card" id="Fcard" style="left:70px;top:600px;width:940px;height:400px">
+          <div class="abs ptitle" style="left:44px;top:40px;font-size:54px">Blazer Siena · Talla S</div>
+          <div class="abs eyebrow" style="left:44px;top:124px;color:#8A8178">STOCK</div>
+          <b class="abs gnum" id="Fn" style="left:44px;top:184px">14</b>
+          <div class="abs gauge" style="left:44px;top:330px;width:852px"><div id="Fbar"></div></div>
+          <div class="abs gmin" style="left:287px;top:300px"></div>
+          <div class="abs gml" style="left:301px;top:262px">Mínimo 4</div>
+        </div>
+        <div class="abs notif" id="Fnt" style="left:70px;top:1050px;width:940px">
+          <span class="nlogo"><img src="assets/img/encatalogo-logo.svg" alt="EnCatalogo.pe" style="height:64px;width:auto;display:block"></span>
+          <div><i>EnCatalogo · ahora</i><b>Reponer pronto</b><span>Blazer Siena · Talla S · quedan 3</span></div>
+        </div>
+        <div class="abs stamp" id="Fok" style="left:70px;top:1300px"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#3F7A4F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="circle-check">
+  <circle cx="12" cy="12" r="10" />
+  <path d="m9 12 2 2 4-4" />
+</svg> Sin ventas perdidas</div>
+      </div>
+      <div class="sc" id="sG" style="background:#FAF9F5">
+        <div class="abs badge" id="Gk" style="left:70px;top:250px">APP MÓVIL</div><div class="abs ttl" id="Gt" style="left:70px;top:330px;width:940px;font-size:92px;color:#0F0F10">Tus quiebres, en el celular</div>
+        <div class="abs phone" id="Gph" style="left:240px;top:570px;height:860px">
+          <div class="abs hi" style="left:44px;top:56px">Inventario</div>
+          <div class="abs eyebrow" style="left:44px;top:140px;font-size:22px">QUIEBRES DE STOCK</div>
+          <div class="abs qr" id="Gq0" style="left:44px;top:190px;width:484px"><span>Jean Nara · 30</span><b class="bad">Agotado</b></div><div class="abs qr" id="Gq1" style="left:44px;top:276px;width:484px"><span>Polo Lima · M</span><b class="bad">Agotado</b></div><div class="abs qr" id="Gq2" style="left:44px;top:362px;width:484px"><span>Blazer Siena · S</span><b class="warn">Quedan 3</b></div>
+          <div class="abs eyebrow" style="left:44px;top:480px;font-size:22px">LOS QUE MÁS SE MUEVEN</div>
+          <div class="abs mrow" style="left:44px;top:530px;width:484px"><span>Vestido Emilia</span><div class="mtrack"><div class="mfill" id="Gm0" style="width:100%"></div></div></div><div class="abs mrow" style="left:44px;top:630px;width:484px"><span>Polo Lima</span><div class="mtrack"><div class="mfill" id="Gm1" style="width:78%"></div></div></div><div class="abs mrow" style="left:44px;top:730px;width:484px"><span>Pantalón Nara</span><div class="mtrack"><div class="mfill" id="Gm2" style="width:58%"></div></div></div>
+        </div>
+      </div>
+      <div class="sc" id="sH" style="background:#0F0F10">
+        <div class="abs badge dk" id="Hk" style="left:70px;top:250px">UN SOLO PLAN</div><div class="abs ttl" id="Ht" style="left:70px;top:330px;width:940px;font-size:100px;color:#FFFFFF">Almacenes gratis</div>
+        <div class="abs zero0" id="Hz" style="left:0;top:520px;width:1080px"><small>S/</small><span>0</span></div>
+        <div class="abs zl" id="Hzl" style="left:0;top:890px;width:1080px">por cada almacén</div>
+        <div class="abs wh" id="Hw0" style="left:70px;top:1000px"><svg width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#D99873" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-label="warehouse">
+  <path d="M22 8.35V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8.35A2 2 0 0 1 3.26 6.5l8-3.2a2 2 0 0 1 1.48 0l8 3.2A2 2 0 0 1 22 8.35Z" />
+  <path d="M6 18h12" />
+  <path d="M6 14h12" />
+  <rect width="12" height="12" x="6" y="10" />
+</svg><span>Almacén 1</span><b>S/ 0</b></div><div class="abs wh" id="Hw1" style="left:390px;top:1000px"><svg width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#D99873" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-label="warehouse">
+  <path d="M22 8.35V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8.35A2 2 0 0 1 3.26 6.5l8-3.2a2 2 0 0 1 1.48 0l8 3.2A2 2 0 0 1 22 8.35Z" />
+  <path d="M6 18h12" />
+  <path d="M6 14h12" />
+  <rect width="12" height="12" x="6" y="10" />
+</svg><span>Almacén 2</span><b>S/ 0</b></div><div class="abs wh" id="Hw2" style="left:710px;top:1000px"><svg width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#D99873" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-label="warehouse">
+  <path d="M22 8.35V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8.35A2 2 0 0 1 3.26 6.5l8-3.2a2 2 0 0 1 1.48 0l8 3.2A2 2 0 0 1 22 8.35Z" />
+  <path d="M6 18h12" />
+  <path d="M6 14h12" />
+  <rect width="12" height="12" x="6" y="10" />
+</svg><span>Almacén 3</span><b>S/ 0</b></div>
+        <div class="abs fine" id="Hf" style="left:70px;top:1300px;color:#B9B2A8">Plan desde S/ 150/mes con 1 tienda · IGV incluido</div>
+      </div>
+      <div class="sc" id="sI" style="background:#F2EDE4">
+        <div class="abs" id="Ilg" style="left:390px;top:300px"><img src="assets/img/encatalogo-logo.svg" alt="EnCatalogo.pe" style="height:300px;width:auto;display:block"></div>
+        <div class="abs wm" id="Iwm" style="left:0;top:650px;width:1080px">EnCatalogo.pe</div>
+        <div class="abs tag1" id="It1" style="left:0;top:770px;width:1080px">Tu mercadería en orden.</div>
+        <div class="abs tag2" id="It2" style="left:0;top:880px;width:1080px">Tu negocio bajo control.</div>
+        <div class="abs cta" id="Icta" style="left:240px;top:1060px;width:600px">Probar 7 días gratis</div>
+        <div class="abs ctas" id="Isub" style="left:0;top:1190px;width:1080px">Sin tarjeta · encatalogo.pe</div>
+      </div>
+      <div class="cap" id="cap0" data-layout-allow-overlap="true"><span>Vendiste la</span></div>
+      <div class="cap" id="cap1" data-layout-allow-overlap="true"><span>última talla M… y tu</span></div>
+      <div class="cap" id="cap2" data-layout-allow-overlap="true"><span>cuaderno todavía dice</span></div>
+      <div class="cap" id="cap3" data-layout-allow-overlap="true"><span>que te quedan tres.</span></div>
+      <div class="cap" id="cap4" data-layout-allow-overlap="true"><span>¿Te suena?</span></div>
+      <div class="cap" id="cap5" data-layout-allow-overlap="true"><span>Con <b>EnCatalogo,</b></span></div>
+      <div class="cap" id="cap6" data-layout-allow-overlap="true"><span>tu inventario se</span></div>
+      <div class="cap" id="cap7" data-layout-allow-overlap="true"><span>actualiza solo:</span></div>
+      <div class="cap" id="cap8" data-layout-allow-overlap="true"><span>cada vez que vendes,</span></div>
+      <div class="cap" id="cap9" data-layout-allow-overlap="true"><span>recibes, devuelves</span></div>
+      <div class="cap" id="cap10" data-layout-allow-overlap="true"><span>o trasladas.</span></div>
+      <div class="cap" id="cap11" data-layout-allow-overlap="true"><span>Ves el <b>stock</b> de cada</span></div>
+      <div class="cap" id="cap12" data-layout-allow-overlap="true"><span>producto por <b>tienda,</b></span></div>
+      <div class="cap" id="cap13" data-layout-allow-overlap="true"><span>por almacén y por</span></div>
+      <div class="cap" id="cap14" data-layout-allow-overlap="true"><span>variante: talla y color.</span></div>
+      <div class="cap" id="cap15" data-layout-allow-overlap="true"><span>¿Miraflores se quedó</span></div>
+      <div class="cap" id="cap16" data-layout-allow-overlap="true"><span>sin talla M y en</span></div>
+      <div class="cap" id="cap17" data-layout-allow-overlap="true"><span>el almacén sobran?</span></div>
+      <div class="cap" id="cap18" data-layout-allow-overlap="true"><span>Creas un <b>traslado</b></span></div>
+      <div class="cap" id="cap19" data-layout-allow-overlap="true"><span>en segundos.</span></div>
+      <div class="cap" id="cap20" data-layout-allow-overlap="true"><span>Y lo sigues paso a</span></div>
+      <div class="cap" id="cap21" data-layout-allow-overlap="true"><span>paso: preparado, en</span></div>
+      <div class="cap" id="cap22" data-layout-allow-overlap="true"><span>camino, recibido.</span></div>
+      <div class="cap" id="cap23" data-layout-allow-overlap="true"><span>Sabes qué tienes,</span></div>
+      <div class="cap" id="cap24" data-layout-allow-overlap="true"><span>dónde está y qué falta.</span></div>
+      <div class="cap" id="cap25" data-layout-allow-overlap="true"><span>Antes de quedarte</span></div>
+      <div class="cap" id="cap26" data-layout-allow-overlap="true"><span>sin talla,</span></div>
+      <div class="cap" id="cap27" data-layout-allow-overlap="true"><span>te llega una alerta</span></div>
+      <div class="cap" id="cap28" data-layout-allow-overlap="true"><span>para <b>reponer.</b></span></div>
+      <div class="cap" id="cap29" data-layout-allow-overlap="true"><span>Así no pierdes</span></div>
+      <div class="cap" id="cap30" data-layout-allow-overlap="true"><span>ventas.</span></div>
+      <div class="cap" id="cap31" data-layout-allow-overlap="true"><span>Y desde el <b>celular,</b></span></div>
+      <div class="cap" id="cap32" data-layout-allow-overlap="true"><span>ves tus quiebres de</span></div>
+      <div class="cap" id="cap33" data-layout-allow-overlap="true"><span><b>stock</b> y los productos</span></div>
+      <div class="cap" id="cap34" data-layout-allow-overlap="true"><span>que más se mueven.</span></div>
+      <div class="cap" id="cap35" data-layout-allow-overlap="true"><span>Y tus almacenes no</span></div>
+      <div class="cap" id="cap36" data-layout-allow-overlap="true"><span>cuestan nada extra:</span></div>
+      <div class="cap" id="cap37" data-layout-allow-overlap="true"><span>son <b>gratis.</b></span></div>
+      <div class="cap" id="cap38" data-layout-allow-overlap="true"><span><b>EnCatalogo.</b> Tu</span></div>
+      <div class="cap" id="cap39" data-layout-allow-overlap="true"><span>mercadería en <b>orden.</b></span></div>
+      <div class="cap" id="cap40" data-layout-allow-overlap="true"><span>Prueba siete días</span></div>
+      <div class="cap" id="cap41" data-layout-allow-overlap="true"><span><b>gratis,</b> sin tarjeta.</span></div>
+      <audio id="v_e1" src="audio/seg/e1.wav" data-start="0.5" data-duration="6.135" data-track-index="12" data-volume="1"></audio>
+      <audio id="v_e2" src="audio/seg/e2.wav" data-start="6.885" data-duration="7.179" data-track-index="12" data-volume="1"></audio>
+      <audio id="v_e3" src="audio/seg/e3.wav" data-start="14.314" data-duration="6.347" data-track-index="12" data-volume="1"></audio>
+      <audio id="v_e4" src="audio/seg/e4.wav" data-start="20.91" data-duration="5.338" data-track-index="12" data-volume="1"></audio>
+      <audio id="v_e5" src="audio/seg/e5.wav" data-start="26.498" data-duration="8.025" data-track-index="12" data-volume="1"></audio>
+      <audio id="v_e6" src="audio/seg/e6.wav" data-start="34.774" data-duration="5.73" data-track-index="12" data-volume="1"></audio>
+      <audio id="v_e7" src="audio/seg/e7.wav" data-start="40.754" data-duration="5.154" data-track-index="12" data-volume="1"></audio>
+      <audio id="v_e8" src="audio/seg/e8.wav" data-start="46.158" data-duration="3.974" data-track-index="12" data-volume="1"></audio>
+      <audio id="v_e9" src="audio/seg/e9.wav" data-start="50.382" data-duration="5.293" data-track-index="12" data-volume="1"></audio>
+      <audio id="musica-fondo" src="audio/musica-duck.wav" data-start="0" data-duration="57.67" data-track-index="13" data-volume="0.8"></audio>
+      <audio id="efectos-sonido" src="audio/efectos.wav" data-start="0" data-duration="57.67" data-track-index="14" data-volume="0.45"></audio>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const capShow = (sel, a, b) => {
+        tl.fromTo(sel, { autoAlpha: 0, y: 12, scale: 0.96 }, { autoAlpha: 1, y: 0, scale: 1, duration: 0.15, ease: "back.out(2)" }, a - 0.04);
+        tl.set(sel, { autoAlpha: 0 }, b);
+      };
+      gsap.set(["#Aq", "#Ast", "#Areal"], { autoAlpha: 0 });
+      tl.fromTo("#Abr", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 0.100);
+      tl.fromTo("#Ak", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 0.250);
+      tl.fromTo("#At", { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.55, ease: "power3.out" }, 0.400);
+      tl.fromTo("#Atk", { autoAlpha: 0, x: 80 }, { autoAlpha: 1, x: 0, duration: 0.45, ease: "power3.out" }, 0.400);
+      tl.fromTo("#Atk .tkl", { color: "#FFFFFF" }, { color: "#D99873", duration: 0.3 }, 1.326);
+      tl.fromTo("#Anb", { autoAlpha: 0, y: 60 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 2.420);
+      tl.fromTo("#sA .nbr", { autoAlpha: 0, x: -20 }, { autoAlpha: 1, x: 0, duration: 0.3, stagger: 0.08 }, 2.670);
+      tl.to("#Ab0", { scale: 1.4, color: "#A65353", duration: 0.25, yoyo: true, repeat: 1 }, 5.197);
+      tl.fromTo("#Ast", { autoAlpha: 1, scaleX: 0 }, { autoAlpha: 1, scaleX: 1, transformOrigin: "0% 50%", duration: 0.3, ease: "power2.out" }, 5.697);
+      tl.fromTo("#Areal", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.8)" }, 5.797);
+      tl.fromTo("#Aq", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.8)" }, 6.050);
+      tl.to("#Aq", { rotation: 12, duration: 0.12, yoyo: true, repeat: 3, ease: "sine.inOut" }, 6.550);
+      tl.set("#sB", { autoAlpha: 1 }, 6.285);
+      tl.fromTo("#sB", { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.6, ease: "power3.inOut" }, 6.285);
+      tl.set("#sA", { autoAlpha: 0 }, 6.935);
+      tl.fromTo("#Bk", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 6.485);
+      tl.fromTo("#Bt", { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 6.635);
+      gsap.set(["#Bn1", "#Bn2", "#Bn3", "#Bn4"], { autoAlpha: 0 });
+      tl.fromTo("#Bcard", { autoAlpha: 0, y: 60 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 7.891);
+      tl.fromTo("#Bm0", { autoAlpha: 0, x: -80 }, { autoAlpha: 1, x: 0, duration: 0.45, ease: "power3.out" }, 11.082);
+      tl.set("#Bn0", { autoAlpha: 0 }, 11.202);
+      tl.fromTo("#Bn1", { autoAlpha: 0, y: -40 }, { autoAlpha: 1, y: 0, duration: 0.25, ease: "back.out(2)" }, 11.202);
+      tl.fromTo("#Bm0", { backgroundColor: "#F2E6CE" }, { backgroundColor: "#FFFFFF", duration: 0.8, immediateRender: false }, 11.382);
+      tl.fromTo("#Bm1", { autoAlpha: 0, x: -80 }, { autoAlpha: 1, x: 0, duration: 0.45, ease: "power3.out" }, 11.659);
+      tl.set("#Bn1", { autoAlpha: 0 }, 11.779);
+      tl.fromTo("#Bn2", { autoAlpha: 0, y: -40 }, { autoAlpha: 1, y: 0, duration: 0.25, ease: "back.out(2)" }, 11.779);
+      tl.fromTo("#Bm1", { backgroundColor: "#F2E6CE" }, { backgroundColor: "#FFFFFF", duration: 0.8, immediateRender: false }, 11.959);
+      tl.fromTo("#Bm2", { autoAlpha: 0, x: -80 }, { autoAlpha: 1, x: 0, duration: 0.45, ease: "power3.out" }, 12.307);
+      tl.set("#Bn2", { autoAlpha: 0 }, 12.427);
+      tl.fromTo("#Bn3", { autoAlpha: 0, y: -40 }, { autoAlpha: 1, y: 0, duration: 0.25, ease: "back.out(2)" }, 12.427);
+      tl.fromTo("#Bm2", { backgroundColor: "#F2E6CE" }, { backgroundColor: "#FFFFFF", duration: 0.8, immediateRender: false }, 12.607);
+      tl.fromTo("#Bm3", { autoAlpha: 0, x: -80 }, { autoAlpha: 1, x: 0, duration: 0.45, ease: "power3.out" }, 13.172);
+      tl.set("#Bn3", { autoAlpha: 0 }, 13.292);
+      tl.fromTo("#Bn4", { autoAlpha: 0, y: -40 }, { autoAlpha: 1, y: 0, duration: 0.25, ease: "back.out(2)" }, 13.292);
+      tl.fromTo("#Bm3", { backgroundColor: "#F2E6CE" }, { backgroundColor: "#FFFFFF", duration: 0.8, immediateRender: false }, 13.472);
+      tl.set("#sC", { autoAlpha: 1 }, 13.714);
+      tl.fromTo("#sC", { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.6, ease: "power3.inOut" }, 13.714);
+      tl.set("#sB", { autoAlpha: 0 }, 14.364);
+      tl.fromTo("#Ck", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 13.914);
+      tl.fromTo("#Ct", { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 14.064);
+      gsap.set(["#Cg1", "#Chr", "#Cha", "#Chc"], { autoAlpha: 0 });
+      tl.fromTo("#Ccard", { autoAlpha: 0, y: 60 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 14.214);
+      tl.fromTo("#Cg0 .cell", { autoAlpha: 0, scale: 0.6 }, { autoAlpha: 1, scale: 1, duration: 0.25, stagger: 0.03, ease: "back.out(2)" }, 15.118);
+      tl.fromTo("#Cg0 .ctot", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3 }, 16.726);
+      tl.fromTo("#Chr", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.25 }, 18.119);
+      tl.to("#Chr", { autoAlpha: 0, duration: 0.25 }, 19.443);
+      tl.fromTo("#Cha", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.25 }, 19.443);
+      tl.to("#Cha", { autoAlpha: 0, duration: 0.25 }, 19.844);
+      tl.fromTo("#Chc", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.25 }, 20.131);
+      tl.to("#Chc", { autoAlpha: 0, duration: 0.25 }, 20.360);
+      tl.to("#Cg0", { autoAlpha: 0, duration: 0.25 }, 20.360);
+      tl.fromTo("#Cg1", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3 }, 20.460);
+      tl.to("#Csw0", { backgroundColor: "#FFFFFF", color: "#8A8178", duration: 0.25 }, 20.360);
+      tl.to("#Csw1", { backgroundColor: "#0F0F10", color: "#FFFFFF", duration: 0.25 }, 20.360);
+      tl.to("#Csw1", { scale: 0.93, duration: 0.09, yoyo: true, repeat: 1 }, 20.360);
+      tl.set("#sD", { autoAlpha: 1 }, 20.310);
+      tl.fromTo("#sD", { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.6, ease: "power3.inOut" }, 20.310);
+      tl.set("#sC", { autoAlpha: 0 }, 20.960);
+      tl.fromTo("#Dk", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 20.510);
+      tl.fromTo("#Dt", { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 20.660);
+      gsap.set(["#Dok", "#Df"], { autoAlpha: 0 });
+      tl.fromTo("#Dl", { autoAlpha: 0, x: -80 }, { autoAlpha: 1, x: 0, duration: 0.45, ease: "power3.out" }, 20.710);
+      tl.to("#Dp0", { scale: 1.12, duration: 0.18, yoyo: true, repeat: 3 }, 22.397);
+      tl.fromTo("#Dr", { autoAlpha: 0, x: 80 }, { autoAlpha: 1, x: 0, duration: 0.45, ease: "power3.out" }, 23.149);
+      tl.fromTo("#Df", { autoAlpha: 0, y: 60 }, { autoAlpha: 1, y: 0, duration: 0.45, ease: "power3.out" }, 24.136);
+      tl.to("#Dbtn", { scale: 0.93, duration: 0.09, yoyo: true, repeat: 1 }, 25.133);
+      tl.fromTo("#Dok", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(1.8)" }, 25.596);
+      tl.set("#sE", { autoAlpha: 1 }, 25.898);
+      tl.fromTo("#sE", { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.6, ease: "power3.inOut" }, 25.898);
+      tl.set("#sD", { autoAlpha: 0 }, 26.548);
+      tl.fromTo("#Ek", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 26.098);
+      tl.fromTo("#Et", { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 26.248);
+      gsap.set(["#Ed0", "#Ed1", "#Ed2"], { autoAlpha: 0.25 });
+      tl.fromTo("#Ecard", { autoAlpha: 0, y: 60 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 26.455);
+      tl.to("#Ed0", { autoAlpha: 1, backgroundColor: "#3F7A4F", scale: 1.15, duration: 0.2, yoyo: true, repeat: 1 }, 27.231);
+      tl.set("#Ed0", { autoAlpha: 1, backgroundColor: "#3F7A4F" }, 27.641);
+      tl.to("#Etr", { y: 0, duration: 0.35, ease: "power2.inOut", overwrite: "auto" }, 27.031);
+      tl.to("#Ed1", { autoAlpha: 1, backgroundColor: "#3F7A4F", scale: 1.15, duration: 0.2, yoyo: true, repeat: 1 }, 27.669);
+      tl.set("#Ed1", { autoAlpha: 1, backgroundColor: "#3F7A4F" }, 28.079);
+      tl.to("#Etr", { y: 160, duration: 0.35, ease: "power2.inOut", overwrite: "auto" }, 27.469);
+      tl.to("#Ed2", { autoAlpha: 1, backgroundColor: "#3F7A4F", scale: 1.15, duration: 0.2, yoyo: true, repeat: 1 }, 27.920);
+      tl.set("#Ed2", { autoAlpha: 1, backgroundColor: "#3F7A4F" }, 28.330);
+      tl.to("#Etr", { y: 320, duration: 0.35, ease: "power2.inOut", overwrite: "auto" }, 27.720);
+      tl.fromTo("#Efill", { scaleY: 0 }, { scaleY: 1, transformOrigin: "50% 0%", duration: 0.69, ease: "none" }, 27.281);
+      tl.fromTo("#Ek0", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.35, ease: "back.out(1.8)" }, 29.857);
+      tl.fromTo("#Ek1", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.35, ease: "back.out(1.8)" }, 30.937);
+      tl.fromTo("#Ek2", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.35, ease: "back.out(1.8)" }, 33.232);
+      tl.set("#sF", { autoAlpha: 1 }, 34.174);
+      tl.fromTo("#sF", { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.6, ease: "power3.inOut" }, 34.174);
+      tl.set("#sE", { autoAlpha: 0 }, 34.824);
+      tl.fromTo("#Fk", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 34.374);
+      tl.fromTo("#Ft", { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 34.524);
+      gsap.set(["#Fnt", "#Fok"], { autoAlpha: 0 });
+      tl.fromTo("#Fcard", { autoAlpha: 0, y: 60 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 34.774);
+      (() => { const o = { v: 14 }; tl.to(o, { v: 3, duration: 1.081000000000003, ease: "power2.out", onUpdate: () => { document.querySelector("#Fn").textContent = Math.round(o.v).toLocaleString("en-US"); } }, 35.074); })();
+      tl.fromTo("#Fbar", { scaleX: 1 }, { scaleX: 0.214, transformOrigin: "0% 50%", duration: 1.08, ease: "power2.out" }, 35.074);
+      tl.to(["#Fbar"], { backgroundColor: "#A65353", duration: 0.3 }, 35.955);
+      tl.to("#Fn", { color: "#A65353", duration: 0.3 }, 35.955);
+      tl.fromTo("#Fnt", { autoAlpha: 0, y: -120 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "back.out(1.4)" }, 37.102);
+      tl.to("#Fnt .nlogo", { rotation: 10, duration: 0.1, yoyo: true, repeat: 5, ease: "sine.inOut" }, 37.602);
+      tl.fromTo("#Fok", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(1.8)" }, 39.338);
+      tl.set("#sG", { autoAlpha: 1 }, 40.154);
+      tl.fromTo("#sG", { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.6, ease: "power3.inOut" }, 40.154);
+      tl.set("#sF", { autoAlpha: 0 }, 40.804);
+      tl.fromTo("#Gk", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 40.354);
+      tl.fromTo("#Gt", { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 40.504);
+      tl.fromTo("#Gph", { autoAlpha: 0, y: 120 }, { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" }, 41.054);
+      tl.fromTo("#sG .qr", { autoAlpha: 0, x: 40 }, { autoAlpha: 1, x: 0, duration: 0.3, stagger: 0.12 }, 42.436);
+      tl.fromTo("#sG .mfill", { scaleX: 0 }, { scaleX: 1, transformOrigin: "0% 50%", duration: 0.6, stagger: 0.1, ease: "power2.out" }, 43.963);
+      tl.to("#Gm0", { backgroundColor: "#A65353", duration: 0.3 }, 45.399);
+      tl.set("#sH", { autoAlpha: 1 }, 45.558);
+      tl.fromTo("#sH", { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.6, ease: "power3.inOut" }, 45.558);
+      tl.set("#sG", { autoAlpha: 0 }, 46.208);
+      tl.fromTo("#Hk", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 45.758);
+      tl.fromTo("#Ht", { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 45.908);
+      tl.fromTo("#Hz", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.5, ease: "back.out(1.8)" }, 46.669);
+      tl.fromTo("#Hzl", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 47.359);
+      tl.fromTo("#Hw0", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.35, ease: "back.out(1.8)" }, 48.249);
+      tl.fromTo("#Hw1", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.35, ease: "back.out(1.8)" }, 48.399);
+      tl.fromTo("#Hw2", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.35, ease: "back.out(1.8)" }, 48.549);
+      tl.to("#Hz span", { scale: 1.12, color: "#FFFFFF", duration: 0.2, yoyo: true, repeat: 1 }, 49.518);
+      tl.fromTo("#Hf", { autoAlpha: 0, y: 15 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 49.918);
+      tl.set("#sI", { autoAlpha: 1 }, 49.782);
+      tl.fromTo("#sI", { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.6, ease: "power3.inOut" }, 49.782);
+      tl.set("#sH", { autoAlpha: 0 }, 50.432);
+      tl.fromTo("#Ilg", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "back.out(1.8)" }, 50.132);
+      tl.fromTo("#Iwm", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.45, ease: "power3.out" }, 50.582);
+      tl.fromTo("#It1", { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 51.188);
+      tl.fromTo("#It2", { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 52.971);
+      tl.fromTo("#Icta", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.5, ease: "back.out(1.8)" }, 53.191);
+      tl.fromTo("#Isub", { autoAlpha: 0, y: 15 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 54.797);
+      tl.to("#Icta", { scale: 1.05, duration: 0.4, yoyo: true, repeat: 3, ease: "sine.inOut" }, 55.497);
+      capShow("#cap0", 0.500, 1.326);
+      capShow("#cap1", 1.326, 2.770);
+      capShow("#cap2", 2.770, 4.284);
+      capShow("#cap3", 4.284, 5.952);
+      capShow("#cap4", 5.952, 6.885);
+      capShow("#cap5", 6.885, 7.900);
+      capShow("#cap6", 7.900, 8.979);
+      capShow("#cap7", 8.979, 10.246);
+      capShow("#cap8", 10.246, 11.759);
+      capShow("#cap9", 11.759, 13.128);
+      capShow("#cap10", 13.128, 14.314);
+      capShow("#cap11", 14.314, 16.726);
+      capShow("#cap12", 16.726, 19.428);
+      capShow("#cap13", 19.428, 19.944);
+      capShow("#cap14", 19.944, 20.910);
+      capShow("#cap15", 20.910, 22.159);
+      capShow("#cap16", 22.159, 23.171);
+      capShow("#cap17", 23.171, 24.536);
+      capShow("#cap18", 24.536, 25.530);
+      capShow("#cap19", 25.530, 26.498);
+      capShow("#cap20", 26.498, 27.093);
+      capShow("#cap21", 27.093, 27.719);
+      capShow("#cap22", 27.719, 28.607);
+      capShow("#cap23", 28.607, 31.037);
+      capShow("#cap24", 31.037, 34.774);
+      capShow("#cap25", 34.774, 35.740);
+      capShow("#cap26", 35.740, 36.674);
+      capShow("#cap27", 36.674, 37.795);
+      capShow("#cap28", 37.795, 38.971);
+      capShow("#cap29", 38.971, 39.971);
+      capShow("#cap30", 39.971, 40.754);
+      capShow("#cap31", 40.754, 42.027);
+      capShow("#cap32", 42.027, 43.299);
+      capShow("#cap33", 43.299, 44.699);
+      capShow("#cap34", 44.699, 46.158);
+      capShow("#cap35", 46.158, 47.459);
+      capShow("#cap36", 47.459, 49.211);
+      capShow("#cap37", 49.211, 50.382);
+      capShow("#cap38", 50.382, 51.514);
+      capShow("#cap39", 51.514, 53.341);
+      capShow("#cap40", 53.341, 54.418);
+      capShow("#cap41", 54.418, 56.075);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

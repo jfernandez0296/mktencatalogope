@@ -1,0 +1,159 @@
+[
+ {
+  "id": "e1",
+  "text": "¿Vendes por WhatsApp y quieres ordenar tu negocio? Empezar con EnCatalogo te toma solo tres pasos.",
+  "start": 0.5,
+  "dur": 6.473,
+  "speech": [
+   [
+    0.0,
+    2.967
+   ],
+   [
+    3.21,
+    6.473
+   ]
+  ],
+  "scene": 0
+ },
+ {
+  "id": "e2",
+  "text": "Paso uno: crea tu cuenta. Tienes siete días gratis, y no necesitas tarjeta.",
+  "start": 7.223,
+  "dur": 5.675,
+  "speech": [
+   [
+    0.0,
+    2.112
+   ],
+   [
+    2.376,
+    5.675
+   ]
+  ],
+  "scene": 1
+ },
+ {
+  "id": "e3",
+  "text": "Paso dos: conecta tu WhatsApp. Usamos la API oficial de WhatsApp Business, y queda listo en minutos.",
+  "start": 13.148,
+  "dur": 7.591,
+  "speech": [
+   [
+    0.0,
+    0.798
+   ],
+   [
+    1.027,
+    2.23
+   ],
+   [
+    2.652,
+    5.597
+   ],
+   [
+    5.834,
+    7.591
+   ]
+  ],
+  "scene": 2
+ },
+ {
+  "id": "e4",
+  "text": "Paso tres: sube tu catálogo. Puedes cargarlo desde Excel, o con fotos del celular.",
+  "start": 20.988,
+  "dur": 5.479,
+  "speech": [
+   [
+    0.0,
+    0.712
+   ],
+   [
+    0.981,
+    5.479
+   ]
+  ],
+  "scene": 3
+ },
+ {
+  "id": "e5",
+  "text": "Y listo: ya puedes vender. Tu vendedor con IA responde en WhatsApp con stock real, fotos y precios.",
+  "start": 26.717,
+  "dur": 7.65,
+  "speech": [
+   [
+    0.0,
+    0.697
+   ],
+   [
+    0.929,
+    7.65
+   ]
+  ],
+  "scene": 4
+ },
+ {
+  "id": "e6",
+  "text": "¿Es para ti? Sí, si vendes productos con precio, si tus clientes te escriben por WhatsApp, y si tienes catálogo, aunque sea en fotos.",
+  "start": 34.618,
+  "dur": 8.499,
+  "speech": [
+   [
+    0.0,
+    0.67
+   ],
+   [
+    1.059,
+    8.499
+   ]
+  ],
+  "scene": 5
+ },
+ {
+  "id": "e7",
+  "text": "Un solo plan: ciento cincuenta soles al mes con una tienda. Noventa soles por cada tienda extra, y los almacenes son gratis.",
+  "start": 43.367,
+  "dur": 9.871,
+  "speech": [
+   [
+    0.0,
+    1.175
+   ],
+   [
+    1.493,
+    7.511
+   ],
+   [
+    7.85,
+    9.871
+   ]
+  ],
+  "scene": 6
+ },
+ {
+  "id": "e8",
+  "text": "Sin permanencia: cancelas cuando quieras.",
+  "start": 53.538,
+  "dur": 2.876,
+  "speech": [
+   [
+    0.0,
+    2.634
+   ]
+  ],
+  "scene": 6
+ },
+ {
+  "id": "e9",
+  "text": "Ordena tu operación. Crea tu cuenta y empieza gratis hoy.",
+  "start": 56.664,
+  "dur": 3.901,
+  "speech": [
+   [
+    0.0,
+    3.901
+   ]
+  ],
+  "scene": 7
+ }
+]
