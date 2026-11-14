@@ -1,0 +1,10 @@
+[
+ {"id": "e1", "text": "¿Vendes en tienda, lo anotas en un cuaderno, y después facturas en otro sistema? Al final del día, nada cuadra."},
+ {"id": "e2", "text": "Con EnCatalogo, vendes, cobras y facturas en el mismo flujo."},
+ {"id": "e3", "text": "Registras la venta en la caja, y en ese momento se actualizan tres cosas: la caja, el inventario y el comprobante."},
+ {"id": "e4", "text": "La factura electrónica sale aceptada por SUNAT, con el IGV de dieciocho por ciento ya calculado."},
+ {"id": "e5", "text": "Y como cada venta descuenta el stock, siempre sabes qué te queda en cada tienda."},
+ {"id": "e6", "text": "Sin pasar datos de un sistema a otro, y sin cuadrar la caja a mano al final del día."},
+ {"id": "e7", "text": "La facturación es un módulo de cincuenta soles al mes por RUC, con quinientos comprobantes incluidos."},
+ {"id": "e8", "text": "EnCatalogo. Vendes, cobras y facturas en un solo lugar. Prueba siete días gratis, sin tarjeta."}
+]
