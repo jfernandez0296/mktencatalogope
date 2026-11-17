@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
-# One ElevenLabs take per segment (voice Sarah, eleven_multilingual_v2), trimmed and loudness-matched.
+# One ElevenLabs take per segment (voz clonada de Jaime, eleven_v4), trimmed and loudness-matched.
 # Fallback for when the Gemini TTS daily quota is exhausted. The API key is added by the credential proxy.
 # Usage: ./generar-segmentos-elevenlabs.sh [voice_id] [ids]
 set -euo pipefail
 cd "$(dirname "$0")"
-VOICE="${1:-EXAVITQu4vr4xnSDxMaL}"; SOLO="${2:-}"
+VOICE="${1:-aOKKQkUAVZUscQGXsy5Z}"; SOLO="${2:-}"
 mkdir -p seg
 n=$(jq length segmentos.json)
 for i in $(seq 0 $((n-1))); do
   id=$(jq -r ".[$i].id" segmentos.json); text=$(jq -r ".[$i].text" segmentos.json)
   if [ -n "$SOLO" ] && [[ ",$SOLO," != *",$id,"* ]]; then continue; fi
-  body=$(jq -n --arg t "$text" '{text:$t, model_id:"eleven_multilingual_v2", language_code:"es", voice_settings:{stability:0.5, similarity_boost:0.8, style:0.15, use_speaker_boost:true}}')
+  body=$(jq -n --arg t "$text" '{text:$t, model_id:"eleven_v4", voice_settings:{stability:0.6, similarity_boost:0.95, style:0, use_speaker_boost:true}}')
   for try in 1 2 3 4 5 6 7 8 9 10; do
     code=$(curl -sS -m 120 -o "seg/$id.mp3" -w "%{http_code}" -H "xi-api-key: proxy" -H "Content-Type: application/json" \
       "https://api.elevenlabs.io/v1/text-to-speech/$VOICE?output_format=mp3_44100_128" -d "$body")

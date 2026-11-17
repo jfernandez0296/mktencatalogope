@@ -5,7 +5,7 @@ SR = 44100
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 A = os.path.join(ROOT, "audio")
 SCENES = [["e1"], ["e2"], ["e3"], ["e4"], ["e5"], ["e6"], ["e7"], ["e8"]]
-IN_GAP, SCENE_GAP, HEAD, TAIL = 0.3, 1.4, 0.6, 3.0
+IN_GAP, SCENE_GAP, HEAD, TAIL = 0.3, 1.0, 0.6, 3.0
 
 def sh(*a): return subprocess.run(a, check=True, capture_output=True, text=True)
 def dur(p): return float(sh("ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", p).stdout)
