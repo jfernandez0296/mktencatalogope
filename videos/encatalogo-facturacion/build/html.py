@@ -254,7 +254,7 @@ popin("#Fok", W("e6", "final", -0.1), 0.45); ev("chime2", W("e6", "final", -0.1)
 wipe("#sG", "#sF", S[6]); heading("G", S[6])
 show("#Gcard", W("e7", "módulo", -0.3), 0.5, 60)
 count("#Gp", W("e7", "cincuenta", -0.1), 0, 50, 0.8)
-for i, (w_, off) in enumerate([("quinientos", -0.1), ("incluidos", 0.2), ("incluidos", 0.6)]): slide(f"#Gl{i}", W("e7", w_, off), -60, i == 0)
+for i, (w_, off) in enumerate([("quinientos", -0.2), ("comprobantes", 0.1), ("incluidos", -0.1)]): slide(f"#Gl{i}", W("e7", w_, off), -60, i == 0)
 # H
 wipe("#sH", "#sG", S[7])
 popin("#Hlg", S[7] + 0.35, 0.6); show("#Hwm", W("e8", "encatalogo", 0.2), 0.45, 20)
