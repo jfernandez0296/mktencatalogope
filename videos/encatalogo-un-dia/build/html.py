@@ -96,14 +96,14 @@ CLK = (f'      <div class="abs clk" id="clk" data-layout-allow-overlap="true" st
        + '</div><div class="ckbar"><div id="ckfill"></div></div></div>')
 
 # A · hook: the day as a timeline
-stops = [("9:00", "smartphone", "Revisas tu negocio desde el celular"), ("12:00", "message-circle", "Vendes por WhatsApp con IA"),
+stops = [("9:00", "smartphone", "Revisas tu negocio desde el celular"), ("12:00", "wa", "Vendes por WhatsApp con IA"),
          ("16:00", "wallet", "Vendes en caja y facturas"), ("18:00", "truck", "Recibes tu traslado")]
 A = f'''      <div class="sc" id="sA" style="background:{CREAM}">
         {BRAND("A")}
         {head("A", "UN DÍA CON ENCATALOGO", "¿Cómo se ve un día en tu tienda?", top=290, size=100)}
         <div class="abs card" id="Acard" style="left:70px;top:690px;width:940px;height:700px">
           <div class="abs tline" id="Aline" style="left:150px;top:90px;height:520px"></div>
-          {"".join(f'<div class="abs stop" id="As{i}" style="left:40px;top:{50 + i * 160}px"><div class="stt">{t}</div><div class="sdot">{icon(ic, 34, WHITE, 2)}</div><span>{d}</span></div>' for i, (t, ic, d) in enumerate(stops))}
+          {"".join(f'<div class="abs stop" id="As{i}" style="left:40px;top:{50 + i * 160}px"><div class="stt">{t}</div><div class="sdot">{logo("whatsapp", 34, WHITE) if ic == "wa" else icon(ic, 34, WHITE, 2)}</div><span>{d}</span></div>' for i, (t, ic, d) in enumerate(stops))}
         </div>
       </div>'''
 
@@ -198,10 +198,10 @@ F = f'''      <div class="sc" id="sF" style="background:{CREAM}">
       </div>'''
 
 # G · recap (dark)
-mods = [("package", "Inventario"), ("truck", "Traslados"), ("message-circle", "Ventas por WhatsApp"), ("wallet", "Caja"), ("receipt", "Facturación")]
+mods = [("package", "Inventario"), ("truck", "Traslados"), ("wa", "Ventas por WhatsApp"), ("wallet", "Caja"), ("receipt", "Facturación")]
 G = f'''      <div class="sc" id="sG" style="background:{INK}">
         {head("G", "TODO CONECTADO", "Un solo sistema, todo el día", True, size=90)}
-        {"".join(f'<div class="abs mod" id="Gm{i}" style="left:{70 if i % 2 == 0 else 555}px;top:{580 + (i // 2) * 170}px;width:{940 if i == 4 else 455}px">{icon(ic, 44, TERRA, 2)}<span>{t}</span></div>' for i, (ic, t) in enumerate(mods))}
+        {"".join(f'<div class="abs mod" id="Gm{i}" style="left:{70 if i % 2 == 0 else 555}px;top:{580 + (i // 2) * 170}px;width:{940 if i == 4 else 455}px">{logo("whatsapp", 40, TERRA) if ic == "wa" else icon(ic, 44, TERRA, 2)}<span>{t}</span></div>' for i, (ic, t) in enumerate(mods))}
         <div class="abs one" id="Gone" style="left:70px;top:1110px;width:940px"><span class="bchip dk">{MARK(70)}</span><b>EnCatalogo.pe</b></div>
       </div>'''
 
@@ -249,8 +249,8 @@ js('gsap.set("#ckfill", { scaleX: 0, transformOrigin: "0% 50%" });')
 # A
 show("#Abr", 0.1, 0.4, 20); show("#Ak", 0.25, 0.4, 20); show("#At", 0.4, 0.55, 40)
 show("#Acard", W("e1", "tienda", -0.2), 0.5, 60)
-js(f'tl.fromTo("#Aline", {{ scaleY: 0 }}, {{ scaleY: 1, transformOrigin: "50% 0%", duration: 1.6, ease: "power1.inOut" }}, {W("e1", "mostramos", -0.2):.3f});')
-for i in range(4): slide(f"#As{i}", W("e1", "mostramos", -0.2) + i * 0.4, -50, True)
+js(f'tl.fromTo("#Aline", {{ scaleY: 0 }}, {{ scaleY: 1, transformOrigin: "50% 0%", duration: 1.6, ease: "power1.inOut" }}, {W("e1", "te", -0.3):.3f});')
+for i in range(4): slide(f"#As{i}", W("e1", "te", -0.3) + i * 0.3, -50, True)
 # B · 9:00
 wipe("#sB", "#sA", S[1]); clock(0, W("e2", "nueve", 0.0)); heading("B", S[1])
 show("#Bph", W("e2", "revisas", -0.4), 0.6, 120)
