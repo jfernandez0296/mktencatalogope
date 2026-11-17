@@ -140,9 +140,9 @@ D = f'''      <div class="sc" id="sD" style="background:{LIGHT}">
         {"".join(f'<div class="abs tile{" inc0" if i == 0 else ""}" id="Ds{i}" style="left:{70 + i * 320}px;top:600px">{icon("store", 56, TERRAD if i else INK, 1.8)}<b>Tienda {i + 1}</b><span>{"Incluida" if i == 0 else "+ S/ 90/mes"}</span></div>' for i in range(3))}
         <div class="abs card wh" id="Dw" style="left:70px;top:1000px;width:940px;height:300px">
           <div class="abs ich big2" style="left:44px;top:84px">{icon("warehouse", 64, TERRAD, 1.8)}</div>
-          <div class="abs eyebrow" style="left:220px;top:70px">ALMACENES</div>
-          <div class="abs whp" style="left:220px;top:110px">S/ <span id="Dz">0</span></div>
-          <div class="abs gratis" id="Dg" style="left:640px;top:120px">Gratis</div>
+          <div class="abs eyebrow" style="left:220px;top:54px">ALMACENES</div>
+          <div class="abs whp" style="left:220px;top:132px">S/ <span id="Dz">0</span></div>
+          <div class="abs gratis" id="Dg" style="left:640px;top:140px">Gratis</div>
         </div>
       </div>'''
 

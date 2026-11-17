@@ -4,7 +4,7 @@ import numpy as np
 SR = 44100
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 A = os.path.join(ROOT, "audio")
-SCENES = [["e1"], ["e2"], ["e3"], ["e4"], ["e5"], ["e6"], ["e7"], ["e8"], ["e9"]]
+SCENES = [["e1"], ["e2"], ["e3"], ["e4", "e5"], ["e6"], ["e7"], ["e8"], ["e9"]]
 IN_GAP, SCENE_GAP, HEAD, TAIL = 0.3, 0.4, 0.5, 2.0
 
 def sh(*a): return subprocess.run(a, check=True, capture_output=True, text=True)

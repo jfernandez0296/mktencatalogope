@@ -1,11 +1,732 @@
 [
- {"id": "e1", "text": "¿Cuánto cuesta EnCatalogo? Te lo digo en un minuto, sin letra chica."},
- {"id": "e2", "text": "Un solo plan: ciento cincuenta soles al mes, con una tienda."},
- {"id": "e3", "text": "Incluye catálogo, tienda online con enlace propio, caja, inventario, pedidos y vendedor IA en WhatsApp."},
- {"id": "e4", "text": "¿Tienes más tiendas? Noventa soles por cada una. Y los almacenes son gratis."},
- {"id": "e5", "text": "La IA cuesta veinte céntimos por cliente atendido cada treinta días. No cobramos por mensaje."},
- {"id": "e6", "text": "¿Necesitas más? Facturación electrónica y el asistente conectado a Claude cuestan cincuenta soles al mes cada uno. Un número de WhatsApp extra, treinta."},
- {"id": "e7", "text": "Si pagas el año, son mil quinientos soles: dos meses gratis."},
- {"id": "e8", "text": "Y sin permanencia: cancelas cuando quieras."},
- {"id": "e9", "text": "EnCatalogo. Precios en soles, con IGV incluido. Prueba siete días gratis, sin tarjeta."}
+ {
+  "id": "e1",
+  "text": "¿Cuánto cuesta EnCatalogo? Te lo digo en un minuto, sin letra chica.",
+  "words": [
+   [
+    "¿Cuánto",
+    0.04,
+    0.24
+   ],
+   [
+    "cuesta",
+    0.3,
+    0.48
+   ],
+   [
+    "EnCatalogo?",
+    0.52,
+    1.16
+   ],
+   [
+    "Te",
+    1.42,
+    1.48
+   ],
+   [
+    "lo",
+    1.52,
+    1.58
+   ],
+   [
+    "digo",
+    1.62,
+    1.78
+   ],
+   [
+    "en",
+    1.82,
+    1.88
+   ],
+   [
+    "un",
+    1.94,
+    2.0
+   ],
+   [
+    "minuto,",
+    2.04,
+    2.44
+   ],
+   [
+    "sin",
+    2.66,
+    2.78
+   ],
+   [
+    "letra",
+    2.82,
+    3.06
+   ],
+   [
+    "chica.",
+    3.14,
+    3.44
+   ]
+  ],
+  "start": 0.5,
+  "dur": 3.529,
+  "speech": [
+   [
+    0.0,
+    3.529
+   ]
+  ],
+  "scene": 0
+ },
+ {
+  "id": "e2",
+  "text": "Un solo plan: ciento cincuenta soles al mes, con una tienda.",
+  "words": [
+   [
+    "Un",
+    0.06,
+    0.12
+   ],
+   [
+    "solo",
+    0.18,
+    0.36
+   ],
+   [
+    "plan:",
+    0.46,
+    0.68
+   ],
+   [
+    "ciento",
+    0.92,
+    1.16
+   ],
+   [
+    "cincuenta",
+    1.22,
+    1.56
+   ],
+   [
+    "soles",
+    1.62,
+    1.84
+   ],
+   [
+    "al",
+    1.9,
+    1.96
+   ],
+   [
+    "mes,",
+    2.04,
+    2.26
+   ],
+   [
+    "con",
+    2.48,
+    2.6
+   ],
+   [
+    "una",
+    2.64,
+    2.76
+   ],
+   [
+    "tienda.",
+    2.86,
+    3.2
+   ]
+  ],
+  "start": 5.129,
+  "dur": 3.309,
+  "speech": [
+   [
+    0.0,
+    3.309
+   ]
+  ],
+  "scene": 1
+ },
+ {
+  "id": "e3",
+  "text": "Incluye catálogo, tienda online con enlace propio, caja, inventario, pedidos y vendedor IA en WhatsApp.",
+  "words": [
+   [
+    "Incluye",
+    0.08,
+    0.38
+   ],
+   [
+    "catálogo,",
+    0.44,
+    1.0
+   ],
+   [
+    "tienda",
+    1.18,
+    1.4
+   ],
+   [
+    "online",
+    1.44,
+    1.78
+   ],
+   [
+    "con",
+    1.88,
+    1.98
+   ],
+   [
+    "enlace",
+    2.02,
+    2.34
+   ],
+   [
+    "propio,",
+    2.44,
+    2.8
+   ],
+   [
+    "caja,",
+    3.02,
+    3.34
+   ],
+   [
+    "inventario,",
+    3.6,
+    4.24
+   ],
+   [
+    "pedidos",
+    4.42,
+    4.88
+   ],
+   [
+    "y",
+    5.04,
+    5.1
+   ],
+   [
+    "vendedor",
+    5.12,
+    5.54
+   ],
+   [
+    "IA",
+    5.76,
+    5.98
+   ],
+   [
+    "en",
+    6.24,
+    6.32
+   ],
+   [
+    "WhatsApp.",
+    6.38,
+    6.74
+   ]
+  ],
+  "start": 9.537,
+  "dur": 6.794,
+  "speech": [
+   [
+    0.0,
+    6.794
+   ]
+  ],
+  "scene": 2
+ },
+ {
+  "id": "e4",
+  "text": "¿Tienes más tiendas? Noventa soles por cada una. Y los almacenes son gratis.",
+  "words": [
+   [
+    "¿Tienes",
+    0.0,
+    0.24
+   ],
+   [
+    "más",
+    0.26,
+    0.36
+   ],
+   [
+    "tiendas?",
+    0.44,
+    0.84
+   ],
+   [
+    "Noventa",
+    1.08,
+    1.38
+   ],
+   [
+    "soles",
+    1.46,
+    1.7
+   ],
+   [
+    "por",
+    1.74,
+    1.82
+   ],
+   [
+    "cada",
+    1.92,
+    2.2
+   ],
+   [
+    "una.",
+    2.28,
+    2.46
+   ],
+   [
+    "Y",
+    2.68,
+    2.72
+   ],
+   [
+    "los",
+    2.76,
+    2.88
+   ],
+   [
+    "almacenes",
+    2.92,
+    3.5
+   ],
+   [
+    "son",
+    3.76,
+    3.9
+   ],
+   [
+    "gratis.",
+    3.96,
+    4.42
+   ]
+  ],
+  "start": 17.431,
+  "dur": 4.512,
+  "speech": [
+   [
+    0.0,
+    4.512
+   ]
+  ],
+  "scene": 3
+ },
+ {
+  "id": "e5",
+  "text": "La IA cuesta veinte céntimos por cliente atendido cada treinta días. No cobramos por mensaje.",
+  "words": [
+   [
+    "La",
+    0.08,
+    0.18
+   ],
+   [
+    "IA",
+    0.22,
+    0.38
+   ],
+   [
+    "cuesta",
+    0.44,
+    0.7
+   ],
+   [
+    "veinte",
+    0.72,
+    0.98
+   ],
+   [
+    "céntimos",
+    1.06,
+    1.54
+   ],
+   [
+    "por",
+    1.56,
+    1.68
+   ],
+   [
+    "cliente",
+    1.76,
+    2.12
+   ],
+   [
+    "atendido",
+    2.36,
+    2.76
+   ],
+   [
+    "cada",
+    2.94,
+    3.22
+   ],
+   [
+    "treinta",
+    3.42,
+    3.76
+   ],
+   [
+    "días.",
+    3.84,
+    4.18
+   ],
+   [
+    "No",
+    4.38,
+    4.5
+   ],
+   [
+    "cobramos",
+    4.52,
+    4.88
+   ],
+   [
+    "por",
+    4.9,
+    5.02
+   ],
+   [
+    "mensaje.",
+    5.06,
+    5.52
+   ]
+  ],
+  "start": 23.043,
+  "dur": 5.615,
+  "speech": [
+   [
+    0.0,
+    5.615
+   ]
+  ],
+  "scene": 4
+ },
+ {
+  "id": "e6",
+  "text": "¿Necesitas más? Facturación electrónica y el asistente conectado a Claude cuestan cincuenta soles al mes cada uno. Un número de WhatsApp extra, treinta.",
+  "words": [
+   [
+    "¿Necesitas",
+    0.06,
+    0.56
+   ],
+   [
+    "más?",
+    0.66,
+    0.88
+   ],
+   [
+    "Facturación",
+    1.18,
+    1.64
+   ],
+   [
+    "electrónica",
+    1.7,
+    2.42
+   ],
+   [
+    "y",
+    2.64,
+    2.66
+   ],
+   [
+    "el",
+    2.7,
+    2.76
+   ],
+   [
+    "asistente",
+    2.82,
+    3.48
+   ],
+   [
+    "conectado",
+    3.7,
+    4.18
+   ],
+   [
+    "a",
+    4.2,
+    4.26
+   ],
+   [
+    "Claude",
+    4.32,
+    4.6
+   ],
+   [
+    "cuestan",
+    4.78,
+    5.1
+   ],
+   [
+    "cincuenta",
+    5.16,
+    5.58
+   ],
+   [
+    "soles",
+    5.68,
+    5.96
+   ],
+   [
+    "al",
+    6.14,
+    6.22
+   ],
+   [
+    "mes",
+    6.32,
+    6.5
+   ],
+   [
+    "cada",
+    6.7,
+    6.9
+   ],
+   [
+    "uno.",
+    7.02,
+    7.2
+   ],
+   [
+    "Un",
+    7.38,
+    7.46
+   ],
+   [
+    "número",
+    7.5,
+    7.78
+   ],
+   [
+    "de",
+    7.8,
+    7.9
+   ],
+   [
+    "WhatsApp",
+    7.94,
+    8.32
+   ],
+   [
+    "extra,",
+    8.52,
+    8.84
+   ],
+   [
+    "treinta.",
+    9.12,
+    9.54
+   ]
+  ],
+  "start": 29.757,
+  "dur": 9.652,
+  "speech": [
+   [
+    0.0,
+    9.652
+   ]
+  ],
+  "scene": 5
+ },
+ {
+  "id": "e7",
+  "text": "Si pagas el año, son mil quinientos soles: dos meses gratis.",
+  "words": [
+   [
+    "Si",
+    0.1,
+    0.16
+   ],
+   [
+    "pagas",
+    0.24,
+    0.52
+   ],
+   [
+    "el",
+    0.56,
+    0.66
+   ],
+   [
+    "año,",
+    0.74,
+    1.0
+   ],
+   [
+    "son",
+    1.28,
+    1.44
+   ],
+   [
+    "mil",
+    1.48,
+    1.6
+   ],
+   [
+    "quinientos",
+    1.7,
+    2.14
+   ],
+   [
+    "soles:",
+    2.18,
+    2.6
+   ],
+   [
+    "dos",
+    2.78,
+    2.88
+   ],
+   [
+    "meses",
+    2.94,
+    3.18
+   ],
+   [
+    "gratis.",
+    3.22,
+    3.7
+   ]
+  ],
+  "start": 40.509,
+  "dur": 3.762,
+  "speech": [
+   [
+    0.0,
+    3.762
+   ]
+  ],
+  "scene": 6
+ },
+ {
+  "id": "e8",
+  "text": "Y sin permanencia: cancelas cuando quieras.",
+  "words": [
+   [
+    "Y",
+    0.06,
+    0.1
+   ],
+   [
+    "sin",
+    0.18,
+    0.28
+   ],
+   [
+    "permanencia:",
+    0.34,
+    0.96
+   ],
+   [
+    "cancelas",
+    1.18,
+    1.54
+   ],
+   [
+    "cuando",
+    1.6,
+    1.82
+   ],
+   [
+    "quieras.",
+    1.92,
+    2.3
+   ]
+  ],
+  "start": 44.771,
+  "dur": 2.351,
+  "speech": [
+   [
+    0.0,
+    2.351
+   ]
+  ],
+  "scene": 6
+ },
+ {
+  "id": "e9",
+  "text": "EnCatalogo. Precios en soles, con IGV incluido. Prueba siete días gratis, sin tarjeta.",
+  "words": [
+   [
+    "EnCatalogo.",
+    0.06,
+    0.62
+   ],
+   [
+    "Precios",
+    0.82,
+    1.06
+   ],
+   [
+    "en",
+    1.1,
+    1.16
+   ],
+   [
+    "soles,",
+    1.24,
+    1.56
+   ],
+   [
+    "con",
+    1.68,
+    1.78
+   ],
+   [
+    "IGV",
+    1.84,
+    2.24
+   ],
+   [
+    "incluido.",
+    2.4,
+    2.86
+   ],
+   [
+    "Prueba",
+    3.02,
+    3.24
+   ],
+   [
+    "siete",
+    3.32,
+    3.56
+   ],
+   [
+    "días",
+    3.62,
+    3.82
+   ],
+   [
+    "gratis,",
+    3.84,
+    4.26
+   ],
+   [
+    "sin",
+    4.46,
+    4.56
+   ],
+   [
+    "tarjeta.",
+    4.62,
+    5.08
+   ]
+  ],
+  "start": 48.222,
+  "dur": 5.164,
+  "speech": [
+   [
+    0.0,
+    5.164
+   ]
+  ],
+  "scene": 7
+ }
 ]

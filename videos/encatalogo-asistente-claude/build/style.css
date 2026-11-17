@@ -87,7 +87,7 @@
       .ask { padding: 20px 30px; border-radius: 28px 28px 28px 8px; background: #26241F; color: #fff; font-size: 34px; font-weight: 600; }
       .ans { display: flex; align-items: center; gap: 20px; padding: 22px 30px; border-radius: 28px; background: #F2EDE4; font-size: 32px; font-weight: 600; }
       .cl { flex: none; width: 64px; height: 64px; border-radius: 18px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; }
-      .illu { font-size: 22px; font-weight: 500; color: #8A8178; }
+      .illu { font-size: 22px; font-weight: 500; color: #6F6861; }
       .price { display: flex; align-items: baseline; gap: 14px; }
       .price small { font-size: 50px; font-weight: 600; }
       .price span { font-family: "DM Serif Display", serif; font-size: 170px; line-height: 1; }
