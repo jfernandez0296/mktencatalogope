@@ -141,7 +141,8 @@
       .xl { width: 50px; height: 50px; border-radius: 10px; background: #fff; color: #1F6F43; font-weight: 700; display: flex; align-items: center; justify-content: center; }
       .shead { left: 30px; top: 110px; width: 880px; display: flex; gap: 10px; font-size: 22px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #8A8178; }
       .shead .scell { background: none; height: auto; }
-      .sbody { left: 30px; top: 160px; width: 880px; }
+      .sview { left: 30px; top: 160px; width: 880px; height: 450px; overflow: hidden; }
+      .sbody { width: 880px; }
       .srow { display: flex; gap: 10px; margin-bottom: 14px; }
       .scell { flex: 1; height: 40px; border-radius: 8px; background: #EFE9E0; }
       .scell.w { flex: 2.2; }

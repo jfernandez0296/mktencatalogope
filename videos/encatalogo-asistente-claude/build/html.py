@@ -94,28 +94,28 @@ def asst(status="conectado a Claude"):
 cols = ["Producto", "Talla", "Tienda", "Stock", "Vend."]
 sheet_rows = "".join(
     f'<div class="srow" id="Ar{r}">' + "".join(f'<span class="scell{" w" if c == 0 else ""}"></span>' for c in range(5)) + '</div>'
-    for r in range(9))
+    for r in range(18))
 A = f'''      <div class="sc" id="sA" style="background:{CREAM}">
         {BRAND("A")}
         {head("A", "ASISTENTE CON CLAUDE", "¿Qué debo reponer esta semana?", top=290, size=100)}
         <div class="abs card sheet" id="Asheet" style="left:70px;top:700px;width:940px;height:640px">
           <div class="abs xlbar"><span class="xl">X</span>inventario_semana_final_v3.xlsx</div>
           <div class="abs shead">{"".join(f'<span class="scell{" w" if i == 0 else ""}">{c}</span>' for i, c in enumerate(cols))}</div>
-          <div class="abs sbody">{sheet_rows}</div>
+          <div class="abs sview"><div class="sbody">{sheet_rows}</div></div>
         </div>
-        <div class="abs clockpill" id="Aclk" style="left:620px;top:640px">{icon("clock", 44, WHITE)}<span id="Ahr">14:00</span></div>
+        <div class="abs clockpill" id="Aclk" style="left:640px;top:630px">{icon("clock", 44, WHITE)}<span id="Ahr">14:00</span></div>
       </div>'''
 
 # B · ask the assistant
 B = f'''      <div class="sc" id="sB" style="background:{INK}">
         {head("B", "PREGÚNTALE A TU NEGOCIO", "Ahora se lo preguntas a tu asistente", True, size=88)}
-        <div class="abs achat" id="Bchat" style="left:70px;top:620px;width:940px;height:620px">
+        <div class="abs achat" id="Bchat" style="left:70px;top:620px;width:940px;height:460px">
           {asst()}
           <div class="abs ask" id="Bq" style="right:36px;top:170px">¿Qué debo reponer esta semana?</div>
           <div class="abs typing" id="Bty" style="left:36px;top:300px"><i></i><i></i><i></i></div>
         </div>
-        <div class="abs cbadge" id="Bcl" style="left:70px;top:1290px"><span class="cl">{logo("claude", 46, TERRA)}</span>Conectado a <b>Claude</b></div>
-        {TM(1410, True)}
+        <div class="abs cbadge" id="Bcl" style="left:70px;top:1130px"><span class="cl">{logo("claude", 46, TERRA)}</span>Conectado a <b>Claude</b></div>
+        {TM(1270, True)}
       </div>'''
 
 # C · concrete answer
@@ -207,7 +207,7 @@ js(f'tl.fromTo("#Asheet .srow", {{ autoAlpha: 0 }}, {{ autoAlpha: 1, duration: 0
 popin("#Aclk", W("e1", "tarde", -0.2), 0.4)
 tc0, tc1 = W("e1", "tarde", 0.1), W("e1", "excel", 0.6)
 js(f'(() => {{ const o = {{ v: 0 }}; tl.to(o, {{ v: 300, duration: {tc1 - tc0:.2f}, ease: "power1.in", onUpdate: () => {{ const m = 14 * 60 + Math.round(o.v); document.querySelector("#Ahr").textContent = Math.floor(m / 60) + ":" + String(m % 60).padStart(2, "0"); }} }}, {tc0:.3f}); }})();')
-js(f'tl.to("#Asheet .sbody", {{ y: -260, duration: {tc1 - tc0:.2f}, ease: "power1.inOut" }}, {tc0:.3f});')
+js(f'tl.to("#Asheet .sbody", {{ y: -480, duration: {tc1 - tc0:.2f}, ease: "power1.inOut" }}, {tc0:.3f});')
 # B
 wipe("#sB", "#sA", S[1]); heading("B", S[1])
 show("#Bchat", W("e2", "ahora", 0.0), 0.5, 60)

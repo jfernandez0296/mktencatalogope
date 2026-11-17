@@ -104,7 +104,7 @@ A = f'''      <div class="sc" id="sA" style="background:{CREAM}">
         <div class="abs mism" id="Amis" style="left:70px;top:1300px;width:940px">
           <div><span class="ml">Cuaderno</span><b>S/ 1,240</b></div><div class="neq">≠</div><div><span class="ml">Caja</span><b>S/ 1,185</b></div>
         </div>
-        <div class="abs nostamp" id="Ano" style="left:720px;top:1205px">No cuadra</div>
+        <div class="abs nostamp" id="Ano" style="left:700px;top:1150px">No cuadra</div>
       </div>'''
 
 # B · un solo flujo
@@ -157,7 +157,7 @@ E = f'''      <div class="sc" id="sE" style="background:{CREAM}">
           <div class="abs pmeta" style="left:290px;top:146px">Talla M · Miraflores</div>
           <div class="abs eyebrow" style="left:290px;top:226px;color:{MUTED}">STOCK</div>
           <div class="abs snum" style="left:740px;top:70px"><span id="En">12</span></div>
-          <div class="abs minus" id="Em" style="left:590px;top:110px">−1</div>
+          <div class="abs minus" id="Em" style="left:630px;top:215px">−1</div>
         </div>
         {"".join(f'<div class="abs srow" id="Er{i}" style="left:70px;top:{940 + i * 130}px;width:940px"><span class="sic">{icon(ic, 40, TERRAD)}</span><span>{t}</span><b>{n}</b></div>' for i, (ic, t, n) in enumerate(stores))}
       </div>'''
