@@ -158,6 +158,8 @@
       .yc { flex: none; width: 72px; height: 72px; border-radius: 36px; background: #3F7A4F; display: flex; align-items: center; justify-content: center; }
       .hub { width: 400px; height: 290px; border-radius: 48px; background: #FFFFFF; border: 2px solid #E7DDD1; display: flex; align-items: center; justify-content: center; box-shadow: 0 24px 60px rgba(15,15,16,.08); }
       .dsub { text-align: center; font-family: "DM Serif Display", serif; font-size: 48px; color: #A65353; }
+      .nocard .vt em { display: none; }
+      .nocard .vt { text-decoration: line-through; text-decoration-thickness: 5px; text-decoration-color: rgba(166,83,83,0); }
 
     </style>
   </head>
@@ -165,12 +167,12 @@
     <div id="root" data-composition-id="main" data-start="0" data-duration="56.76" data-fps="30" data-width="1080" data-height="1920">
       <div class="sc" id="sA" style="background:#F2EDE4">
         <div class="abs brand" id="Abr" style="left:70px;top:130px;color:#0F0F10"><span class="bchip"><img src="assets/img/encatalogo-logo.svg" alt="EnCatalogo.pe" style="height:54px;width:auto;display:block"></span>EnCatalogo.pe</div>
-        <div class="abs badge" id="Ak" style="left:70px;top:290px">¿ES PARA TI?</div><div class="abs ttl" id="At" style="left:70px;top:370px;width:940px;font-size:128px;color:#0F0F10">No es para todos.</div>
-        <div class="abs card" id="Acard" style="left:70px;top:620px;width:940px;height:760px">
+        <div class="abs badge" id="Ak" style="left:70px;top:290px">¿ES PARA TI?</div><div class="abs ttl" id="At" style="left:70px;top:370px;width:940px;font-size:116px;color:#0F0F10">No es para todos.</div>
+        <div class="abs card" id="Acard" style="left:70px;top:660px;width:940px;height:680px">
           <div class="abs eyebrow" style="left:50px;top:50px">ANTES DE PROBAR, REVISA ESTO</div>
-          <div class="abs prow" id="Ar0" style="left:50px;top:120px"><i class="pdot"></i><span class="pline" style="width:620px"></span></div><div class="abs prow" id="Ar1" style="left:50px;top:220px"><i class="pdot"></i><span class="pline" style="width:520px"></span></div><div class="abs prow" id="Ar2" style="left:50px;top:320px"><i class="pdot"></i><span class="pline" style="width:700px"></span></div><div class="abs prow" id="Ar3" style="left:50px;top:420px"><i class="pdot"></i><span class="pline" style="width:460px"></span></div><div class="abs prow" id="Ar4" style="left:50px;top:520px"><i class="pdot"></i><span class="pline" style="width:580px"></span></div><div class="abs prow" id="Ar5" style="left:50px;top:620px"><i class="pdot"></i><span class="pline" style="width:640px"></span></div>
+          <div class="abs prow" id="Ar0" style="left:50px;top:120px"><i class="pdot"></i><span class="pline" style="width:620px"></span></div><div class="abs prow" id="Ar1" style="left:50px;top:208px"><i class="pdot"></i><span class="pline" style="width:520px"></span></div><div class="abs prow" id="Ar2" style="left:50px;top:296px"><i class="pdot"></i><span class="pline" style="width:700px"></span></div><div class="abs prow" id="Ar3" style="left:50px;top:384px"><i class="pdot"></i><span class="pline" style="width:460px"></span></div><div class="abs prow" id="Ar4" style="left:50px;top:472px"><i class="pdot"></i><span class="pline" style="width:580px"></span></div><div class="abs prow" id="Ar5" style="left:50px;top:560px"><i class="pdot"></i><span class="pline" style="width:640px"></span></div>
         </div>
-        <div class="abs clock" id="Aclk" style="left:70px;top:1410px"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="clock">
+        <div class="abs clock" id="Aclk" style="left:70px;top:1380px"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#A65353" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="clock">
   <circle cx="12" cy="12" r="10" />
   <polyline points="12 6 12 12 16 14" />
 </svg> Te ahorramos tiempo</div>
@@ -389,11 +391,11 @@
       tl.fromTo("#Bt", { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 7.210);
       gsap.set([".nox"], { autoAlpha: 0 });
       tl.fromTo("#Bn0", { autoAlpha: 0, y: 50 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 7.380);
-      tl.fromTo("#Bn0l", { scaleX: 0 }, { scaleX: 1, transformOrigin: "0% 50%", duration: 0.4, ease: "power2.out" }, 10.280);
+      tl.fromTo("#Bn0 .vt", { textDecorationColor: "rgba(166,83,83,0)" }, { textDecorationColor: "rgba(166,83,83,1)", duration: 0.4, ease: "power2.out" }, 10.280);
       tl.fromTo("#Bn0x", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(1.8)" }, 9.870);
       tl.to("#Bn0", { opacity: 0.6, duration: 0.4 }, 10.420);
       tl.fromTo("#Bn1", { autoAlpha: 0, y: 50 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 12.182);
-      tl.fromTo("#Bn1l", { scaleX: 0 }, { scaleX: 1, transformOrigin: "0% 50%", duration: 0.4, ease: "power2.out" }, 13.852);
+      tl.fromTo("#Bn1 .vt", { textDecorationColor: "rgba(166,83,83,0)" }, { textDecorationColor: "rgba(166,83,83,1)", duration: 0.4, ease: "power2.out" }, 13.852);
       tl.fromTo("#Bn1x", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(1.8)" }, 14.292);
       tl.set("#sC", { autoAlpha: 1 }, 14.905);
       tl.fromTo("#sC", { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.6, ease: "power3.inOut" }, 14.905);
@@ -411,8 +413,8 @@
       tl.to("#Cy1", { borderColor: "#3F7A4F", duration: 0.3 }, 18.665);
       tl.fromTo("#Cc2", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.35, ease: "back.out(1.8)" }, 21.228);
       tl.to("#Cy2", { borderColor: "#3F7A4F", duration: 0.3 }, 21.228);
-      tl.fromTo("#Cc3", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.35, ease: "back.out(1.8)" }, 24.388);
-      tl.to("#Cy3", { borderColor: "#3F7A4F", duration: 0.3 }, 24.388);
+      tl.fromTo("#Cc3", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.35, ease: "back.out(1.8)" }, 23.428);
+      tl.to("#Cy3", { borderColor: "#3F7A4F", duration: 0.3 }, 23.428);
       tl.set("#sD", { autoAlpha: 1 }, 24.838);
       tl.fromTo("#sD", { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.6, ease: "power3.inOut" }, 24.838);
       tl.set("#sC", { autoAlpha: 0 }, 25.488);

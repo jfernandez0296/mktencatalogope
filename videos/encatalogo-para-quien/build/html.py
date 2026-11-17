@@ -98,12 +98,12 @@ def chathead(name="Tienda Demo", status="en línea"):
 ROWS = 6
 A = f'''      <div class="sc" id="sA" style="background:{CREAM}">
         {BRAND("A")}
-        {head("A", "¿ES PARA TI?", "No es para todos.", top=290, size=128)}
-        <div class="abs card" id="Acard" style="left:70px;top:620px;width:940px;height:760px">
+        {head("A", "¿ES PARA TI?", "No es para todos.", top=290, size=116)}
+        <div class="abs card" id="Acard" style="left:70px;top:660px;width:940px;height:680px">
           <div class="abs eyebrow" style="left:50px;top:50px">ANTES DE PROBAR, REVISA ESTO</div>
-          {"".join(f'<div class="abs prow" id="Ar{i}" style="left:50px;top:{120 + i * 100}px"><i class="pdot"></i><span class="pline" style="width:{[620, 520, 700, 460, 580, 640][i]}px"></span></div>' for i in range(ROWS))}
+          {"".join(f'<div class="abs prow" id="Ar{i}" style="left:50px;top:{120 + i * 88}px"><i class="pdot"></i><span class="pline" style="width:{[620, 520, 700, 460, 580, 640][i]}px"></span></div>' for i in range(ROWS))}
         </div>
-        <div class="abs clock" id="Aclk" style="left:70px;top:1410px">{icon("clock", 34, TERRAD)} Te ahorramos tiempo</div>
+        <div class="abs clock" id="Aclk" style="left:70px;top:1380px">{icon("clock", 34, TERRAD)} Te ahorramos tiempo</div>
       </div>'''
 
 # B · not for you (dark)
@@ -192,7 +192,7 @@ def wipe(sel, prev, t):
 def count(sel, t, frm, to, d=1.0):
     js(f'(() => {{ const o = {{ v: {frm} }}; tl.to(o, {{ v: {to}, duration: {d}, ease: "power2.out", onUpdate: () => {{ document.querySelector("{sel}").textContent = Math.round(o.v); }} }}, {t:.3f}); }})();')
 def heading(sid, t): show(f"#{sid}k", t + 0.2, 0.4, 20); show(f"#{sid}t", t + 0.35, 0.5, 40)
-def line(sel, t, d=0.4): js(f'tl.fromTo("{sel}", {{ scaleX: 0 }}, {{ scaleX: 1, transformOrigin: "0% 50%", duration: {d}, ease: "power2.out" }}, {t:.3f});')
+def line(sel, t, d=0.4): js(f'tl.fromTo("{sel[:-1]} .vt", {{ textDecorationColor: "rgba(166,83,83,0)" }}, {{ textDecorationColor: "rgba(166,83,83,1)", duration: {d}, ease: "power2.out" }}, {t:.3f});')
 
 # A
 show("#Abr", 0.1, 0.4, 20); show("#Ak", 0.25, 0.4, 20); show("#At", 0.4, 0.6, 50)
@@ -215,7 +215,7 @@ wipe("#sC", "#sB", S[2]); heading("C", S[2])
 js('gsap.set(["#sC .yc"], { autoAlpha: 0 });')
 for i, (w_, sid, nth) in enumerate([("productos", "e4", 0), ("clientes", "e4", 0), ("catálogo", "e5", 0), ("tienda", "e5", 0)]):
     slide(f"#Cy{i}", W(sid, w_, -0.45), -60, False)
-for i, (w_, sid) in enumerate([("precio", "e4"), ("whatsapp", "e4"), ("fotos", "e5"), ("caja", "e5")]):
+for i, (w_, sid) in enumerate([("precio", "e4"), ("whatsapp", "e4"), ("fotos", "e5"), ("física", "e5")]):
     popin(f"#Cc{i}", W(sid, w_, 0.0), 0.35)
     js(f'tl.to("#Cy{i}", {{ borderColor: "{OK}", duration: 0.3 }}, {W(sid, w_, 0.0):.3f});')
 # D

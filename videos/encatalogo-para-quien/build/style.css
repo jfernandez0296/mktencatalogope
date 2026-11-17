@@ -150,3 +150,5 @@
       .yc { flex: none; width: 72px; height: 72px; border-radius: 36px; background: #3F7A4F; display: flex; align-items: center; justify-content: center; }
       .hub { width: 400px; height: 290px; border-radius: 48px; background: #FFFFFF; border: 2px solid #E7DDD1; display: flex; align-items: center; justify-content: center; box-shadow: 0 24px 60px rgba(15,15,16,.08); }
       .dsub { text-align: center; font-family: "DM Serif Display", serif; font-size: 48px; color: #A65353; }
+      .nocard .vt em { display: none; }
+      .nocard .vt { text-decoration: line-through; text-decoration-thickness: 5px; text-decoration-color: rgba(166,83,83,0); }
