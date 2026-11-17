@@ -9,7 +9,7 @@
       #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #F2EDE4; font-family: "Inter", system-ui, sans-serif; color: #0F0F10; }
       .abs { position: absolute; }
       .sc { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: hidden; }
-      #sB, #sC, #sD, #sE, #sF, #sG, #sH, #sI, .cap { visibility: hidden; opacity: 0; }
+      #sB, #sC, #sD, #sE, #sF, #sG, #sH, #clk, .cap { visibility: hidden; opacity: 0; }
       .eyebrow { font-size: 26px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #A65353; }
       .badge { padding: 14px 28px; border-radius: 999px; background: #F2E6CE; color: #A65353; font-size: 26px; font-weight: 700; letter-spacing: .12em; white-space: nowrap; }
       .badge.dk { background: rgba(217,152,115,.18); color: #D99873; }
@@ -135,3 +135,35 @@
       .bigstat .num { font-family: "DM Serif Display", serif; font-size: 150px; line-height: 1; }
       .bigstat .lbl { font-size: 36px; font-weight: 600; line-height: 1.25; color: #57534E; }
       .per { font-size: 38px; font-weight: 600; }
+      .clk { z-index: 5; width: 440px; height: 112px; padding: 0 26px; border-radius: 30px; background: #FFFFFF; border: 2px solid #E7DDD1; box-shadow: 0 14px 34px rgba(15,15,16,.14); display: flex; align-items: center; gap: 20px; overflow: hidden; }
+      .cki { flex: none; width: 70px; height: 70px; border-radius: 20px; background: #F2E6CE; display: flex; align-items: center; justify-content: center; }
+      .ckt { position: relative; flex: 1; height: 80px; }
+      .cks { position: absolute; left: 0; top: 0; display: flex; align-items: baseline; gap: 14px; }
+      .cks b { font-family: "DM Serif Display", serif; font-weight: 400; font-size: 64px; line-height: 80px; color: #0F0F10; }
+      .cks i { font-style: normal; font-size: 24px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #A65353; }
+      .ckbar { position: absolute; left: 26px; right: 26px; bottom: 10px; height: 6px; border-radius: 3px; background: #F2E6CE; overflow: hidden; }
+      .ckbar div { width: 100%; height: 100%; background: #D99873; }
+      .tline { width: 6px; border-radius: 3px; background: #E7DDD1; }
+      .stop { display: flex; align-items: center; gap: 28px; height: 120px; }
+      .stt { width: 120px; text-align: right; font-family: "DM Serif Display", serif; font-size: 44px; }
+      .sdot { flex: none; width: 72px; height: 72px; border-radius: 36px; background: #A65353; border: 6px solid #fff; box-shadow: 0 0 0 2px #E7DDD1; display: flex; align-items: center; justify-content: center; }
+      .stop span { font-size: 34px; font-weight: 600; width: 560px; line-height: 1.2; }
+      .mv { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 14px 0; border-top: 2px solid #E7DDD1; font-size: 28px; font-weight: 600; }
+      .mvb { width: 200px; height: 14px; border-radius: 7px; background: #E7DDD1; overflow: hidden; }
+      .mvb div { height: 100%; background: #D99873; border-radius: 7px; }
+      .st2 { width: 455px; height: 240px; padding: 34px 36px; border-radius: 36px; background: #FFFFFF; border: 2px solid #E7DDD1; box-shadow: 0 12px 30px rgba(15,15,16,.06); }
+      .st2 span { display: flex; align-items: center; gap: 12px; font-size: 32px; font-weight: 700; }
+      .st2 b { display: inline-block; margin-top: 18px; font-family: "DM Serif Display", serif; font-weight: 400; font-size: 100px; line-height: 1; }
+      .st2 i { font-style: normal; margin-left: 16px; font-size: 30px; font-weight: 500; color: #57534E; }
+      .cta.sm { height: 110px; gap: 18px; font-size: 38px; }
+      .pill { display: flex; align-items: center; gap: 10px; padding: 12px 24px; border-radius: 999px; background: #FAF9F5; border: 2px solid #E7DDD1; font-size: 28px; font-weight: 600; color: #8A8178; white-space: nowrap; }
+      .pill.ok { background: #E6EFE8; border-color: #C9DDCD; color: #2F5E3B; }
+      .tnum { font-family: "DM Serif Display", serif; font-size: 140px; line-height: 1; }
+      .tmeta { display: flex; align-items: center; gap: 10px; font-size: 28px; font-weight: 600; color: #57534E; white-space: nowrap; }
+      .tile .stamp { font-size: 26px; padding: 12px 22px; }
+      .callout.ok { background: #E6EFE8; border-left-color: #3F7A4F; }
+      .callout em { font-style: normal; font-weight: 700; color: #2F5E3B; }
+      .mod { display: flex; align-items: center; gap: 18px; height: 130px; padding: 0 28px; border-radius: 34px; background: #1C1B1A; border: 2px solid #3A3631; color: #fff; font-size: 34px; font-weight: 700; white-space: nowrap; }
+      .one { display: flex; align-items: center; justify-content: center; gap: 24px; height: 150px; border-radius: 40px; background: #F2EDE4; color: #0F0F10; font-size: 52px; }
+      #Fs1 { align-items: center; left: 315px !important; }
+      #Fs2 { align-items: flex-end; left: 596px !important; }
