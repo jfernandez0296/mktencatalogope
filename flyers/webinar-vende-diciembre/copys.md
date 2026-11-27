@@ -1,11 +1,11 @@
 # Copys · Del chat al pago: vende más en diciembre
 
-Miércoles 9 de diciembre · 8:15 pm (hora Lima) · Ponente: Jaime Fernández Chávez
+Martes 8 de diciembre · 8:30 pm (hora Lima) · Ponente: Jaime Fernández Chávez
 
 ## ¿Qué va en Luma?
 
 Nombre del evento: **Del chat al pago: vende más en diciembre · Webinar gratuito**
-Fecha y hora: 9 de diciembre, 8:15 pm · zona horaria **America/Lima**
+Fecha y hora: 8 de diciembre, 8:30 pm · zona horaria **America/Lima**
 
 ```
 ¿Tus clientes preguntan por WhatsApp, piden fotos y precios… y luego desaparecen? ¿Pasas horas confirmando pagos de Yape y Plin a mano?
@@ -30,8 +30,8 @@ Un chatbot contesta lo que le preguntan. Un vendedor recomienda, envía fotos y 
 
 ## Detalles
 
-- 📅 Miércoles 9 de diciembre
-- ⏰ 8:15 pm hora Perú (7:15 pm México · 8:15 pm Colombia · 10:15 pm Chile y Argentina)
+- 📅 Martes 8 de diciembre
+- ⏰ 8:30 pm hora Perú (7:30 pm México · 8:30 pm Colombia · 10:30 pm Chile y Argentina)
 - 💻 Online y en vivo. Recibirás el enlace al registrarte.
 - ✅ Gratuito · Cupos limitados
 
